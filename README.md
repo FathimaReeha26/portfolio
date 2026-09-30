@@ -64,20 +64,25 @@ The "Download CV" buttons point at `/cv` (a page mirroring the CV). To
 serve a real PDF: save it as `public/cv.pdf`, then set `cvHref: "/cv.pdf"`
 in `content/site.ts`.
 
-## Deploy
+## Deploy (Vercel)
 
-Set the canonical domain first, otherwise social/SEO tags fall back to a
-placeholder:
+Vercel is the hosting target. The app uses `output: "export"`, so Vercel
+serves it as fully static files — no server configuration needed.
 
-```bash
-NEXT_PUBLIC_SITE_URL=https://your-domain.com npm run build
-```
+1. Push this repo to GitHub (see note below), then import it in Vercel.
+   The Next.js preset auto-detects everything: build command
+   `npm run build`, output handled from `next.config.ts`.
+2. Set the environment variable `NEXT_PUBLIC_SITE_URL` to the real
+   domain (e.g. `https://your-name.vercel.app` or a custom domain) in
+   the Vercel project settings, then redeploy. Without it, sitemap and
+   social-card URLs fall back to a placeholder.
+3. Custom domains and HTTPS are handled in the Vercel dashboard.
 
-**Vercel:** import the repo, framework preset Next.js. No extra config —
-`output: "export"` produces static files. Set `NEXT_PUBLIC_SITE_URL` in
-the project environment variables.
+Push prerequisite: the push to GitHub is currently blocked (403 for the
+cached credential — see project notes). Unblock that first; Vercel
+imports from the GitHub repo.
 
-**GitHub Pages:** build locally or in Actions, publish the `out/`
+## Deploy (GitHub Pages, alternative)
 directory. `public/.nojekyll` is already included. For a *project* site
 (`username.github.io/portfolio/`), set `basePath: "/portfolio"` in
 `next.config.ts` before building.
