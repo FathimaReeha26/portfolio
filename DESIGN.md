@@ -92,7 +92,7 @@ Spacing from the 4px scale; section rhythm from whitespace (`gap-16/20`, generou
 
 One orchestrated moment per page load, everything else answers scroll:
 
-1. **Boot intro** (once per session, under 2 seconds, click/Escape skips): system lines report the real build with amber `ok` markers, resolving into the monogram before the curtain lifts. Mounts client-side only, so SSR and no-JS users never see it. Skipped entirely under reduced motion.
+1. **Boot intro** (every full page load, about 3 seconds, click/Escape skips): system lines report the real build with amber `ok` markers, resolving into the monogram before the curtain lifts. Mounts client-side only, so SSR and no-JS users never see it. Skipped entirely under reduced motion.
 2. **Hero** chained after the intro: headline lines rise inside overflow masks, supporting elements fade up staggered.
 3. **Scroll reveals** (`ScrollTrigger.batch`, `once`): short fade with a 14px rise; heading rules draw via `scaleX`.
 4. Hovers are CSS micro-transitions (200ms): arrow nudges, borders darken, fills shift.
@@ -130,6 +130,6 @@ Plain, specific, confident. Actions say what happens ("View projects", "Download
 
 **Visual:** paper canvas, ink text, amber rationed to actions/focus/selection/progress/rules, pine used sparingly, flat bordered surfaces, generous whitespace, Fraunces display with single italic accents, Inter body ≤70ch.
 **Components:** amber primary buttons with all states; index rows (not card grids); cardless timeline; chips with check-marked selection; labeled forms with linked errors; focus-trapping modal; labeled alerts; readable responsive tables.
-**Motion:** boot intro under 2s, skippable, session-gated, absent without JS and under reduced motion; hero chained; reveals once; no markers; no layout shift.
+**Motion:** boot intro about 3s on every load, skippable, absent without JS and under reduced motion; hero chained; reveals once; no markers; no layout shift.
 **Accessibility:** AA contrast verified by script; visible amber focus; no color-only state; semantic HTML; 44px targets; reduced motion honored; decorative marks hidden.
 **Content:** specific CTAs, recovery-led errors, helpful empty states, no invented facts.

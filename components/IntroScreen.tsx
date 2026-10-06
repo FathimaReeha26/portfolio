@@ -9,8 +9,6 @@ import { site } from "@/content/site";
 
 gsap.registerPlugin(useGSAP);
 
-const SESSION_KEY = "folio-intro-seen";
-
 interface BootLine {
   text: string;
   status?: string;
@@ -26,7 +24,7 @@ const bootLines: BootLine[] = [
 
 /* The single orchestrated moment: a boot sequence that reports the
    real build, resolving into the monogram before the curtain lifts.
-   Shown once per session and always under two seconds; click or
+   Plays on every full page load (about three seconds); click or
    Escape skips it. It mounts client-side only, so SSR and no-JS
    users never see it, and reduced motion skips it outright. */
 export function IntroScreen() {
@@ -38,11 +36,6 @@ export function IntroScreen() {
   function finish() {
     if (finished.current) return;
     finished.current = true;
-    try {
-      window.sessionStorage.setItem(SESSION_KEY, "1");
-    } catch {
-      /* private mode — intro simply replays next visit */
-    }
     setDone(true);
     markIntroReady();
   }
@@ -54,22 +47,12 @@ export function IntroScreen() {
   useGSAP(
     () => {
       if (!mounted || finished.current) return;
-      let seen = false;
-      try {
-        seen = window.sessionStorage.getItem(SESSION_KEY) === "1";
-      } catch {
-        seen = false;
-      }
 
       const mm = gsap.matchMedia();
       mm.add("(prefers-reduced-motion: reduce)", () => {
         finish();
       });
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        if (seen) {
-          finish();
-          return;
-        }
         const root = rootRef.current;
         if (!root) {
           finish();
@@ -79,31 +62,31 @@ export function IntroScreen() {
         tl.from(".folio-boot-line", {
           opacity: 0,
           x: -12,
-          duration: 0.28,
+          duration: 0.36,
           ease: "power1.out",
-          stagger: 0.11,
+          stagger: 0.19,
         })
           .from(
             ".folio-boot-mark",
             {
               opacity: 0,
               scale: 0.85,
-              duration: 0.45,
+              duration: 0.6,
               ease: "expo.out",
             },
-            "-=0.15"
+            "-=0.25"
           )
           .fromTo(
             ".folio-boot-rule",
             { scaleX: 0 },
-            { scaleX: 1, duration: 0.4, ease: "expo.inOut" },
-            "-=0.3"
+            { scaleX: 1, duration: 0.6, ease: "expo.inOut" },
+            "-=0.45"
           )
           .to(root, {
             yPercent: -100,
-            duration: 0.6,
+            duration: 0.9,
             ease: "power4.inOut",
-            delay: 0.12,
+            delay: 0.35,
           });
       });
       return () => mm.revert();
