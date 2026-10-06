@@ -174,16 +174,18 @@ function Experience() {
     <section aria-labelledby="experience" className="scroll-mt-24">
       <SectionHeading id="experience" title="Experience and education" />
       <div className="flex flex-col gap-8">
-        <Reveal>
-          <Timeline
-            items={experience.map((item) => ({
+        {experience.length > 0 && (
+          <Reveal>
+            <Timeline
+              items={experience.map((item) => ({
               title: item.role,
               subtitle: item.org,
               dates: item.dates,
               bullets: item.bullets,
             }))}
           />
-        </Reveal>
+          </Reveal>
+        )}
         <Reveal>
           <Timeline
             items={education.map((item) => ({
@@ -194,18 +196,20 @@ function Experience() {
             }))}
           />
         </Reveal>
-        <div>
-          <h3 className="mb-2 text-md font-semibold text-ink">
-            Relevant coursework
-          </h3>
-          <ul className="flex flex-wrap gap-2">
-            {coursework.map((course) => (
-              <li key={course}>
-                <Chip>{course}</Chip>
-              </li>
-            ))}
-          </ul>
-        </div>
+        {coursework.length > 0 && (
+          <div>
+            <h3 className="mb-2 text-md font-semibold text-ink">
+              Relevant coursework
+            </h3>
+            <ul className="flex flex-wrap gap-2">
+              {coursework.map((course) => (
+                <li key={course}>
+                  <Chip>{course}</Chip>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,5 +1,4 @@
 /* Site-wide profile, contact, and navigation content.
-   Values in [BRACKETS] are placeholders — replace them with real details.
    Updating this file never requires touching components. */
 
 export interface SocialLink {
@@ -8,28 +7,22 @@ export interface SocialLink {
 }
 
 export const site = {
-  name: "[Your Name]",
-  tagline:
-    "[One-line tagline, e.g. CS master's student building reliable ML systems]",
+  name: "Fathima Reeha T.A",
+  tagline: "CSE undergraduate building explainable AI for healthcare",
   supportingLine:
-    "[One supporting sentence: what you study, what you build, and what you are looking for.]",
-  degree: "[M.S. in Computer Science]",
-  school: "[University Name]",
-  graduation: "[Expected graduation year]",
-  email: "[you@example.com]",
+    "Third-year engineering student working in Python, machine learning, and data — based in Kerala, India.",
+  degree: "B.E. in Computer Science and Engineering",
+  school: "P.A. College of Engineering",
+  graduation: "2028",
+  email: "reeha5622@gmail.com",
   // "Download CV" points at the /cv page until a real PDF is added
   // to public/cv.pdf (see README). Then point this at "/cv.pdf".
   cvHref: "/cv",
-  lastUpdated: "2026-09-30",
-  signOff: "[A short handwritten sign-off, e.g. Drawn with care]",
-  socials: [
-    { label: "GitHub", href: "https://github.com/[username]" },
-    { label: "LinkedIn", href: "https://www.linkedin.com/in/[username]" },
-    {
-      label: "Google Scholar",
-      href: "https://scholar.google.com/citations?user=[id]",
-    },
-  ] as SocialLink[],
+  lastUpdated: "2026-10-06",
+  signOff: "Thanks for stopping by my sketchbook",
+  // Social links are omitted until real profile URLs are provided —
+  // no placeholder links are shown.
+  socials: [] as SocialLink[],
 };
 
 export interface CurrentlyItem {
@@ -38,25 +31,29 @@ export interface CurrentlyItem {
 }
 
 export const currently: CurrentlyItem[] = [
-  { label: "Studying", value: "[What you are studying right now]" },
-  { label: "Building", value: "[What you are building right now]" },
-  { label: "Reading", value: "[What you are reading right now]" },
-  { label: "Looking for", value: "[e.g. Summer 2027 internships]" },
+  { label: "Studying", value: "B.E. CSE, 3rd year · CGPA 8.3/10" },
+  {
+    label: "Building",
+    value: "SynCura – Explainable ICU Risk Monitoring System",
+  },
+  {
+    label: "Looking for",
+    value: "Opportunities to apply my skills to real-world challenges",
+  },
 ];
 
 export const bio: string[] = [
-  "[First bio sentence: who you are and what you study.]",
-  "[Second sentence: what you build or research and why it matters.]",
-  "[Third sentence: what you are looking for next — internships, collaborations, roles.]",
+  "I am Fathima Reeha, a third-year Computer Science Engineering student at P.A. College of Engineering (2024–2028, CGPA 8.3/10) with strong programming skills in Python and Java.",
+  "I am currently building SynCura, an explainable ICU risk monitoring system that predicts early patient risk from clinical data and raises timely alerts.",
+  "I care about Artificial Intelligence, Data Structures, and practical software that solves real problems — and I am looking for opportunities to apply my skills to real-world challenges.",
 ];
 
 export const researchInterests: string[] = [
-  "[Research interest 1]",
-  "[Research interest 2]",
-  "[Research interest 3]",
+  "Artificial Intelligence",
+  "Machine Learning",
+  "Data Structures",
+  "Real-time health monitoring",
 ];
-
-export const advisor = "[Advisor name, Lab name]";
 
 export interface NavItem {
   label: string;

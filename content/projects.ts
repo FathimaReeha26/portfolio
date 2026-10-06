@@ -1,9 +1,10 @@
-/* Project case-study content. Values in [BRACKETS] are placeholders.
+/* Project case-study content.
    `areas` drive the filter chips on the home page: "ML" | "Systems" | "Web" | "Research".
    `architecture` is an array of columns; each column is a list of stage
    boxes, drawn left-to-right with pencil arrows between columns.
    `results` renders as a table; entries with a numeric `value` (0-100)
-   also get a labeled bar in the chart. Omit `value` when you only have text. */
+   also get a labeled bar in the chart. Omit `value` when you only have text.
+   `learnings` and `links` are optional — sections render only when provided. */
 
 export type ProjectArea = "ML" | "Systems" | "Web" | "Research";
 
@@ -32,96 +33,86 @@ export interface Project {
   outcome: string;
   architecture: string[][];
   results: ProjectResult[];
-  learnings: string[];
-  links: ProjectLink[];
+  learnings?: string[];
+  links?: ProjectLink[];
 }
 
 export const projects: Project[] = [
   {
-    slug: "project-one",
-    title: "[Project title one]",
-    summary: "[One-line summary of what it does and who it helps.]",
-    problem: "[What problem does this solve, and why does it matter?]",
+    slug: "syncura-icu-risk-monitoring",
+    title: "SynCura – Explainable ICU Risk Monitoring",
+    summary:
+      "AI-based ICU risk monitoring that predicts early patient risk from clinical data and raises real-time alerts.",
+    problem:
+      "Patient deterioration in intensive care can go unnoticed until it becomes critical. SynCura tackles early risk prediction so care teams get timely warnings, starting with heartbeat fluctuations.",
     approach: [
-      "[First step of your approach.]",
-      "[Second step of your approach.]",
-      "[Third step of your approach.]",
+      "Clean and prepare clinical data for modeling.",
+      "Build a risk prediction model for early warning signs.",
+      "Add explanations so each prediction can be understood and trusted.",
+      "Deliver continuous monitoring with real-time alerts.",
     ],
-    role: "[Your role, e.g. Sole builder]",
-    stack: ["[Tech 1]", "[Tech 2]", "[Tech 3]"],
+    role: "Team member",
+    stack: ["Python", "Machine Learning", "Data Analysis"],
     areas: ["ML"],
-    outcome: "[Outcome or metric, e.g. improved baseline by X.]",
+    outcome: "In development — working toward early risk prediction on clinical data.",
     architecture: [
-      ["[Input]", "[Preprocessing]"],
-      ["[Model]", "[Training]"],
-      ["[Evaluation]", "[Output]"],
+      ["Clinical data", "Data cleaning"],
+      ["Risk prediction", "Explanations"],
+      ["Real-time alerts", "Monitoring"],
     ],
     results: [
-      { label: "[Metric name]", display: "[Value, e.g. 92%]" },
-      { label: "[Metric name]", display: "[Value]" },
-    ],
-    learnings: [
-      "[What you learned building this.]",
-      "[What you would do differently.]",
-    ],
-    links: [
-      { label: "GitHub", href: "https://github.com/[username]/[repo]" },
-      { label: "Demo", href: "https://[demo-url]" },
+      { label: "Status", display: "In development" },
+      { label: "Focus", display: "Early risk prediction from clinical data" },
     ],
   },
   {
-    slug: "project-two",
-    title: "[Project title two]",
-    summary: "[One-line summary of what it does and who it helps.]",
-    problem: "[What problem does this solve, and why does it matter?]",
+    slug: "home-automation-system",
+    title: "Home Automation System",
+    summary:
+      "Automated control and monitoring for home lighting, appliances, and security.",
+    problem:
+      "Managing home lighting, appliances, and security by hand is tedious and easy to neglect. This system automates monitoring and control in one place.",
     approach: [
-      "[First step of your approach.]",
-      "[Second step of your approach.]",
+      "Automate monitoring across lighting, appliances, and security.",
+      "Centralize control so the home responds without manual effort.",
     ],
-    role: "[Your role, e.g. Backend lead in a team of three]",
-    stack: ["[Tech 1]", "[Tech 2]"],
+    role: "Team member",
+    stack: [],
     areas: ["Systems"],
-    outcome: "[Outcome or metric.]",
-    architecture: [["[Client]"], ["[Service]", "[Cache]"], ["[Database]"]],
-    results: [{ label: "[Metric name]", display: "[Value]" }],
-    learnings: ["[What you learned building this.]"],
-    links: [{ label: "GitHub", href: "https://github.com/[username]/[repo]" }],
+    outcome: "Working system covering lighting, appliances, and security monitoring.",
+    architecture: [
+      ["Sensors", "Monitoring"],
+      ["Automation", "Control"],
+      ["Lighting", "Appliances", "Security"],
+    ],
+    results: [
+      { label: "Scope", display: "Lighting, appliances, and security" },
+    ],
   },
   {
-    slug: "project-three",
-    title: "[Project title three]",
-    summary: "[One-line summary of what it does and who it helps.]",
-    problem: "[What problem does this solve, and why does it matter?]",
+    slug: "railway-management-system",
+    title: "Railway Management System",
+    summary:
+      "Ticket booking, train scheduling, and passenger management that automates railway operations.",
+    problem:
+      "Manual railway operations — booking, scheduling, passenger records — are slow and error-prone. This system automates them to cut manual work and improve efficiency.",
     approach: [
-      "[First step of your approach.]",
-      "[Second step of your approach.]",
+      "Build ticket booking and train scheduling flows.",
+      "Manage passenger records alongside operations.",
+      "Automate manual steps to improve efficiency.",
     ],
-    role: "[Your role]",
-    stack: ["[Tech 1]", "[Tech 2]"],
-    areas: ["Web"],
-    outcome: "[Outcome or metric.]",
-    architecture: [["[Pages]"], ["[API]"], ["[Data]"]],
-    results: [{ label: "[Metric name]", display: "[Value]" }],
-    learnings: ["[What you learned building this.]"],
-    links: [{ label: "GitHub", href: "https://github.com/[username]/[repo]" }],
-  },
-  {
-    slug: "project-four",
-    title: "[Project title four]",
-    summary: "[One-line summary of what it does and who it helps.]",
-    problem: "[What problem does this solve, and why does it matter?]",
-    approach: [
-      "[First step of your approach.]",
-      "[Second step of your approach.]",
+    role: "Team member",
+    stack: [],
+    areas: ["Systems"],
+    outcome: "Automated booking, scheduling, and passenger management workflows.",
+    architecture: [
+      ["Ticket booking", "Train scheduling"],
+      ["Passenger management"],
+      ["Automated operations"],
     ],
-    role: "[Your role, e.g. Research assistant]",
-    stack: ["[Tech 1]", "[Tech 2]"],
-    areas: ["Research"],
-    outcome: "[Outcome or metric.]",
-    architecture: [["[Dataset]"], ["[Experiment]"], ["[Findings]"]],
-    results: [{ label: "[Metric name]", display: "[Value]" }],
-    learnings: ["[What you learned building this.]"],
-    links: [{ label: "Paper", href: "https://[paper-url]" }],
+    results: [
+      { label: "Goal", display: "Less manual work, more efficient operations" },
+    ],
   },
 ];
 

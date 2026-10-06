@@ -1,5 +1,5 @@
-/* Skills content. Group names are structural; items in [BRACKETS]
-   are placeholders — list only skills you actually have. */
+/* Skills content — every item below comes from the resume.
+   Awards stay empty until exact certificate titles are confirmed. */
 
 export interface SkillGroup {
   group: string;
@@ -7,14 +7,19 @@ export interface SkillGroup {
 }
 
 export const skillGroups: SkillGroup[] = [
-  { group: "Languages", items: ["[Language 1]", "[Language 2]", "[Language 3]"] },
-  { group: "ML / Data", items: ["[Tool 1]", "[Tool 2]", "[Tool 3]"] },
-  { group: "Systems", items: ["[Tool 1]", "[Tool 2]"] },
-  { group: "Web", items: ["[Tool 1]", "[Tool 2]", "[Tool 3]"] },
-  { group: "Tools", items: ["[Tool 1]", "[Tool 2]"] },
+  { group: "Languages", items: ["Python", "Java", "SQL"] },
+  {
+    group: "ML / Data",
+    items: ["Machine Learning", "Data Analysis", "Data Cleaning"],
+  },
+  {
+    group: "Tools",
+    items: ["VS Code", "Jupyter Notebook", "GitHub", "Excel", "Canva"],
+  },
+  {
+    group: "Working style",
+    items: ["Team Work", "Problem Solving", "Communication", "Time Management"],
+  },
 ];
 
-export const awards: string[] = [
-  "[Award, talk, or open-source contribution.]",
-  "[Award, talk, or open-source contribution.]",
-];
+export const awards: string[] = [];

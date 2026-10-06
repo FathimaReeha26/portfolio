@@ -51,13 +51,15 @@ export default async function ProjectPage({
         <h1 className="text-2xl font-semibold text-ink">{project.title}</h1>
         <p className="max-w-2xl text-lg text-ink">{project.summary}</p>
         <p className="font-mono text-sm text-ink">My role: {project.role}</p>
-        <ul aria-label="Technologies used" className="flex flex-wrap gap-2">
-          {project.stack.map((tech) => (
-            <li key={tech}>
-              <Chip>{tech}</Chip>
-            </li>
-          ))}
-        </ul>
+        {project.stack.length > 0 && (
+          <ul aria-label="Technologies used" className="flex flex-wrap gap-2">
+            {project.stack.map((tech) => (
+              <li key={tech}>
+                <Chip>{tech}</Chip>
+              </li>
+            ))}
+          </ul>
+        )}
       </header>
 
       <Reveal>
@@ -108,8 +110,9 @@ export default async function ProjectPage({
         <ResultsTable results={project.results} />
       </section>
 
-      <Reveal>
-        <section aria-labelledby="learnings">
+      {project.learnings && project.learnings.length > 0 && (
+        <Reveal>
+          <section aria-labelledby="learnings">
           <Card variant="note" className="flex flex-col gap-3">
             <h2 id="learnings" className="text-xl font-semibold text-ink">
               What I learned
@@ -124,9 +127,11 @@ export default async function ProjectPage({
             </ul>
           </Card>
         </section>
-      </Reveal>
+        </Reveal>
+      )}
 
-      <section aria-labelledby="links">
+      {project.links && project.links.length > 0 && (
+        <section aria-labelledby="links">
         <h2 id="links" className="mb-4 text-xl font-semibold text-ink">
           Links
         </h2>
@@ -142,8 +147,9 @@ export default async function ProjectPage({
               </a>
             </li>
           ))}
-        </ul>
-      </section>
+          </ul>
+        </section>
+      )}
     </article>
   );
 }

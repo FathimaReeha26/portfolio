@@ -60,7 +60,8 @@ export default function CvPage() {
         </div>
       </section>
 
-      <section aria-labelledby="cv-experience">
+      {experience.length > 0 && (
+        <section aria-labelledby="cv-experience">
         <SectionHeading id="cv-experience" title="Experience" />
         <div className="flex flex-col gap-4">
           {experience.map((item) => (
@@ -80,7 +81,8 @@ export default function CvPage() {
             </Reveal>
           ))}
         </div>
-      </section>
+        </section>
+      )}
 
       <section aria-labelledby="cv-skills">
         <SectionHeading id="cv-skills" title="Skills and coursework" />
@@ -99,12 +101,14 @@ export default function CvPage() {
               </ul>
             </div>
           ))}
-          <div>
-            <h3 className="mb-2 text-md font-semibold text-ink">
-              Relevant coursework
-            </h3>
-            <p className="font-mono text-sm text-ink">{coursework.join(" · ")}</p>
-          </div>
+          {coursework.length > 0 && (
+            <div>
+              <h3 className="mb-2 text-md font-semibold text-ink">
+                Relevant coursework
+              </h3>
+              <p className="font-mono text-sm text-ink">{coursework.join(" · ")}</p>
+            </div>
+          )}
         </div>
       </section>
 

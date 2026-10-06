@@ -24,13 +24,15 @@ export function ProjectCard({ project }: { project: Project }) {
         </h3>
         <p className="text-md text-ink">{project.summary}</p>
       </div>
-      <ul aria-label="Technologies used" className="flex flex-wrap gap-2">
-        {project.stack.map((tech) => (
-          <li key={tech}>
-            <Chip>{tech}</Chip>
-          </li>
-        ))}
-      </ul>
+      {project.stack.length > 0 && (
+        <ul aria-label="Technologies used" className="flex flex-wrap gap-2">
+          {project.stack.map((tech) => (
+            <li key={tech}>
+              <Chip>{tech}</Chip>
+            </li>
+          ))}
+        </ul>
+      )}
       <p className="font-mono text-sm text-ink">
         <span className="font-semibold">Result:</span> {project.outcome}
       </p>

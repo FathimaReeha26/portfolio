@@ -10,9 +10,10 @@ Visual source of truth: `DESIGN.md` (tokens, components, QA) and
 `SKILL.md` (how to apply the system). If code and `DESIGN.md` disagree,
 `DESIGN.md` wins. `AGENTS.md` holds the working rules for AI agents.
 
-> Status: all visible copy is **placeholder content in `[BRACKETS]`**.
-> Replace every bracketed value in `content/` with real details (see
-> "Editing content" below). Nothing here invents facts about you.
+> Status: content is personalized from the owner's resume. Sections with
+> no real data yet (experience timeline, coursework, certificates,
+> project links) stay hidden automatically — add the data and they
+> render. Nothing here invents facts.
 
 ## Setup
 
