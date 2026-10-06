@@ -60,7 +60,7 @@ Left-aligned, whitespace-structured sections (`gap-16/20`), no decorative divide
 
 ## Motion details
 
-- Intro: monogram in, amber rule draws, curtain lifts; once per session; click/Escape skips; client-mounted only.
+- Intro: boot lines report the real build, monogram resolves, curtain lifts; once per session; click/Escape skips; client-mounted only.
 - Hero: masked-line rise + staggered fades, chained on intro completion.
 - Reveals: `ScrollTrigger.batch`, `opacity/y:14`, `power1.out`, `once:true`, `start:"top 90%"`.
 - Rules draw via `scaleX` on scroll. Hovers are 200ms CSS. No markers in production. `useGSAP` with scope, SSR-safe, reverted on cleanup.
@@ -96,7 +96,7 @@ Plain, specific, confident. Actions say what happens; errors say what happened a
 - [ ] Helpful empty states; readable responsive tables
 
 **Motion**
-- [ ] Intro under 1.4s, skippable, session-gated, absent without JS/motion
+- [ ] Boot intro under 2s, skippable, session-gated, absent without JS/motion
 - [ ] Hero chained; reveals fire once; no markers; no layout shift
 
 **Accessibility**

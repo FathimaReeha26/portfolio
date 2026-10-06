@@ -4,17 +4,31 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef, useState } from "react";
 import { markIntroReady } from "@/lib/introBus";
+import { projects } from "@/content/projects";
 import { site } from "@/content/site";
 
 gsap.registerPlugin(useGSAP);
 
 const SESSION_KEY = "folio-intro-seen";
 
-/* The single orchestrated moment: monogram in, amber rule draws,
-   curtain lifts. Shown once per session, skipped entirely under
-   reduced motion or without JavaScript (the overlay only mounts
-   client-side, so SSR and no-JS users never see it). Click or
-   Escape skips it. Total under 1.4 seconds. */
+interface BootLine {
+  text: string;
+  status?: string;
+}
+
+const bootLines: BootLine[] = [
+  { text: "folio/boot — folio v0.1.0" },
+  { text: "setting type · Fraunces + Inter", status: "ok" },
+  { text: `laying out ${projects.length} case studies`, status: "ok" },
+  { text: "warming the amber", status: "ok" },
+  { text: `ready — welcome in, this is ${site.shortName}'s folio` },
+];
+
+/* The single orchestrated moment: a boot sequence that reports the
+   real build, resolving into the monogram before the curtain lifts.
+   Shown once per session and always under two seconds; click or
+   Escape skips it. It mounts client-side only, so SSR and no-JS
+   users never see it, and reduced motion skips it outright. */
 export function IntroScreen() {
   const [mounted, setMounted] = useState(false);
   const [done, setDone] = useState(false);
@@ -58,28 +72,34 @@ export function IntroScreen() {
           return;
         }
         const tl = gsap.timeline({ onComplete: finish });
-        tl.from(".folio-intro-mark", {
+        tl.from(".folio-boot-line", {
           opacity: 0,
-          y: 26,
-          duration: 0.5,
-          ease: "expo.out",
+          x: -12,
+          duration: 0.28,
+          ease: "power1.out",
+          stagger: 0.11,
         })
           .from(
-            ".folio-intro-name",
-            { opacity: 0, y: 14, duration: 0.45, ease: "expo.out" },
-            "-=0.3"
+            ".folio-boot-mark",
+            {
+              opacity: 0,
+              scale: 0.85,
+              duration: 0.45,
+              ease: "expo.out",
+            },
+            "-=0.15"
           )
           .fromTo(
-            ".folio-intro-rule",
+            ".folio-boot-rule",
             { scaleX: 0 },
-            { scaleX: 1, duration: 0.45, ease: "expo.inOut" },
-            "-=0.25"
+            { scaleX: 1, duration: 0.4, ease: "expo.inOut" },
+            "-=0.3"
           )
           .to(root, {
             yPercent: -100,
-            duration: 0.55,
+            duration: 0.6,
             ease: "power4.inOut",
-            delay: 0.15,
+            delay: 0.12,
           });
       });
     },
@@ -104,17 +124,30 @@ export function IntroScreen() {
       ref={rootRef}
       aria-hidden="true"
       onClick={finish}
-      className="fixed inset-0 z-[100] flex cursor-pointer flex-col items-center justify-center gap-4 bg-ink text-paper"
+      className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center bg-ink text-paper"
     >
-      <p className="folio-intro-mark font-display text-4xl font-semibold sm:text-3xl">
-        F<span className="italic text-amber">R</span>
-      </p>
-      <p className="folio-intro-name text-sm tracking-wide text-paper">
-        {site.shortName} — Portfolio
-      </p>
-      <span className="block h-[3px] w-40 overflow-hidden rounded-full bg-paper/20">
-        <span className="folio-intro-rule block h-full w-full origin-left rounded-full bg-amber" />
-      </span>
+      <div className="flex w-full max-w-sm flex-col gap-5 px-8">
+        <p className="folio-boot-mark font-display text-5xl font-semibold">
+          F<span className="italic text-amber">R</span>
+        </p>
+        <div className="flex flex-col gap-1.5">
+          {bootLines.map((line) => (
+            <p
+              key={line.text}
+              className="folio-boot-line tnum flex items-baseline justify-between gap-4 text-[13px] leading-relaxed text-paper/75"
+            >
+              <span>{line.text}</span>
+              {line.status && (
+                <span className="font-semibold text-amber">{line.status}</span>
+              )}
+            </p>
+          ))}
+        </div>
+        <span className="block h-[3px] w-full overflow-hidden rounded-full bg-paper/15">
+          <span className="folio-boot-rule block h-full w-full origin-left rounded-full bg-amber" />
+        </span>
+        <p className="text-xs text-paper/40">click anywhere to skip</p>
+      </div>
     </div>
   );
 }
