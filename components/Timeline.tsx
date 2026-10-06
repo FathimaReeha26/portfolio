@@ -22,7 +22,8 @@ export function Timeline({ items }: TimelineProps) {
           <div className="flex flex-col gap-1">
             <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
             <p className="text-md text-ink">
-              {item.subtitle} · <span className="font-mono text-sm">{item.dates}</span>
+              {item.subtitle},{" "}
+              <span className="font-mono text-sm">{item.dates}</span>
             </p>
             <ul className="mt-2 flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-graphite">
               {item.bullets.map((bullet, index) => (

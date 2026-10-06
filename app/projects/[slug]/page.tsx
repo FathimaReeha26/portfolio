@@ -1,10 +1,9 @@
-import { ArrowLeft, ExternalLink } from "lucide-react";
+import { ArrowLeft, Check, ExternalLink } from "lucide-react";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArchitectureDiagram } from "@/components/ArchitectureDiagram";
 import { Card } from "@/components/Card";
-import { CheckDoodle } from "@/components/Illustration";
 import { ResultsTable } from "@/components/ResultsTable";
 import { Reveal } from "@/components/Reveal";
 import { getProject, projects } from "@/content/projects";
@@ -120,7 +119,7 @@ export default async function ProjectPage({
             <ul className="flex flex-col gap-2">
               {project.learnings.map((learning, index) => (
                 <li key={index} className="flex items-start gap-3 text-md text-ink">
-                  <CheckDoodle className="mt-1 h-6 w-8" />
+                  <Check aria-hidden="true" size={18} className="mt-1 shrink-0 text-ink" />
                   <span>{learning}</span>
                 </li>
               ))}

@@ -26,7 +26,7 @@ export default function CvPage() {
         </h1>
         <p className="text-lg text-ink">{site.name}</p>
         <p className="font-mono text-sm text-ink">
-          {site.degree} · {site.school} · {site.graduation}
+          {site.degree}, {site.school}, Class of {site.graduation}
         </p>
         <p className="font-mono text-sm text-ink">{site.email}</p>
       </header>
@@ -46,7 +46,7 @@ export default function CvPage() {
               <Card variant="standard">
                 <h3 className="text-lg font-semibold text-ink">{item.degree}</h3>
                 <p className="text-md text-ink">
-                  {item.school} ·{" "}
+                  {item.school},{" "}
                   <span className="font-mono text-sm">{item.dates}</span>
                 </p>
                 <ul className="mt-2 flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-graphite">
@@ -69,7 +69,7 @@ export default function CvPage() {
               <Card variant="standard">
                 <h3 className="text-lg font-semibold text-ink">{item.role}</h3>
                 <p className="text-md text-ink">
-                  {item.org} ·{" "}
+                  {item.org},{" "}
                   <span className="font-mono text-sm">{item.dates}</span>
                 </p>
                 <ul className="mt-2 flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-graphite">
@@ -106,7 +106,7 @@ export default function CvPage() {
               <h3 className="mb-2 text-md font-semibold text-ink">
                 Relevant coursework
               </h3>
-              <p className="font-mono text-sm text-ink">{coursework.join(" · ")}</p>
+              <p className="font-mono text-sm text-ink">{coursework.join(", ")}</p>
             </div>
           )}
         </div>

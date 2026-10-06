@@ -3,15 +3,10 @@ import type { Metadata } from "next";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { Chip } from "@/components/Chip";
-import {
-  ArrowDoodle,
-  PaperclipDoodle,
-  StarDoodle,
-} from "@/components/Illustration";
+import { ArrowDoodle } from "@/components/Illustration";
 import { ProjectFilters } from "@/components/ProjectFilters";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
-import { SketchDivider } from "@/components/SketchDivider";
 import { Timeline } from "@/components/Timeline";
 import { coursework, education } from "@/content/education";
 import { experience } from "@/content/experience";
@@ -33,21 +28,11 @@ export default function Home() {
   return (
     <div className="flex flex-col gap-8 py-8">
       <Hero />
-      <SketchDivider />
       <About />
-      <SketchDivider />
       <Projects />
-      {publications.length > 0 && (
-        <>
-          <SketchDivider />
-          <Research />
-        </>
-      )}
-      <SketchDivider />
+      {publications.length > 0 && <Research />}
       <Experience />
-      <SketchDivider />
       <Skills />
-      <SketchDivider />
       <Contact />
     </div>
   );
@@ -55,10 +40,9 @@ export default function Home() {
 
 function Hero() {
   return (
-    <section aria-labelledby="hero-heading" className="relative py-8">
-      <StarDoodle className="absolute top-2 right-4 hidden h-8 w-8 sm:block" />
+    <section aria-labelledby="hero-heading" className="py-8">
       <p className="font-mono text-sm text-ink">
-        {site.degree} · {site.school} · {site.graduation}
+        {site.degree}, {site.school}, Class of {site.graduation}
       </p>
       <h1 id="hero-heading" className="mt-4 text-2xl font-semibold text-ink">
         {site.name}
@@ -87,8 +71,7 @@ function About() {
         description="A short sketch of who I am and what I am working on."
       />
       <Reveal>
-        <Card variant="note" className="relative">
-          <PaperclipDoodle className="absolute -top-3 right-8 h-12 w-6" />
+        <Card variant="note">
           {bio.map((paragraph, index) => (
             <p key={index} className="mb-4 text-md text-ink last:mb-0">
               {paragraph}
@@ -221,20 +204,18 @@ function Skills() {
       <SectionHeading id="skills" title="Skills" />
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
         {skillGroups.map((group) => (
-          <Reveal key={group.group}>
-            <Card variant="standard" className="h-full">
-              <h3 className="mb-3 text-lg font-semibold text-ink">
-                {group.group}
-              </h3>
-              <ul className="flex flex-wrap gap-2">
-                {group.items.map((skill) => (
-                  <li key={skill}>
-                    <Chip>{skill}</Chip>
-                  </li>
-                ))}
-              </ul>
-            </Card>
-          </Reveal>
+          <div key={group.group}>
+            <h3 className="mb-2 text-md font-semibold text-ink">
+              {group.group}
+            </h3>
+            <ul className="flex flex-wrap gap-2">
+              {group.items.map((skill) => (
+                <li key={skill}>
+                  <Chip>{skill}</Chip>
+                </li>
+              ))}
+            </ul>
+          </div>
         ))}
       </div>
       {awards.length > 0 && (
