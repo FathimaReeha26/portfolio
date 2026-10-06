@@ -1,49 +1,49 @@
 import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import type { Project } from "@/content/projects";
-import { Card } from "./Card";
 import { Chip } from "./Chip";
 
-/* Dashed sketch card for the project grid: title, summary, stack chips,
-   result metric, and a link into the case study. The whole card is one
-   link with a clear name; stack chips are static labels. */
+/* Editorial index row, not a card: title, summary, stack, and result
+   in a ruled row. The title link carries the accessible name; the
+   trailing link is a visual affordance pointing at the same place. */
 export function ProjectCard({ project }: { project: Project }) {
   return (
-    <Card
-      variant="sketch"
-      className="flex h-full flex-col gap-4 transition-all duration-150 hover:-translate-y-1 hover:shadow-pencil-lg focus-within:border-solid focus-within:border-ink"
-    >
-      <div className="flex flex-col gap-2">
-        <h3 className="text-lg font-semibold text-ink">
+    <article className="group border-t border-line py-7 transition-colors duration-200 last:border-b hover:bg-sand/40">
+      <div className="flex flex-col gap-3 px-1 sm:px-2">
+        <p className="text-sm font-semibold text-amber-deep">
+          {project.areas.join(", ")}
+        </p>
+        <h3 className="font-display text-xl font-medium text-ink transition-colors duration-200 group-hover:text-amber-deep sm:text-2xl">
+          <Link href={`/projects/${project.slug}`}>{project.title}</Link>
+        </h3>
+        <p className="max-w-2xl text-md text-ink">{project.summary}</p>
+        {project.stack.length > 0 && (
+          <ul aria-label="Technologies used" className="flex flex-wrap gap-2">
+            {project.stack.map((tech) => (
+              <li key={tech}>
+                <Chip>{tech}</Chip>
+              </li>
+            ))}
+          </ul>
+        )}
+        <div className="flex flex-wrap items-baseline justify-between gap-3">
+          <p className="tnum text-sm text-ink">
+            <span className="font-semibold">Result:</span> {project.outcome}
+          </p>
           <Link
             href={`/projects/${project.slug}`}
-            className="rounded-sm focus-visible:outline-none"
+            aria-label={`Read the ${project.title} case study`}
+            className="inline-flex min-h-[44px] items-center gap-1.5 text-md font-semibold text-ink"
           >
-            {project.title}
+            Read case study
+            <ArrowRight
+              aria-hidden="true"
+              size={18}
+              className="text-amber transition-transform duration-200 group-hover:translate-x-1"
+            />
           </Link>
-        </h3>
-        <p className="text-md text-ink">{project.summary}</p>
+        </div>
       </div>
-      {project.stack.length > 0 && (
-        <ul aria-label="Technologies used" className="flex flex-wrap gap-2">
-          {project.stack.map((tech) => (
-            <li key={tech}>
-              <Chip>{tech}</Chip>
-            </li>
-          ))}
-        </ul>
-      )}
-      <p className="font-mono text-sm text-ink">
-        <span className="font-semibold">Result:</span> {project.outcome}
-      </p>
-      <Link
-        href={`/projects/${project.slug}`}
-        aria-label={`Read the ${project.title} case study`}
-        className="mt-auto inline-flex min-h-[44px] items-center gap-2 self-start rounded-pill border-2 border-transparent px-3 text-md font-semibold text-ink underline decoration-teal decoration-2 underline-offset-4 hover:border-ink hover:bg-teal-soft"
-      >
-        Read case study
-        <ArrowRight aria-hidden="true" size={18} />
-      </Link>
-    </Card>
+    </article>
   );
 }

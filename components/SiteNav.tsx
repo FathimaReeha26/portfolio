@@ -1,14 +1,14 @@
 "use client";
 
-import { Menu, Pencil, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { nav, site } from "@/content/site";
 
-/* Sticky rounded top nav with pill links. The current page gets a pill
-   background plus a teal underline plus aria-current — more than color.
-   Mobile collapses to an accessible disclosure menu. */
+/* Quiet top bar: wordmark with an amber full stop, text links with an
+   amber underline on hover, current page underlined and semibold plus
+   aria-current — more than color. Mobile collapses to a disclosure menu. */
 export function SiteNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -27,17 +27,16 @@ export function SiteNav() {
   }, [open ]);
 
   return (
-    <header className="sticky top-0 z-40 border-b-2 border-dashed border-graphite bg-paper">
-      <nav aria-label="Primary" className="mx-auto flex max-w-5xl items-center justify-between gap-4 px-4 py-3">
+    <header className="sticky top-0 z-40 border-b border-line bg-paper">
+      <nav aria-label="Primary" className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-6 py-4">
         <Link
           href="/"
-          className="flex min-h-[44px] items-center gap-2 rounded-pill px-3 text-lg font-semibold text-ink"
+          className="flex min-h-[44px] items-center font-display text-lg font-semibold text-ink"
         >
-          <Pencil aria-hidden="true" size={20} className="text-teal" />
-          <span>{site.name}</span>
+          {site.shortName}<span aria-hidden="true" className="text-amber">.</span>
         </Link>
 
-        <ul className="hidden items-center gap-2 md:flex">
+        <ul className="hidden items-center gap-7 md:flex">
           {nav.map((item) => {
             const isPage = !item.href.includes("#") && pathname === item.href;
             return (
@@ -45,10 +44,10 @@ export function SiteNav() {
                 <Link
                   href={item.href}
                   aria-current={isPage ? "page" : undefined}
-                  className={`flex min-h-[44px] items-center rounded-pill border-2 px-4 text-md transition-colors duration-150 ${
+                  className={`flex min-h-[44px] items-center text-md transition-colors duration-200 ${
                     isPage
-                      ? "border-ink bg-teal-soft font-semibold text-ink underline decoration-teal decoration-2 underline-offset-4"
-                      : "border-transparent text-ink hover:border-ink hover:bg-paper-card"
+                      ? "font-semibold text-ink underline decoration-amber decoration-2 underline-offset-8"
+                      : "text-ink hover:text-amber-deep hover:underline hover:decoration-amber hover:decoration-2 hover:underline-offset-8"
                   }`}
                 >
                   {item.label}
@@ -59,7 +58,7 @@ export function SiteNav() {
           <li>
             <Link
               href={site.cvHref}
-              className="flex min-h-[44px] items-center rounded-pill border-2 border-ink bg-teal px-4 text-md font-semibold text-ink shadow-pencil-sm transition-all duration-150 hover:-translate-y-px hover:shadow-pencil-md"
+              className="flex min-h-[44px] items-center rounded-md bg-ink px-5 text-md font-semibold text-paper transition-colors duration-200 hover:bg-amber-deep"
             >
               Download CV
             </Link>
@@ -72,29 +71,29 @@ export function SiteNav() {
           aria-controls="mobile-menu"
           aria-label={open ? "Close menu" : "Open menu"}
           onClick={() => setOpen((value) => !value)}
-          className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-pill border-2 border-ink bg-paper-card text-ink md:hidden"
+          className="flex min-h-[44px] min-w-[44px] items-center justify-center rounded-md border border-line text-ink md:hidden"
         >
           {open ? <X aria-hidden="true" size={22} /> : <Menu aria-hidden="true" size={22} />}
         </button>
       </nav>
 
       {open && (
-        <div id="mobile-menu" className="border-t-2 border-dashed border-graphite px-4 pb-4 md:hidden">
-          <ul className="flex flex-col gap-2 pt-3">
+        <div id="mobile-menu" className="border-t border-line px-6 py-4 md:hidden">
+          <ul className="flex flex-col gap-1">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="flex min-h-[44px] items-center rounded-pill border-2 border-dashed border-graphite bg-paper-card px-4 text-md text-ink"
+                  className="flex min-h-[44px] items-center rounded-md px-2 text-md text-ink hover:bg-sand"
                 >
                   {item.label}
                 </Link>
               </li>
             ))}
-            <li>
+            <li className="pt-2">
               <Link
                 href={site.cvHref}
-                className="flex min-h-[44px] items-center justify-center rounded-pill border-2 border-ink bg-teal px-4 text-md font-semibold text-ink"
+                className="flex min-h-[44px] items-center justify-center rounded-md bg-ink px-5 text-md font-semibold text-paper"
               >
                 Download CV
               </Link>

@@ -1,33 +1,54 @@
+"use client";
+
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef } from "react";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
+
 interface SectionHeadingProps {
   id: string;
   title: string;
   description?: string;
 }
 
-/* Handwritten section title with a teal wavy pencil underline.
-   The svg is decorative; the heading carries the meaning. */
+/* Editorial section header: Fraunces title with a short amber rule
+   that draws in on scroll (static final state without motion).
+   The heading carries the meaning; the rule is decoration. */
 export function SectionHeading({ id, title, description }: SectionHeadingProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+      gsap.from(".folio-section-rule", {
+        scaleX: 0,
+        transformOrigin: "left center",
+        duration: 0.6,
+        ease: "expo.out",
+        scrollTrigger: {
+          trigger: rootRef.current,
+          start: "top 88%",
+          once: true,
+        },
+      });
+    },
+    { scope: rootRef }
+  );
+
   return (
-    <div className="mb-6">
-      <h2 id={id} className="inline-block text-xl font-semibold text-ink sm:text-2xl">
+    <div ref={rootRef} className="mb-8">
+      <span
+        aria-hidden="true"
+        className="folio-section-rule mb-3 block h-1 w-12 rounded-full bg-amber"
+      />
+      <h2 id={id} className="font-display text-2xl font-medium text-ink">
         {title}
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 220 12"
-          preserveAspectRatio="none"
-          className="pointer-events-none mt-1 block h-3 w-full"
-        >
-          <path
-            d="M4 8 C 40 3, 70 10, 110 6 S 180 4, 216 7"
-            fill="none"
-            stroke="var(--teal)"
-            strokeWidth="4"
-            strokeLinecap="round"
-            className="sketch-draw"
-          />
-        </svg>
       </h2>
-      {description && <p className="mt-2 max-w-2xl text-md text-ink">{description}</p>}
+      {description && (
+        <p className="mt-2 max-w-2xl text-md text-ink">{description}</p>
+      )}
     </div>
   );
 }

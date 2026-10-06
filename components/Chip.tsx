@@ -7,9 +7,9 @@ interface ChipProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
 }
 
-/* Pill chip. Interactive chips are real buttons with aria-pressed;
-   selected state is teal fill AND a check mark, never color alone.
-   Without onSelect it renders as a static label chip. */
+/* Compact bordered chip. Interactive chips are real buttons with
+   aria-pressed; selected state is an ink fill AND a check mark,
+   never color alone. Without onSelect it renders as a static label. */
 export function Chip({
   selected = false,
   onSelect,
@@ -18,10 +18,10 @@ export function Chip({
   ...rest
 }: ChipProps) {
   const classes =
-    `inline-flex min-h-[44px] items-center gap-2 rounded-pill border-2 px-4 py-2 text-sm font-medium transition-colors duration-150 focus-visible:border-ink ${
+    `inline-flex min-h-[44px] items-center gap-1.5 rounded-sm border px-3 py-1 text-sm font-medium transition-colors duration-200 ${
       selected
-        ? "border-ink bg-teal text-ink shadow-pencil-sm"
-        : "border-dashed border-graphite bg-paper-card text-ink hover:border-solid hover:border-ink hover:bg-teal-soft"
+        ? "border-ink bg-ink text-paper"
+        : "border-line bg-paper text-ink hover:border-ink"
     } ${className}`.trim();
 
   if (!onSelect) {
@@ -36,7 +36,7 @@ export function Chip({
       className={classes}
       {...rest}
     >
-      {selected && <Check aria-hidden="true" size={16} strokeWidth={3} />}
+      {selected && <Check aria-hidden="true" size={15} strokeWidth={3} />}
       <span>{children}</span>
     </button>
   );

@@ -11,7 +11,7 @@ import { site } from "@/content/site";
 import { skillGroups } from "@/content/skills";
 
 export const metadata: Metadata = {
-  title: `CV · ${site.name}`,
+  title: `CV — ${site.name}`,
   description: `Curriculum vitae of ${site.name}: education, experience, skills, and contact details.`,
 };
 
@@ -19,21 +19,21 @@ export const metadata: Metadata = {
    public/cv.pdf and point site.cvHref at "/cv.pdf" (see README). */
 export default function CvPage() {
   return (
-    <div className="flex flex-col gap-8 py-8">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold text-ink">
+    <div className="flex flex-col gap-12 py-12">
+      <header className="flex max-w-3xl flex-col gap-2">
+        <h1 className="font-display text-3xl font-medium text-ink sm:text-4xl">
           Curriculum vitae
         </h1>
-        <p className="text-lg text-ink">{site.name}</p>
-        <p className="font-mono text-sm text-ink">
+        <p className="font-display text-xl italic text-ink">{site.name}</p>
+        <p className="tnum text-sm text-ink">
           {site.degree}, {site.school}, Class of {site.graduation}
         </p>
-        <p className="font-mono text-sm text-ink">{site.email}</p>
+        <p className="tnum text-sm text-ink">{site.email}</p>
       </header>
 
       <Alert variant="note" title="About the PDF version">
         The downloadable PDF is added separately. Place it at
-        <span className="font-mono text-sm"> public/cv.pdf </span>
+        <span className="tnum text-sm"> public/cv.pdf </span>
         and point the CV links at it — everything on this page already
         mirrors what belongs in the file.
       </Alert>
@@ -43,13 +43,13 @@ export default function CvPage() {
         <div className="flex flex-col gap-4">
           {education.map((item) => (
             <Reveal key={item.degree}>
-              <Card variant="standard">
-                <h3 className="text-lg font-semibold text-ink">{item.degree}</h3>
-                <p className="text-md text-ink">
+              <Card variant="default">
+                <h3 className="font-display text-lg font-medium text-ink">{item.degree}</h3>
+                <p className="mt-1 text-md text-ink">
                   {item.school},{" "}
-                  <span className="font-mono text-sm">{item.dates}</span>
+                  <span className="tnum text-sm">{item.dates}</span>
                 </p>
-                <ul className="mt-2 flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-graphite">
+                <ul className="mt-2 flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-amber">
                   {item.details.map((detail, index) => (
                     <li key={index}>{detail}</li>
                   ))}
@@ -62,31 +62,31 @@ export default function CvPage() {
 
       {experience.length > 0 && (
         <section aria-labelledby="cv-experience">
-        <SectionHeading id="cv-experience" title="Experience" />
-        <div className="flex flex-col gap-4">
-          {experience.map((item) => (
-            <Reveal key={`${item.role}-${item.org}`}>
-              <Card variant="standard">
-                <h3 className="text-lg font-semibold text-ink">{item.role}</h3>
-                <p className="text-md text-ink">
-                  {item.org},{" "}
-                  <span className="font-mono text-sm">{item.dates}</span>
-                </p>
-                <ul className="mt-2 flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-graphite">
-                  {item.bullets.map((bullet, index) => (
-                    <li key={index}>{bullet}</li>
-                  ))}
-                </ul>
-              </Card>
-            </Reveal>
-          ))}
-        </div>
+          <SectionHeading id="cv-experience" title="Experience" />
+          <div className="flex flex-col gap-4">
+            {experience.map((item) => (
+              <Reveal key={`${item.role}-${item.org}`}>
+                <Card variant="default">
+                  <h3 className="font-display text-lg font-medium text-ink">{item.role}</h3>
+                  <p className="mt-1 text-md text-ink">
+                    {item.org},{" "}
+                    <span className="tnum text-sm">{item.dates}</span>
+                  </p>
+                  <ul className="mt-2 flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-amber">
+                    {item.bullets.map((bullet, index) => (
+                      <li key={index}>{bullet}</li>
+                    ))}
+                  </ul>
+                </Card>
+              </Reveal>
+            ))}
+          </div>
         </section>
       )}
 
       <section aria-labelledby="cv-skills">
         <SectionHeading id="cv-skills" title="Skills and coursework" />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           {skillGroups.map((group) => (
             <div key={group.group}>
               <h3 className="mb-2 text-md font-semibold text-ink">
@@ -106,7 +106,7 @@ export default function CvPage() {
               <h3 className="mb-2 text-md font-semibold text-ink">
                 Relevant coursework
               </h3>
-              <p className="font-mono text-sm text-ink">{coursework.join(", ")}</p>
+              <p className="tnum text-sm text-ink">{coursework.join(", ")}</p>
             </div>
           )}
         </div>
@@ -115,7 +115,7 @@ export default function CvPage() {
       {publications.length > 0 && (
         <section aria-labelledby="cv-publications">
           <SectionHeading id="cv-publications" title="Publications" />
-          <ul className="flex list-disc flex-col gap-2 pl-6 text-md text-ink marker:text-graphite">
+          <ul className="flex list-disc flex-col gap-2 pl-6 text-md text-ink marker:text-amber">
             {publications.map((publication) => (
               <li key={publication.citation}>{publication.citation}</li>
             ))}

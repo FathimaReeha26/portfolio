@@ -12,8 +12,8 @@ interface ModalProps {
   closeLabel?: string;
 }
 
-/* White rounded modal with pencil shadow. Traps focus while open,
-   closes on Escape, and returns focus to the element that opened it. */
+/* Quiet panel over a dimmed page. Traps focus while open, closes on
+   Escape, and returns focus to the element that opened it. */
 export function Modal({ open, title, children, onClose, closeLabel = "Close dialog" }: ModalProps) {
   const dialogRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<Element | null>(null);
@@ -67,7 +67,7 @@ export function Modal({ open, title, children, onClose, closeLabel = "Close dial
 
   return createPortal(
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/40 p-4"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-ink/60 p-4"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) onClose();
       }}
@@ -78,16 +78,16 @@ export function Modal({ open, title, children, onClose, closeLabel = "Close dial
         aria-modal="true"
         aria-label={title}
         tabIndex={-1}
-        className="w-full max-w-lg rounded-lg border-2 border-solid border-graphite bg-paper-card p-6 shadow-pencil-lg"
+        className="w-full max-w-lg rounded-lg border border-line bg-paper p-8"
       >
         <div className="mb-4 flex items-start justify-between gap-4">
-          <h2 className="text-xl font-semibold text-ink">{title}</h2>
+          <h2 className="font-display text-xl font-medium text-ink">{title}</h2>
           <button
             type="button"
             onClick={onClose}
             aria-label={closeLabel}
             autoFocus
-            className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-pill border-2 border-transparent text-ink hover:border-ink hover:bg-teal-soft"
+            className="flex min-h-[44px] min-w-[44px] shrink-0 items-center justify-center rounded-md text-ink hover:bg-sand"
           >
             <X aria-hidden="true" size={20} />
           </button>

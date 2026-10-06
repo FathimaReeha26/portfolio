@@ -9,23 +9,26 @@ interface TimelineProps {
   items: TimelineItem[];
 }
 
-/* Vertical timeline drawn as a dashed pencil line with solid teal nodes. */
+/* Quiet vertical timeline: a single line with amber nodes.
+   Dates in tabular numerals. */
 export function Timeline({ items }: TimelineProps) {
   return (
-    <ol className="relative ml-3 flex flex-col gap-6 border-l-2 border-dashed border-graphite pl-8">
+    <ol className="relative ml-1.5 flex flex-col gap-8 border-l border-line pl-8">
       {items.map((item) => (
         <li key={`${item.title}-${item.subtitle}`} className="relative">
           <span
             aria-hidden="true"
-            className="absolute top-2 -left-8 block h-4 w-4 -translate-x-1/2 rounded-full border-2 border-ink bg-teal"
+            className="absolute top-2 -left-8 block h-3 w-3 -translate-x-1/2 rounded-full bg-amber"
           />
           <div className="flex flex-col gap-1">
-            <h3 className="text-lg font-semibold text-ink">{item.title}</h3>
+            <h3 className="font-display text-lg font-medium text-ink">
+              {item.title}
+            </h3>
             <p className="text-md text-ink">
               {item.subtitle},{" "}
-              <span className="font-mono text-sm">{item.dates}</span>
+              <span className="tnum text-sm">{item.dates}</span>
             </p>
-            <ul className="mt-2 flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-graphite">
+            <ul className="mt-2 flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-amber">
               {item.bullets.map((bullet, index) => (
                 <li key={index}>{bullet}</li>
               ))}

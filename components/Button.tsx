@@ -21,19 +21,18 @@ type ButtonProps = ButtonBase &
   };
 
 const base =
-  "inline-flex min-h-[44px] items-center justify-center gap-2 rounded-pill border-2 px-6 py-3 text-md font-semibold transition-all duration-150 focus-visible:border-ink disabled:shadow-none";
+  "inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md px-6 py-3 text-md font-semibold transition-colors duration-200 active:translate-y-px disabled:translate-y-0";
 
 const variants: Record<ButtonVariant, string> = {
-  // Ink text on teal fill: high contrast, never white-on-teal body text.
+  // Paper on amber: high contrast; the brand moment for primary actions.
   primary:
-    "border-ink bg-teal text-ink shadow-pencil-sm hover:-translate-y-px hover:shadow-pencil-md active:translate-x-[3px] active:translate-y-[3px] active:shadow-none disabled:border-graphite-soft disabled:bg-paper-soft disabled:text-graphite",
+    "bg-amber text-paper hover:bg-amber-deep disabled:bg-sand disabled:text-ink/50",
   secondary:
-    "border-ink bg-paper-card text-ink shadow-pencil-sm hover:-translate-y-px hover:bg-teal-soft hover:shadow-pencil-md active:translate-x-[3px] active:translate-y-[3px] active:shadow-none disabled:border-graphite-soft disabled:bg-paper-soft disabled:text-graphite",
+    "border border-line bg-paper text-ink hover:border-ink disabled:border-line disabled:text-ink/40",
   tertiary:
-    "border-transparent text-ink underline decoration-teal decoration-2 underline-offset-4 hover:bg-teal-soft disabled:text-graphite disabled:no-underline",
-  // White on danger red passes AA; border stays ink for affordance.
+    "min-h-[44px] rounded-sm text-ink underline decoration-amber decoration-2 underline-offset-4 hover:bg-amber-soft disabled:text-ink/40 disabled:no-underline",
   destructive:
-    "border-ink bg-danger text-white shadow-pencil-sm hover:-translate-y-px hover:shadow-pencil-md active:translate-x-[3px] active:translate-y-[3px] active:shadow-none disabled:border-graphite-soft disabled:bg-paper-soft disabled:text-graphite",
+    "bg-danger text-paper hover:brightness-95 disabled:bg-sand disabled:text-ink/50",
 };
 
 export function Button({

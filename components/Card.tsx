@@ -1,13 +1,6 @@
 import type { HTMLAttributes, ReactNode } from "react";
 
-export type CardVariant =
-  | "standard"
-  | "sketch"
-  | "note"
-  | "action"
-  | "choice"
-  | "empty"
-  | "data";
+export type CardVariant = "default" | "sand" | "pine";
 
 interface CardProps extends HTMLAttributes<HTMLDivElement> {
   variant?: CardVariant;
@@ -16,31 +9,25 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 const variants: Record<CardVariant, string> = {
-  standard: "border-dashed",
-  sketch: "border-dashed shadow-pencil-md",
-  note: "border-dashed bg-paper-soft",
-  action: "border-dashed shadow-pencil-sm",
-  choice: "border-dashed",
-  empty: "border-dashed",
-  data: "border-dashed",
+  default: "border-line bg-paper",
+  sand: "border-transparent bg-sand",
+  pine: "border-transparent bg-pine text-paper",
 };
 
-/* White sketch object on the cream canvas. Standard cards use dashed
-   graphite outlines; selected / interactive emphasis switches to a
-   solid teal outline plus a check or label supplied by the caller. */
+/* Quiet surfaces, no elevation. Depth comes from borders and
+   whitespace. Selected state pairs an amber border with a soft
+   amber wash — never color alone, since callers add a check or label. */
 export function Card({
-  variant = "standard",
+  variant = "default",
   selected = false,
   children,
   className = "",
   ...rest
 }: CardProps) {
-  const outline = selected
-    ? "border-solid border-teal"
-    : "border-graphite";
+  const outline = selected ? "border-amber bg-amber-soft/50" : "";
   return (
     <div
-      className={`rounded-lg border-2 bg-paper-card p-6 ${variants[variant]} ${outline} ${className}`.trim()}
+      className={`rounded-lg border p-8 ${variants[variant]} ${outline} ${className}`.trim()}
       {...rest}
     >
       {children}

@@ -8,6 +8,7 @@ export interface SocialLink {
 
 export const site = {
   name: "Fathima Reeha T.A",
+  shortName: "Fathima Reeha",
   tagline: "CSE undergraduate building explainable AI for healthcare",
   supportingLine:
     "Third-year engineering student working in Python, machine learning, and data — based in Kerala, India.",

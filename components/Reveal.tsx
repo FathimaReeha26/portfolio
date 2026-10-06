@@ -1,45 +1,43 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useRef, type ReactNode } from "react";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 interface RevealProps {
   children: ReactNode;
   className?: string;
 }
 
-/* Plays the gentle card-entrance animation once when scrolled into view.
-   Content is fully readable without JavaScript: the observer only adds
-   a class, and reduced-motion keeps everything static and visible. */
+/* Scroll reveal, played once per element: a short fade with a small
+   rise (the uupm scroll-reveal preset). Content renders in its final
+   state by default, so it stays fully readable without JavaScript
+   and under reduced motion — GSAP only ever animates *from* that. */
 export function Reveal({ children, className = "" }: RevealProps) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    const element = ref.current;
-    if (!element) return;
-    // Hidden state is applied from JavaScript only, so content stays
-    // visible when JavaScript is unavailable or fails to load.
-    element.classList.add("reveal");
-    if (
-      typeof IntersectionObserver === "undefined" ||
-      window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    ) {
-      element.classList.add("is-visible");
-      return;
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-visible");
-            observer.disconnect();
-          }
-        }
-      },
-      { threshold: 0.15 }
-    );
-    observer.observe(element);
-    return () => observer.disconnect();
-  }, []);
+  useGSAP(
+    () => {
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        return;
+      }
+      gsap.from(ref.current, {
+        opacity: 0,
+        y: 14,
+        duration: 0.5,
+        ease: "power1.out",
+        scrollTrigger: {
+          trigger: ref.current,
+          start: "top 90%",
+          once: true,
+        },
+      });
+    },
+    { scope: ref }
+  );
 
   return (
     <div ref={ref} className={className}>

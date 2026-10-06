@@ -3,10 +3,10 @@ interface ArchitectureDiagramProps {
   title: string;
 }
 
-/* Hand-drawn-style architecture diagram as inline SVG: dashed graphite
-   stage boxes with pencil arrows between columns. Every box is labeled
-   in the SVG and the full flow is repeated as list text below, so the
-   diagram is never the only carrier of the information. */
+/* Crisp architecture diagram as inline SVG: ink stage boxes with
+   amber flow arrows. Every box is labeled in the SVG and the full
+   flow is repeated as list text below, so the diagram is never the
+   only carrier of the information. */
 export function ArchitectureDiagram({ stages, title }: ArchitectureDiagramProps) {
   const boxWidth = 150;
   const boxHeight = 52;
@@ -31,7 +31,7 @@ export function ArchitectureDiagram({ stages, title }: ArchitectureDiagramProps)
 
   return (
     <figure className="flex flex-col gap-4">
-      <div className="overflow-x-auto rounded-lg border-2 border-dashed border-graphite bg-paper-card p-4">
+      <div className="overflow-x-auto rounded-lg border border-line bg-paper p-4">
         <svg
           role="img"
           aria-label={`${title}: ${stages.map((boxes) => boxes.join(", ")).join(" leading to ")}`}
@@ -45,11 +45,10 @@ export function ArchitectureDiagram({ stages, title }: ArchitectureDiagramProps)
                 y={box.y}
                 width={boxWidth}
                 height={boxHeight}
-                rx={14}
-                fill="var(--paper-card)"
-                stroke="var(--graphite)"
-                strokeWidth={2}
-                strokeDasharray="8 6"
+                rx={12}
+                fill="var(--paper)"
+                stroke="var(--ink)"
+                strokeWidth={1.5}
               />
               <text
                 x={box.x + boxWidth / 2}
@@ -57,7 +56,7 @@ export function ArchitectureDiagram({ stages, title }: ArchitectureDiagramProps)
                 textAnchor="middle"
                 fontSize={13}
                 fill="var(--ink)"
-                fontFamily="var(--font-mono)"
+                fontFamily="var(--font-sans)"
               >
                 {box.label.length > 22 ? `${box.label.slice(0, 21)}…` : box.label}
               </text>
@@ -80,14 +79,14 @@ export function ArchitectureDiagram({ stages, title }: ArchitectureDiagramProps)
                         y1={fromY}
                         x2={toX - 8}
                         y2={toY}
-                        stroke="var(--teal)"
+                        stroke="var(--amber)"
                         strokeWidth={2.5}
                         strokeLinecap="round"
                       />
                       <path
                         d={`M ${toX - 8} ${toY - 6} L ${toX} ${toY} L ${toX - 8} ${toY + 6}`}
                         fill="none"
-                        stroke="var(--teal)"
+                        stroke="var(--amber)"
                         strokeWidth={2.5}
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -103,9 +102,9 @@ export function ArchitectureDiagram({ stages, title }: ArchitectureDiagramProps)
       </figcaption>
       <ol className="flex flex-col gap-2 text-md text-ink">
         {stages.map((boxes, i) => (
-          <li key={i} className="flex gap-2">
-            <span aria-hidden="true" className="font-mono text-sm font-semibold">
-              {i + 1}.
+          <li key={i} className="flex gap-3">
+            <span aria-hidden="true" className="tnum text-sm font-semibold text-amber-deep">
+              {String(i + 1).padStart(2, "0")}
             </span>
             <span>{boxes.join(" → ")}</span>
           </li>

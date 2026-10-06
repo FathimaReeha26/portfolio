@@ -6,7 +6,7 @@ export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 export const dynamic = "force-static";
 
-/* Sketch-style social card, generated at build time. */
+/* Folio social card, generated at build time. */
 export default async function OgImage() {
   return new ImageResponse(
     (
@@ -17,33 +17,30 @@ export default async function OgImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          gap: 24,
-          padding: 80,
-          background: "#F4EDE0",
+          gap: 28,
+          padding: 90,
+          background: "#FAF6EF",
         }}
       >
         <div
           style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: 16,
-            background: "#FFFFFF",
-            border: "4px dashed rgba(17,24,39,0.72)",
-            borderRadius: 32,
-            padding: 56,
+            width: 72,
+            height: 8,
+            background: "#B45309",
+            borderRadius: 999,
+          }}
+        />
+        <div
+          style={{
+            fontSize: 92,
+            lineHeight: 1,
+            color: "#201A15",
+            fontFamily: "Georgia, serif",
           }}
         >
-          <div style={{ fontSize: 84, color: "#111827" }}>{site.name}</div>
-          <div
-            style={{
-              width: 220,
-              height: 10,
-              background: "#1DAD97",
-              borderRadius: 999,
-            }}
-          />
-          <div style={{ fontSize: 36, color: "#111827" }}>{site.tagline}</div>
+          {site.name}
         </div>
+        <div style={{ fontSize: 34, color: "#201A15" }}>{site.tagline}</div>
       </div>
     ),
     { ...size }

@@ -8,8 +8,8 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   error?: string;
 }
 
-/* Labeled pill input. Labels are always visible; errors are ink text
-   with an icon and linked via aria-describedby + aria-invalid. */
+/* Labeled input. Labels are always visible; errors are ink text with
+   an icon and linked via aria-describedby + aria-invalid. */
 export function Input({ id, label, hint, error, required, ...rest }: InputProps) {
   const hintId = hint ? `${id}-hint` : undefined;
   const errorId = error ? `${id}-error` : undefined;
@@ -17,7 +17,7 @@ export function Input({ id, label, hint, error, required, ...rest }: InputProps)
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-sm font-medium text-ink">
+      <label htmlFor={id} className="text-sm font-semibold text-ink">
         {label}
         {required && (
           <span aria-hidden="true" className="text-danger">
@@ -32,8 +32,8 @@ export function Input({ id, label, hint, error, required, ...rest }: InputProps)
         required={required}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy}
-        className={`w-full rounded-pill border-2 bg-paper-card px-4 py-3 font-primary text-md text-ink placeholder:text-graphite focus-visible:border-ink ${
-          error ? "border-danger" : "border-graphite"
+        className={`w-full rounded-md border bg-paper px-4 py-3 text-md text-ink placeholder:text-ink/40 focus:border-amber ${
+          error ? "border-danger" : "border-line"
         }`}
         {...rest}
       />

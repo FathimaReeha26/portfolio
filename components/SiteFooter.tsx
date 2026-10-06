@@ -1,18 +1,20 @@
 import Link from "next/link";
+import { PulseMark } from "./Illustration";
 import { nav, site } from "@/content/site";
 
 export function SiteFooter() {
   return (
-    <footer className="border-t-2 border-dashed border-graphite bg-paper-soft">
-      <div className="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-8">
-        <p className="text-lg text-ink">{site.signOff}</p>
+    <footer className="bg-pine text-paper">
+      <div className="mx-auto flex max-w-6xl flex-col gap-6 px-6 py-12">
+        <PulseMark className="h-6 w-28 [&_path]:stroke-amber" />
+        <p className="font-display text-xl italic">{site.signOff}</p>
         <nav aria-label="Footer">
-          <ul className="flex flex-wrap gap-x-6 gap-y-2">
+          <ul className="flex flex-wrap gap-x-7 gap-y-2">
             {nav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className="inline-flex min-h-[44px] items-center text-md text-ink underline decoration-graphite-soft decoration-2 underline-offset-4 hover:decoration-teal"
+                  className="inline-flex min-h-[44px] items-center text-md text-paper/85 underline decoration-transparent decoration-2 underline-offset-8 transition-colors duration-200 hover:text-paper hover:decoration-amber"
                 >
                   {item.label}
                 </Link>
@@ -20,21 +22,21 @@ export function SiteFooter() {
             ))}
           </ul>
         </nav>
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <ul className="flex flex-wrap gap-x-4 gap-y-2">
+        <div className="flex flex-col gap-3 border-t border-paper/15 pt-6 sm:flex-row sm:items-center sm:justify-between">
+          <ul className="flex flex-wrap gap-x-5 gap-y-2">
             {site.socials.map((social) => (
               <li key={social.label}>
                 <a
                   href={social.href}
-                  className="inline-flex min-h-[44px] items-center font-mono text-sm text-ink underline decoration-graphite-soft decoration-2 underline-offset-4 hover:decoration-teal"
+                  className="tnum inline-flex min-h-[44px] items-center text-sm text-paper/85 underline decoration-transparent decoration-2 underline-offset-4 transition-colors duration-200 hover:text-paper hover:decoration-amber"
                 >
                   {social.label}
                 </a>
               </li>
             ))}
           </ul>
-          <p className="font-mono text-xs text-ink">
-            Last updated: {site.lastUpdated}
+          <p className="tnum text-xs text-paper/70">
+            Last updated {site.lastUpdated}
           </p>
         </div>
       </div>

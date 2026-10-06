@@ -5,48 +5,57 @@ import { Alert } from "@/components/Alert";
 import { Button } from "@/components/Button";
 import { Card } from "@/components/Card";
 import { Chip } from "@/components/Chip";
-import {
-  ArrowDoodle,
-  CheckDoodle,
-  LoopDoodle,
-  PaperclipDoodle,
-  StarDoodle,
-} from "@/components/Illustration";
+import { PulseMark } from "@/components/Illustration";
 import { Input } from "@/components/Input";
 import { Modal } from "@/components/Modal";
 import { SectionHeading } from "@/components/SectionHeading";
-import { SketchDivider } from "@/components/SketchDivider";
 import { Spinner } from "@/components/Spinner";
 import { Textarea } from "@/components/Textarea";
 import { Timeline } from "@/components/Timeline";
 
-/* Review-only primitive showcase. Unlinked from navigation;
-   delete this folder before deploying if you prefer. */
+/* Review-only primitive showcase for the Folio system. Unlinked from
+   navigation; delete this folder before deploying if you prefer. */
 export default function StyleguidePage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [chipOn, setChipOn] = useState(true);
 
   return (
-    <div className="flex flex-col gap-10 py-8">
-      <header className="flex flex-col gap-2">
-        <h1 className="text-2xl font-semibold text-ink">Styleguide</h1>
-        <p className="max-w-2xl text-md text-ink">
-          Every Sketch primitive with its states. Review here, then delete
+    <div className="flex flex-col gap-12 py-12">
+      <header className="flex max-w-2xl flex-col gap-2">
+        <h1 className="font-display text-3xl font-medium text-ink">
+          Styleguide
+        </h1>
+        <p className="text-md text-ink">
+          Every Folio primitive with its states. Review here, then delete
           this page before deploying if you do not want it public.
         </p>
       </header>
 
+      <section aria-labelledby="sg-type" className="flex flex-col gap-3">
+        <h2 id="sg-type" className="font-display text-xl font-medium text-ink">
+          Type scale
+        </h2>
+        <p className="font-display text-4xl font-medium text-ink">
+          Display <em className="text-amber">italic</em>
+        </p>
+        <p className="font-display text-2xl font-medium text-ink">Section heading</p>
+        <p className="text-md text-ink">
+          Body copy at 17 pixels with a generous measure for comfortable reading.
+        </p>
+        <p className="tnum text-sm text-ink">Tabular facts, 2024 – 2028, CGPA 8.3/10</p>
+      </section>
+
       <section aria-labelledby="sg-buttons" className="flex flex-col gap-4">
-        <h2 id="sg-buttons" className="text-xl font-semibold text-ink">
+        <h2 id="sg-buttons" className="font-display text-xl font-medium text-ink">
           Buttons
         </h2>
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           <Button variant="primary">Save changes</Button>
           <Button variant="secondary">View examples</Button>
           <Button variant="tertiary">Learn more</Button>
           <Button variant="destructive">Delete note</Button>
         </div>
-        <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-wrap items-center gap-3">
           <Button variant="primary" loading>
             Saving changes…
           </Button>
@@ -58,7 +67,7 @@ export default function StyleguidePage() {
       </section>
 
       <section aria-labelledby="sg-chips" className="flex flex-col gap-4">
-        <h2 id="sg-chips" className="text-xl font-semibold text-ink">
+        <h2 id="sg-chips" className="font-display text-xl font-medium text-ink">
           Chips
         </h2>
         <div className="flex flex-wrap gap-2">
@@ -71,31 +80,27 @@ export default function StyleguidePage() {
       </section>
 
       <section aria-labelledby="sg-cards" className="flex flex-col gap-4">
-        <h2 id="sg-cards" className="text-xl font-semibold text-ink">
-          Cards
+        <h2 id="sg-cards" className="font-display text-xl font-medium text-ink">
+          Surfaces
         </h2>
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          <Card variant="sketch">
-            <h3 className="text-lg font-semibold text-ink">Sketch card</h3>
-            <p className="text-md text-ink">Dashed outline, pencil shadow.</p>
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+          <Card variant="default">
+            <h3 className="font-display text-lg font-medium text-ink">Default</h3>
+            <p className="mt-1 text-md text-ink">Bordered paper surface.</p>
           </Card>
-          <Card variant="note">
-            <h3 className="text-lg font-semibold text-ink">Note card</h3>
-            <p className="text-md text-ink">Paper-soft informal surface.</p>
+          <Card variant="sand">
+            <h3 className="font-display text-lg font-medium text-ink">Sand</h3>
+            <p className="mt-1 text-md text-ink">Quiet tinted surface.</p>
           </Card>
-          <Card variant="standard" selected>
-            <h3 className="text-lg font-semibold text-ink">Selected card</h3>
-            <p className="text-md text-ink">Solid teal outline when selected.</p>
-          </Card>
-          <Card variant="data">
-            <h3 className="text-lg font-semibold text-ink">Data card</h3>
-            <p className="font-mono text-sm text-ink">42 sketchbooks filled</p>
+          <Card variant="pine">
+            <h3 className="font-display text-lg font-medium text-paper">Pine</h3>
+            <p className="mt-1 text-md text-paper">Inverted feature surface.</p>
           </Card>
         </div>
       </section>
 
       <section aria-labelledby="sg-forms" className="flex flex-col gap-4">
-        <h2 id="sg-forms" className="text-xl font-semibold text-ink">
+        <h2 id="sg-forms" className="font-display text-xl font-medium text-ink">
           Forms
         </h2>
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -124,11 +129,11 @@ export default function StyleguidePage() {
       </section>
 
       <section aria-labelledby="sg-alerts" className="flex flex-col gap-4">
-        <h2 id="sg-alerts" className="text-xl font-semibold text-ink">
+        <h2 id="sg-alerts" className="font-display text-xl font-medium text-ink">
           Alerts
         </h2>
         <Alert variant="success" title="Changes saved.">
-          Your sketchbook is up to date.
+          Your folio is up to date.
         </Alert>
         <Alert variant="warning" title="Review this step before continuing.">
           One section still needs your attention.
@@ -142,7 +147,7 @@ export default function StyleguidePage() {
       </section>
 
       <section aria-labelledby="sg-modal" className="flex flex-col gap-4">
-        <h2 id="sg-modal" className="text-xl font-semibold text-ink">
+        <h2 id="sg-modal" className="font-display text-xl font-medium text-ink">
           Modal
         </h2>
         <div>
@@ -156,8 +161,7 @@ export default function StyleguidePage() {
           onClose={() => setModalOpen(false)}
         >
           <p className="mb-4">
-            This action cannot be undone. The note leaves your sketchbook for
-            good.
+            This action cannot be undone. The note leaves your folio for good.
           </p>
           <div className="flex flex-wrap gap-3">
             <Button variant="destructive" onClick={() => setModalOpen(false)}>
@@ -170,27 +174,20 @@ export default function StyleguidePage() {
         </Modal>
       </section>
 
-      <section aria-labelledby="sg-type" className="flex flex-col gap-4">
-        <h2 id="sg-type" className="text-xl font-semibold text-ink">
-          Headings, dividers, doodles
+      <section aria-labelledby="sg-headings" className="flex flex-col gap-4">
+        <h2 id="sg-headings" className="font-display text-xl font-medium text-ink">
+          Headings and marks
         </h2>
         <SectionHeading
           id="sg-demo"
           title="Section heading"
-          description="Wavy teal underline included."
+          description="Amber rule included."
         />
-        <SketchDivider />
-        <div className="flex flex-wrap items-center gap-6">
-          <ArrowDoodle className="h-12 w-20" />
-          <StarDoodle className="h-8 w-8" />
-          <LoopDoodle className="h-12 w-32" />
-          <CheckDoodle className="h-8 w-10" />
-          <PaperclipDoodle className="h-14 w-6" />
-        </div>
+        <PulseMark className="h-8 w-36" />
       </section>
 
       <section aria-labelledby="sg-timeline" className="flex flex-col gap-4">
-        <h2 id="sg-timeline" className="text-xl font-semibold text-ink">
+        <h2 id="sg-timeline" className="font-display text-xl font-medium text-ink">
           Timeline
         </h2>
         <Timeline

@@ -1,53 +1,52 @@
 # AGENTS.md
 
-Personal portfolio site built in the **Sketch** design system: a warm, hand-drawn, sketchbook-style interface on cream paper.
+Personal portfolio site built in the **Folio** design system: an editorial, print-like interface on warm paper with serif headlines and one amber accent.
 
 ## Canonical references
 
 Read these before writing any UI. They are the source of truth — do not restate or invent tokens here.
 
-- `DESIGN.md` — tokens, CSS variables, component specs, accessibility baseline, QA checklist.
-- `SKILL.md` — how to apply the system, anti-patterns, migration order, QA checklist.
+- `DESIGN.md` — tokens, CSS variables, component specs, motion rules, accessibility baseline, QA checklist.
+- `SKILL.md` — how to apply the system, anti-patterns, QA checklist.
 
 If code and `DESIGN.md` disagree, `DESIGN.md` wins. Fix the code, not the doc.
 
-`files.zip` is a duplicate archive of `SKILL.md` and `DESIGN.md`. Never edit inside it.
+`files.zip` is a duplicate archive of the original Sketch `SKILL.md` and `DESIGN.md`. It is kept for history only. Never edit inside it.
 
 ## Hard rules
 
 These are the failures that matter most. Full detail lives in the reference files.
 
-1. Page background is cream `#F4EDE0`. Cards, modals, and inputs are white. Never pure white or cold gray as the canvas.
-2. Text is `#111827`. Never important text in low-opacity graphite.
-3. Teal `#1DAD97` marks actions, focus, selection, and progress only — not every heading, icon, and border.
-4. Cards and callouts use `2px dashed` graphite outlines. Inputs, buttons, and selected/focused items use solid outlines.
-5. Shadows are hard offset pencil shadows (`3px`/`6px`/`9px`, no blur, `rgba(17,24,39,0.18)`). No soft SaaS elevation, no heavy neobrutalism.
-6. Controls are pills (`999px`). Multiline textareas use 16–20px.
-7. Spacing only from `4 / 8 / 12 / 16 / 24 / 32`. Type only from `12 / 14 / 16 / 20 / 24 / 32`. No one-off values.
-8. `Delicious Handdrawn` for primary and display type, `cursive` fallback. `JetBrains Mono` only for code, IDs, and technical values.
-9. Every interactive element has `hover`, `focus-visible`, `active`, and `disabled` states, plus `loading` and `error` where relevant.
-10. Color is never the only state indicator — pair it with text, an icon, a check mark, an underline, or an outline change.
-11. Labels are always visible. Placeholders never replace labels. Errors link to fields via `aria-invalid` and `aria-describedby`.
-12. Focus is a double pencil stroke — 3px teal outline plus a 3px ink outer ring — because teal alone falls below 3:1 on cream. Never a faint glow, never hidden behind a dashed border.
-13. Decorative illustrations get `aria-hidden="true"`, never intercept pointer events, and never cover text, controls, or focus outlines.
-14. Respect `prefers-reduced-motion`. No gradients, glassmorphism, or 3D effects anywhere.
+1. Page background is paper `#FAF6EF`, one light theme. Text is ink `#201A15`.
+2. Amber `#B45309` marks primary actions, focus, selection, progress, key links, and rules only — never body copy, never every icon and border.
+3. Pine `#24473B` inverts sparingly (footer, at most one feature card per page), always with paper text.
+4. Surfaces are flat: 1px `line` borders, radii 8/12/18px, whitespace for structure. No shadows, gradients, glassmorphism, or 3D effects anywhere.
+5. Fraunces for display with one italic amber accent per headline; Inter for everything else with tabular numerals for facts. No third typeface, no monospace, no all-caps labels.
+6. Projects are ruled index rows, never card grids. Numbers only where a real sequence exists.
+7. Every interactive element has `hover`, `focus-visible`, `active`, and `disabled` states, plus `loading` and `error` where relevant.
+8. Color is never the only state indicator — pair it with text, an icon, a check mark, an underline, or an outline change.
+9. Labels are always visible. Placeholders never replace labels. Errors link to fields via `aria-invalid` and `aria-describedby`.
+10. Focus is a 3px amber outline with offset, never removed, never a faint glow.
+11. Motion: one sub-1.4s intro per session (skippable, client-mounted only), hero chained after it, `once` scroll reveals. `useGSAP` with scope, SSR-safe, reverted on cleanup, reduced-motion guards with static final states, no production markers. Content reads without JS.
+12. Decorative marks get `aria-hidden="true"`, never intercept pointer events, and never cover text, controls, or focus outlines.
+13. Respect `prefers-reduced-motion` in CSS and GSAP.
+14. Copy is plain, specific, confident. No invented facts, metrics, or publications.
 
 ## Workflow
 
-1. Define the CSS variables from `DESIGN.md` once at `:root`. Reference tokens in components — no scattered raw hex values.
-2. Set `body` to `--paper` background, `--ink` text, `--font-primary` at 16px / 1.6.
-3. Build layout on the spacing scale, then components from the variants in `DESIGN.md`.
-4. Add illustration only where it clarifies; skip it by default.
-5. Verify contrast for every foreground/background pair you introduce, especially teal on cream, teal on white, and white on teal.
-6. Run the QA checklists at the end of `DESIGN.md` and `SKILL.md` before delivering.
+1. Define the CSS variables from `DESIGN.md` once at `:root` and in the Tailwind `@theme`. Reference tokens in components — no scattered raw hex values.
+2. Set `body` to `--paper` background, `--ink` text, Inter at 17px / 1.65.
+3. Build layout on whitespace rhythm, then components from the variants in `DESIGN.md`.
+4. Verify contrast for every foreground/background pair you introduce (`npm run contrast`), especially paper on amber, paper on pine, and amber on paper.
+5. Run the QA checklists at the end of `DESIGN.md` and `SKILL.md` before delivering.
 
 ## Copy
 
-Clear, friendly, specific. No `Submit`, `Click here`, `Go`, or `Oopsie`. Errors say what happened and how to recover; destructive actions state their consequences; empty states say what is missing and offer one clear next step.
+Clear, friendly, specific. Errors say what happened and how to recover; destructive actions state their consequences; empty states say what is missing and offer one clear next step.
 
 ## Commands
 
-Stack: Next.js 16 (App Router) + TypeScript + Tailwind CSS v4, statically
+Stack: Next.js 16 (App Router) + TypeScript + Tailwind CSS v4 + GSAP (+ @gsap/react), statically
 exported (`output: "export"`, images unoptimized) into `out/`.
 
 - Install: `npm install`
@@ -55,18 +54,21 @@ exported (`output: "export"`, images unoptimized) into `out/`.
 - Production build + type-check + static export: `npm run build`
 - Serve the build locally: `npm run start`
 - Contrast check (measured ratios, fails on violation): `npm run contrast`
+- Deploy to production: `vercel --prod --yes` (project `reeha1/portfolio`)
 
 Environment notes: Node lives at `C:\Program Files\nodejs` and is not on
 `PATH`; the `npm.ps1`/`npx.ps1` shims are blocked by the execution policy,
-so invoke `node`, `npm.cmd`, and `npx.cmd` with the directory on `PATH`.
-`next dev` auto-appends a managed `nextjs-agent-rules` block to this file;
-keep that block untouched and put project rules outside its markers.
-Dynamic route slugs must be URL-safe (lowercase, numbers, hyphens) —
-brackets and special characters make static export emit 404 pages.
+so invoke `node`, `npm.cmd`, and `npx.cmd` with the directory on `PATH`
+(Vercel CLI via `%APPDATA%\npm\vercel.cmd`). `next dev` auto-appends a
+managed `nextjs-agent-rules` block to this file; keep that block untouched
+and put project rules outside its markers. Dynamic route slugs must be
+URL-safe (lowercase, numbers, hyphens) — brackets and special characters
+make static export emit 404 pages. `vercel.json` pins the Vercel build
+(`npm run build` → `out/`) with `cleanUrls` for the static routes.
 
 ## Scope
 
-This is a personal portfolio. Content changes are expected and welcome; the visual system is not. Treat a change to `DESIGN.md` or `SKILL.md` as a deliberate decision and call it out explicitly rather than making it quietly.
+This is a personal portfolio. Content changes are expected and welcome; the visual system is not. History: the site launched in the Sketch system; the owner explicitly requested a full redesign, and Folio replaced it (DESIGN.md, SKILL.md, and these rules rewritten; `files.zip` preserves the originals). Treat any further change to `DESIGN.md` or `SKILL.md` as a deliberate decision and call it out explicitly rather than making it quietly.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

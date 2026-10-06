@@ -1,5 +1,6 @@
-/* WCAG contrast check for every foreground/background pair the site relies on.
-   Run: npm run contrast. Exits non-zero if any required pair fails. */
+/* WCAG contrast check for every foreground/background pair the Folio
+   site relies on. Run: npm run contrast. Exits non-zero if any required
+   pair fails. */
 
 function luminance(hex) {
   const rgb = hex
@@ -61,38 +62,33 @@ function ratio(fg, bg) {
   return (lighter + 0.05) / (darker + 0.05);
 }
 
-const INK = "#111827";
-const PAPER = "#F4EDE0";
-const WHITE = "#FFFFFF";
-const TEAL = "#1DAD97";
-const GRAPHITE = "rgba(17, 24, 39, 0.72)";
-const GRAPHITE_SOFT = "rgba(17, 24, 39, 0.28)";
-const SUCCESS = "#16A34A";
-const WARNING = "#D97706";
-const DANGER = "#DC2626";
+const PAPER = "#FAF6EF";
+const INK = "#201A15";
+const AMBER = "#B45309";
+const AMBER_DEEP = "#8A3F06";
+const PINE = "#24473B";
+const SAND = "#ECE2CE";
+const LINE = "rgba(32, 26, 39, 0.16)";
+const SUCCESS = "#2E7D32";
+const DANGER = "#C62828";
+const PAPER_DIM = "rgba(250, 246, 239, 0.7)";
 
 // min: enforced threshold. "report" means measured-and-documented only
 // (decorative use, never the sole carrier of meaning).
 const pairs = [
-  { name: "Body text on cream", fg: INK, bg: PAPER, min: 4.5 },
-  { name: "Body text on white", fg: INK, bg: WHITE, min: 4.5 },
-  { name: "Ink on teal (primary buttons, selected chips)", fg: INK, bg: TEAL, min: 4.5 },
-  { name: "White on danger (destructive buttons)", fg: WHITE, bg: DANGER, min: 4.5 },
-  { name: "Danger on white (error icons, required marks)", fg: DANGER, bg: WHITE, min: 3 },
-  { name: "Danger on cream", fg: DANGER, bg: PAPER, min: 3 },
-  { name: "Success on white (success icons)", fg: SUCCESS, bg: WHITE, min: 3 },
-  { name: "Warning on white (warning icons)", fg: WARNING, bg: WHITE, min: 3 },
-  { name: "Dashed graphite on white (card outlines)", fg: GRAPHITE, bg: WHITE, min: 3 },
-  { name: "Dashed graphite on cream", fg: GRAPHITE, bg: PAPER, min: 3 },
-  // Focus is a double pencil stroke: 3px teal outline plus a 3px ink
-  // outer ring. The teal alone is below 3:1, so the ink ring carries
-  // the WCAG 2.2 AA focus-appearance indicator; both are measured here.
-  { name: "Focus ink ring on cream", fg: INK, bg: PAPER, min: 3 },
-  { name: "Focus ink ring on white", fg: INK, bg: WHITE, min: 3 },
-  { name: "Focus teal outline on cream (paired with ink ring)", fg: TEAL, bg: PAPER, min: 0 },
-  { name: "Focus teal outline on white (paired with ink ring)", fg: TEAL, bg: WHITE, min: 0 },
-  { name: "Teal text on cream (decorative only, never body copy)", fg: TEAL, bg: PAPER, min: 0 },
-  { name: "Soft dividers on white (decorative only)", fg: GRAPHITE_SOFT, bg: WHITE, min: 0 },
+  { name: "Body text on paper", fg: INK, bg: PAPER, min: 4.5 },
+  { name: "Body text on sand (tinted panels)", fg: INK, bg: SAND, min: 4.5 },
+  { name: "Paper on amber (primary buttons)", fg: PAPER, bg: AMBER, min: 4.5 },
+  { name: "Paper on amber-deep (hover states)", fg: PAPER, bg: AMBER_DEEP, min: 4.5 },
+  { name: "Paper on pine (footer, feature card)", fg: PAPER, bg: PINE, min: 4.5 },
+  { name: "Dim paper on pine (footer secondary)", fg: PAPER_DIM, bg: PINE, min: 4.5 },
+  { name: "Amber on paper (links, accents, focus ring)", fg: AMBER, bg: PAPER, min: 4.5 },
+  { name: "Amber-deep on paper (small amber text)", fg: AMBER_DEEP, bg: PAPER, min: 4.5 },
+  { name: "Paper on danger (destructive buttons)", fg: PAPER, bg: DANGER, min: 4.5 },
+  { name: "Danger on paper (error icons, required marks)", fg: DANGER, bg: PAPER, min: 3 },
+  { name: "Success on paper (success icons)", fg: SUCCESS, bg: PAPER, min: 3 },
+  { name: "Paper on ink (selected chips, dark buttons)", fg: PAPER, bg: INK, min: 4.5 },
+  { name: "Hairline borders on paper (decorative only)", fg: LINE, bg: PAPER, min: 0 },
 ];
 
 let failures = 0;

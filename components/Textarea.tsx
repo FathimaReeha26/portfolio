@@ -8,7 +8,7 @@ interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   error?: string;
 }
 
-/* Labeled multiline input. Textareas use a 20px radius, never a full pill. */
+/* Labeled multiline input, same treatment as Input. */
 export function Textarea({ id, label, hint, error, required, ...rest }: TextareaProps) {
   const hintId = hint ? `${id}-hint` : undefined;
   const errorId = error ? `${id}-error` : undefined;
@@ -16,7 +16,7 @@ export function Textarea({ id, label, hint, error, required, ...rest }: Textarea
 
   return (
     <div className="flex flex-col gap-2">
-      <label htmlFor={id} className="text-sm font-medium text-ink">
+      <label htmlFor={id} className="text-sm font-semibold text-ink">
         {label}
         {required && (
           <span aria-hidden="true" className="text-danger">
@@ -31,8 +31,8 @@ export function Textarea({ id, label, hint, error, required, ...rest }: Textarea
         required={required}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy}
-        className={`w-full rounded-[20px] border-2 bg-paper-card px-4 py-3 font-primary text-md text-ink placeholder:text-graphite focus-visible:border-ink ${
-          error ? "border-danger" : "border-graphite"
+        className={`w-full rounded-md border bg-paper px-4 py-3 text-md text-ink placeholder:text-ink/40 focus:border-amber ${
+          error ? "border-danger" : "border-line"
         }`}
         {...rest}
       />
