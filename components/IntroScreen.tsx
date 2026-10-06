@@ -47,9 +47,13 @@ export function IntroScreen() {
     markIntroReady();
   }
 
+  useGSAP(() => {
+    setMounted(true);
+  }, { scope: rootRef });
+
   useGSAP(
     () => {
-      setMounted(true);
+      if (!mounted || finished.current) return;
       let seen = false;
       try {
         seen = window.sessionStorage.getItem(SESSION_KEY) === "1";
@@ -102,8 +106,9 @@ export function IntroScreen() {
             delay: 0.12,
           });
       });
+      return () => mm.revert();
     },
-    { scope: rootRef }
+    { scope: rootRef, dependencies: [mounted] }
   );
 
   useGSAP(

@@ -11,7 +11,7 @@ import { site } from "@/content/site";
 import { skillGroups } from "@/content/skills";
 
 export const metadata: Metadata = {
-  title: `CV — ${site.name}`,
+  title: "CV",
   description: `Curriculum vitae of ${site.name}: education, experience, skills, and contact details.`,
 };
 
