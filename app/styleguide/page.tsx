@@ -93,8 +93,8 @@ export default function StyleguidePage() {
             <p className="mt-1 text-md text-ink">Quiet tinted surface.</p>
           </Card>
           <Card variant="pine">
-            <h3 className="font-display text-lg font-medium text-paper">Pine</h3>
-            <p className="mt-1 text-md text-paper">Inverted feature surface.</p>
+            <h3 className="font-display text-lg font-medium text-paper dark:text-cream">Pine</h3>
+            <p className="mt-1 text-md text-paper dark:text-cream">Inverted feature surface.</p>
           </Card>
         </div>
       </section>

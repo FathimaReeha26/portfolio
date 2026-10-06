@@ -17,9 +17,9 @@ If code and `DESIGN.md` disagree, `DESIGN.md` wins. Fix the code, not the doc.
 
 These are the failures that matter most. Full detail lives in the reference files.
 
-1. Page background is paper `#FAF6EF`, one light theme. Text is ink `#201A15`.
+1. Page background is paper `#FAF6EF` (dark: `#171310` via `html.dark`), chosen with the nav toggle and synced across tabs. Text is ink `#201A15` (dark: `#F5EEE3`).
 2. Amber `#B45309` marks primary actions, focus, selection, progress, key links, and rules only — never body copy, never every icon and border.
-3. Pine `#24473B` inverts sparingly (footer, at most one feature card per page), always with paper text.
+3. Pine `#24473B` inverts sparingly (footer, at most one feature card per page), always with paper text in light and cream text in dark.
 4. Surfaces are flat: 1px `line` borders, radii 8/12/18px, whitespace for structure. No shadows, gradients, glassmorphism, or 3D effects anywhere.
 5. Fraunces for display with one italic amber accent per headline; Inter for everything else with tabular numerals for facts. No third typeface, no monospace, no all-caps labels.
 6. Projects are ruled index rows, never card grids. Numbers only where a real sequence exists.

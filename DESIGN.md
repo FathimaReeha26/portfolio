@@ -8,25 +8,27 @@ Use this file as the token and component reference. See `SKILL.md` for how to ap
 
 ## 1. Color
 
-| Token | Value | Purpose |
-| --- | --- | --- |
-| `paper` | `#FAF6EF` | Page canvas |
-| `ink` | `#201A15` | Primary text, borders, dark fills |
-| `amber` | `#B45309` | The one accent: primary actions, focus, selection, key links, rules, marks |
-| `amber-deep` | `#8A3F06` | Amber hover states and small amber text needing extra contrast |
-| `amber-soft` | `rgba(180, 83, 9, 0.12)` | Selected washes, link hover fills |
-| `pine` | `#24473B` | Inverted surfaces: footer, feature cards |
-| `sand` | `#ECE2CE` | Quiet tinted panels |
-| `line` | `rgba(32, 26, 21, 0.16)` | Borders and dividers |
-| `success` | `#2E7D32` | Real positive states only |
-| `danger` | `#C62828` | Errors and destructive actions only |
+| Token | Light | Dark (`html.dark`) | Purpose |
+| --- | --- | --- | --- |
+| `paper` | `#FAF6EF` | `#171310` | Page canvas |
+| `ink` | `#201A15` | `#F5EEE3` | Primary text, borders, dark fills |
+| `amber` | `#B45309` | `#E2953F` | The one accent: primary actions, focus, selection, key links, rules, marks |
+| `amber-deep` | `#8A3F06` | `#C07F31` | Amber hover states and small amber text needing extra contrast |
+| `amber-soft` | `rgba(180, 83, 9, 0.12)` | `rgba(226, 149, 63, 0.25)` | Selected washes, link hover fills |
+| `pine` | `#24473B` | `#24473B` | Inverted surfaces: footer, feature cards |
+| `sand` | `#ECE2CE` | `#262019` | Quiet tinted panels |
+| `line` | `rgba(32, 26, 21, 0.16)` | `rgba(245, 238, 227, 0.16)` | Borders and dividers |
+| `success` | `#2E7D32` | `#86C989` | Real positive states only |
+| `danger` | `#C62828` | `#E78D8D` | Errors and destructive actions only |
+| `cream` | `#FAF6EF` | `#FAF6EF` | Constant: light text on pine surfaces |
+| `boot` | `#201A15` | `#201A15` | Constant: boot screen background |
 
 ### Usage principles
 
-1. **Paper is the canvas.** One light theme. No dark mode.
+1. **Two themes, one system.** Light paper by default; dark flips the page to warm near-black via `html.dark`. A sun/moon toggle in the nav switches themes, persists the choice, and stays in sync across tabs; without a stored choice it follows the OS. Pine, cream, and boot stay constant — pine surfaces and the boot screen remain dark in both themes.
 2. **Ink carries everything.** Body, labels, borders, dark fills.
 3. **Amber is rationed.** Primary CTAs, focus rings, selection, results/progress, heading rules, the pulse mark, key-link underlines. Never body text at small sizes without checking contrast; never every icon and border.
-4. **Pine inverts.** Footer and one feature card per page at most. Paper text on pine only.
+4. **Pine inverts.** Footer and one feature card per page at most. Paper text on pine in light, cream text on pine in dark.
 5. **Depth from borders and space, never shadows.** No soft SaaS elevation, no gradients, no glass.
 
 ```css
@@ -103,7 +105,7 @@ Rules: `useGSAP` with scope, never during SSR, `ctx.revert` cleanup, `gsap.match
 
 ## 6. Accessibility (WCAG 2.2 AA baseline)
 
-- Text pairs meet AA (ink on paper/sand, paper on amber/pine, amber on paper). Verify with `npm run contrast`.
+- Text pairs meet AA in both themes (ink on paper/sand, paper on amber/pine, amber on paper, and the dark-theme counterparts). Verify with `npm run contrast`.
 - Amber 3px focus ring with offset everywhere; never removed.
 - Color never the only indicator; form errors programmatically linked; semantic HTML; 44px+ targets; decorative marks `aria-hidden`.
 - Reduced motion respected in CSS and GSAP; meaning preserved statically.

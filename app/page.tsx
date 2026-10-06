@@ -232,7 +232,7 @@ function Contact() {
                 <li key={social.label}>
                   <a
                     href={social.href}
-                    className="tnum inline-flex min-h-[44px] items-center text-sm text-paper/85 underline decoration-amber decoration-2 underline-offset-4 hover:text-paper"
+                    className="tnum inline-flex min-h-[44px] items-center text-sm text-paper/85 underline decoration-amber decoration-2 underline-offset-4 hover:text-paper dark:text-cream/85 dark:hover:text-cream"
                   >
                     {social.label}
                   </a>
@@ -240,7 +240,7 @@ function Contact() {
               ))}
             </ul>
           )}
-          <p className="flex items-center gap-2 text-sm text-paper/75">
+          <p className="flex items-center gap-2 text-sm text-paper/75 dark:text-cream/75">
             <ArrowDown aria-hidden="true" size={16} />
             No contact form here yet — email reaches me directly.
           </p>

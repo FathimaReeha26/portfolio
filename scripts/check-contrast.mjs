@@ -68,10 +68,21 @@ const AMBER = "#B45309";
 const AMBER_DEEP = "#8A3F06";
 const PINE = "#24473B";
 const SAND = "#ECE2CE";
-const LINE = "rgba(32, 26, 39, 0.16)";
+const LINE = "rgba(32, 26, 21, 0.16)";
 const SUCCESS = "#2E7D32";
 const DANGER = "#C62828";
 const PAPER_DIM = "rgba(250, 246, 239, 0.7)";
+
+const D_PAPER = "#171310";
+const D_INK = "#F5EEE3";
+const D_AMBER = "#E2953F";
+const D_AMBER_DEEP = "#C07F31";
+const D_SAND = "#262019";
+const D_LINE = "rgba(245, 238, 227, 0.16)";
+const D_SUCCESS = "#86C989";
+const D_DANGER = "#E78D8D";
+const CREAM = "#FAF6EF";
+const CREAM_DIM = "rgba(250, 246, 239, 0.85)";
 
 // min: enforced threshold. "report" means measured-and-documented only
 // (decorative use, never the sole carrier of meaning).
@@ -88,6 +99,18 @@ const pairs = [
   { name: "Danger on paper (error icons, required marks)", fg: DANGER, bg: PAPER, min: 3 },
   { name: "Success on paper (success icons)", fg: SUCCESS, bg: PAPER, min: 3 },
   { name: "Paper on ink (selected chips, dark buttons)", fg: PAPER, bg: INK, min: 4.5 },
+  { name: "Dark: body text on dark paper", fg: D_INK, bg: D_PAPER, min: 4.5 },
+  { name: "Dark: body text on dark sand", fg: D_INK, bg: D_SAND, min: 4.5 },
+  { name: "Dark: amber on dark paper (links, accents, focus)", fg: D_AMBER, bg: D_PAPER, min: 4.5 },
+  { name: "Dark: amber-deep on dark paper (small amber text)", fg: D_AMBER_DEEP, bg: D_PAPER, min: 4.5 },
+  { name: "Dark: dark text on amber (primary buttons)", fg: D_PAPER, bg: D_AMBER, min: 4.5 },
+  { name: "Dark: dark text on amber-deep (hover fills)", fg: D_PAPER, bg: D_AMBER_DEEP, min: 4.5 },
+  { name: "Dark: dark text on light ink (inverted buttons)", fg: D_PAPER, bg: D_INK, min: 4.5 },
+  { name: "Dark: cream on pine (footer, feature card)", fg: CREAM, bg: PINE, min: 4.5 },
+  { name: "Dark: dim cream on pine (footer secondary)", fg: CREAM_DIM, bg: PINE, min: 4.5 },
+  { name: "Dark: dark text on danger (destructive buttons)", fg: D_PAPER, bg: D_DANGER, min: 4.5 },
+  { name: "Dark: danger on dark paper (error icons)", fg: D_DANGER, bg: D_PAPER, min: 3 },
+  { name: "Dark: success on dark paper (success icons)", fg: D_SUCCESS, bg: D_PAPER, min: 3 },
   { name: "Hairline borders on paper (decorative only)", fg: LINE, bg: PAPER, min: 0 },
 ];
 

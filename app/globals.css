@@ -1,7 +1,12 @@
 @import "tailwindcss";
 
+/* Class-based dark mode: `dark:` variants key off `html.dark`. */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* Folio design tokens mapped into the Tailwind v4 theme.
-   Source of truth: DESIGN.md. No raw hex in components. */
+   Source of truth: DESIGN.md. No raw hex in components.
+   `cream` and `boot` are theme constants: light text on the pine
+   surfaces and the boot screen, which stay dark in both themes. */
 @theme {
   --color-paper: #faf6ef;
   --color-ink: #201a15;
@@ -14,6 +19,8 @@
   --color-success: #2e7d32;
   --color-danger: #c62828;
   --color-focus: #b45309;
+  --color-cream: #faf6ef;
+  --color-boot: #201a15;
 
   --font-display: "Fraunces", Georgia, serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
@@ -33,17 +40,38 @@
 }
 
 :root {
-  --paper: #faf6ef;
-  --ink: #201a15;
-  --amber: #b45309;
-  --amber-deep: #8a3f06;
-  --amber-soft: rgba(180, 83, 9, 0.12);
-  --pine: #24473b;
-  --sand: #ece2ce;
-  --line: rgba(32, 26, 21, 0.16);
-  --success: #2e7d32;
-  --danger: #c62828;
-  --focus: #b45309;
+  --paper: var(--color-paper);
+  --ink: var(--color-ink);
+  --amber: var(--color-amber);
+  --amber-deep: var(--color-amber-deep);
+  --amber-soft: var(--color-amber-soft);
+  --pine: var(--color-pine);
+  --sand: var(--color-sand);
+  --line: var(--color-line);
+  --success: var(--color-success);
+  --danger: var(--color-danger);
+  --focus: var(--color-focus);
+  --cream: var(--color-cream);
+  --boot: var(--color-boot);
+  color-scheme: light;
+}
+
+/* Dark theme: the page flips to warm near-black with lightened
+   amber, success, and danger so every pair still passes `npm run
+   contrast`. Pine, cream, and boot stay constant: pine surfaces and
+   the boot screen remain dark in both themes. */
+html.dark {
+  --color-paper: #171310;
+  --color-ink: #f5eee3;
+  --color-amber: #e2953f;
+  --color-amber-deep: #c07f31;
+  --color-amber-soft: rgba(226, 149, 63, 0.25);
+  --color-sand: #262019;
+  --color-line: rgba(245, 238, 227, 0.16);
+  --color-success: #86c989;
+  --color-danger: #e78d8d;
+  --color-focus: #e2953f;
+  color-scheme: dark;
 }
 
 html {
@@ -63,7 +91,7 @@ body {
 }
 
 /* Visible keyboard focus everywhere: 3px amber ring with offset.
-   Amber on paper measures ~5.5:1 — a single ring suffices. */
+   The amber ring passes against both themes — see `npm run contrast`. */
 :focus-visible {
   outline: 3px solid var(--focus);
   outline-offset: 2px;

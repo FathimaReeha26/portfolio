@@ -1,10 +1,11 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Fraunces, Inter } from "next/font/google";
 import type { ReactNode } from "react";
 import "./globals.css";
 import { IntroScreen } from "@/components/IntroScreen";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteNav } from "@/components/SiteNav";
+import { ThemeProvider } from "@/lib/theme";
 import { site } from "@/content/site";
 import { siteUrl } from "@/lib/site-url";
 
@@ -41,6 +42,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = {
+  themeColor: "#FAF6EF",
+};
+
 const personSchema = {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -50,24 +55,32 @@ const personSchema = {
   sameAs: site.socials.map((social) => social.href),
 };
 
+/* Runs before first paint so a stored dark choice (or the OS
+   setting) applies with no light flash. The ThemeProvider takes over
+   from here and keeps every tab in sync. */
+const themeInitScript = `(function(){try{var s=localStorage.getItem('folio-theme');var d=s==='dark'||(!s&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d)document.documentElement.classList.add('dark')}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${display.variable} ${sans.variable} flex min-h-screen flex-col bg-paper font-sans text-ink antialiased`}
       >
-        <a
-          href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[110] focus:rounded-md focus:bg-paper focus:px-4 focus:py-2 focus:text-md focus:text-ink"
-        >
-          Skip to content
-        </a>
-        <IntroScreen />
-        <SiteNav />
-        <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6">
-          {children}
-        </main>
-        <SiteFooter />
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        <ThemeProvider>
+          <a
+            href="#main-content"
+            className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[110] focus:rounded-md focus:bg-paper focus:px-4 focus:py-2 focus:text-md focus:text-ink"
+          >
+            Skip to content
+          </a>
+          <IntroScreen />
+          <SiteNav />
+          <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6">
+            {children}
+          </main>
+          <SiteFooter />
+        </ThemeProvider>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}

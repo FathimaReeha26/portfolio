@@ -112,7 +112,7 @@ export function IntroScreen() {
       ref={rootRef}
       aria-hidden="true"
       onClick={finish}
-      className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center bg-ink text-paper"
+      className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center bg-boot text-cream"
     >
       <div className="flex w-full max-w-sm flex-col gap-5 px-8">
         <p className="folio-boot-mark font-display text-5xl font-semibold">
@@ -122,7 +122,7 @@ export function IntroScreen() {
           {bootLines.map((line) => (
             <p
               key={line.text}
-              className="folio-boot-line tnum flex items-baseline justify-between gap-4 text-[13px] leading-relaxed text-paper/75"
+              className="folio-boot-line tnum flex items-baseline justify-between gap-4 text-[13px] leading-relaxed text-cream/75"
             >
               <span>{line.text}</span>
               {line.status && (
@@ -131,10 +131,10 @@ export function IntroScreen() {
             </p>
           ))}
         </div>
-        <span className="block h-[3px] w-full overflow-hidden rounded-full bg-paper/15">
+        <span className="block h-[3px] w-full overflow-hidden rounded-full bg-cream/15">
           <span className="folio-boot-rule block h-full w-full origin-left rounded-full bg-amber" />
         </span>
-        <p className="text-xs text-paper/40">click anywhere to skip</p>
+        <p className="text-xs text-cream/40">click anywhere to skip</p>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ interface CardProps extends HTMLAttributes<HTMLDivElement> {
 const variants: Record<CardVariant, string> = {
   default: "border-line bg-paper",
   sand: "border-transparent bg-sand",
-  pine: "border-transparent bg-pine text-paper",
+  pine: "border-transparent bg-pine text-paper dark:text-cream",
 };
 
 /* Quiet surfaces, no elevation. Depth comes from borders and
