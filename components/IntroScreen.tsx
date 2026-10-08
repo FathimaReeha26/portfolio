@@ -215,6 +215,7 @@ export function IntroScreen() {
   const codeRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
   const ruleRef = useRef<HTMLSpanElement>(null);
+  const dotRef = useRef<HTMLSpanElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const subTextRef = useRef<HTMLSpanElement>(null);
   const subCaretRef = useRef<HTMLSpanElement>(null);
@@ -331,8 +332,8 @@ export function IntroScreen() {
            short fade, auto-exit after about 1.5s. No drift, no
            typing, no pop. */
         root
-          .querySelectorAll("[data-caret]")
-          .forEach((caret) => ((caret as HTMLElement).style.display = "none"));
+          .querySelectorAll("[data-caret], [data-dot]")
+          .forEach((el) => ((el as HTMLElement).style.display = "none"));
         const rtl = gsap.timeline({ onComplete: teardown });
         masterRef.current = rtl;
         rtl.fromTo(root, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 });
@@ -363,6 +364,62 @@ export function IntroScreen() {
           },
           "name"
         );
+        /* Hopping dot: bounces along the top of each letter as it
+           lands, then pops out before the rule draws. */
+        const dot = dotRef.current;
+        const wrap = nameRef.current;
+        if (dot && wrap) {
+          const wrapBox = wrap.getBoundingClientRect();
+          const stops = (
+            Array.from(
+              wrap.querySelectorAll(".folio-intro-letter")
+            ) as HTMLElement[]
+          ).map((letter) => {
+            const box = letter.getBoundingClientRect();
+            return {
+              x: box.left - wrapBox.left + box.width / 2,
+              y: box.top - wrapBox.top,
+            };
+          });
+          if (stops.length > 0) {
+            gsap.set(dot, {
+              xPercent: -50,
+              yPercent: -50,
+              x: stops[0].x - 48,
+              y: stops[0].y - 6,
+              scale: 0,
+            });
+            tl.to(
+              dot,
+              { scale: 1, duration: 0.2, ease: "back.out(2)" },
+              "name"
+            );
+            stops.forEach((stop, index) => {
+              const at = `name+=${(index * CONFIG.letter.stagger + 0.1).toFixed(3)}`;
+              tl.to(
+                dot,
+                { x: stop.x, duration: 0.18, ease: "power1.inOut" },
+                at
+              );
+              tl.to(
+                dot,
+                {
+                  y: stop.y - 34,
+                  duration: 0.1,
+                  ease: "power2.out",
+                  yoyo: true,
+                  repeat: 1,
+                },
+                at
+              );
+            });
+            tl.to(
+              dot,
+              { scale: 0, duration: 0.25, ease: "back.in(2)" },
+              `name+=${(stops.length * CONFIG.letter.stagger + 0.35).toFixed(3)}`
+            );
+          }
+        }
         /* Amber rule draws as the last letter lands. */
         tl.fromTo(
           ruleRef.current,
@@ -594,8 +651,14 @@ export function IntroScreen() {
 
       {/* The name: one announcement, letters purely visual. */}
       <div className="absolute inset-0 flex flex-col items-center justify-center px-6">
-        <div ref={nameRef} className="will-change-transform">
+        <div ref={nameRef} className="relative will-change-transform">
           <span className="sr-only">{CONFIG.name}</span>
+          <span
+            ref={dotRef}
+            aria-hidden="true"
+            data-dot="true"
+            className="absolute top-0 left-0 h-3 w-3 rounded-full bg-amber will-change-transform"
+          />
           <span
             aria-hidden="true"
             className="relative block overflow-hidden font-display text-[clamp(3.5rem,14vw,8.5rem)] leading-none font-semibold text-cream"

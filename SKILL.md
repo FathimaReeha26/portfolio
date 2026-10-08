@@ -60,7 +60,7 @@ Left-aligned, whitespace-structured sections (`gap-16/20`), no decorative divide
 
 ## Motion details
 
-- Intro: ambient field of real code, cream name reveal with amber rule, typed mono sub-line, themed handoff; every full page load; Skip control, backdrop click, and Escape fast-forward; client-mounted only.
+- Intro: ambient field of real code, cream name reveal with hopping amber dot and amber rule, typed mono sub-line, themed handoff; every full page load; Skip control, backdrop click, and Escape fast-forward; client-mounted only.
 - Hero: masked-line rise + staggered fades, chained on intro completion.
 - Reveals: `ScrollTrigger.batch`, `opacity/y:14`, `power1.out`, `once:true`, `start:"top 90%"`.
 - Rules draw via `scaleX` on scroll. Hovers are 200ms CSS. No markers in production. `useGSAP` with scope, SSR-safe, reverted on cleanup.
