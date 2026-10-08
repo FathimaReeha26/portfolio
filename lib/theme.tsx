@@ -16,9 +16,9 @@ const LIGHT_PAPER = "#FAF6EF";
 const DARK_PAPER = "#171310";
 
 /* Single source of truth for the theme. Initial value comes from the
-   pre-paint script in the root layout (stored choice, else the OS
-   setting), so no flash. `storage` events keep every open tab live
-   in sync with the same choice. */
+   pre-paint script in the root layout (dark unless "light" is stored),
+   so no flash. `storage` events keep every open tab live in sync with
+   the same choice. */
 function currentTheme(): Theme {
   if (typeof document === "undefined") return "light";
   return document.documentElement.classList.contains("dark")

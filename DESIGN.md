@@ -24,7 +24,7 @@ Use this file as the token and component reference. See `SKILL.md` for how to ap
 
 ### Usage principles
 
-1. **Two themes, one system.** Light paper by default; dark flips the page to warm near-black via `html.dark`. A sun/moon toggle in the nav switches themes, persists the choice, and stays in sync across tabs; without a stored choice it follows the OS. Pine and cream stay constant — pine surfaces remain dark in both themes. The intro follows the active theme, so it always hands off to a matching page.
+1. **Two themes, one system.** Dark is the default (warm near-black `#171310`); light flips the page to warm paper via the sun/moon toggle in the nav, which persists the choice and stays in sync across tabs. Pine and cream stay constant — pine surfaces remain dark in both themes. The intro follows the active theme, so it always hands off to a matching page.
 2. **Ink carries everything.** Body, labels, borders, dark fills.
 3. **Amber is rationed.** Primary CTAs, focus rings, selection, results/progress, heading rules, the pulse mark, key-link underlines. Never body text at small sizes without checking contrast; never every icon and border.
 4. **Pine inverts.** Footer and one feature card per page at most. Paper text on pine in light, cream text on pine in dark.

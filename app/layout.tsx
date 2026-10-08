@@ -43,7 +43,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FAF6EF",
+  themeColor: "#171310",
 };
 
 const personSchema = {
@@ -55,10 +55,10 @@ const personSchema = {
   sameAs: site.socials.map((social) => social.href),
 };
 
-/* Runs before first paint so a stored dark choice (or the OS
-   setting) applies with no light flash. The ThemeProvider takes over
-   from here and keeps every tab in sync. */
-const themeInitScript = `(function(){try{var s=localStorage.getItem('folio-theme');var d=s==='dark'||(!s&&window.matchMedia('(prefers-color-scheme: dark)').matches);if(d)document.documentElement.classList.add('dark')}catch(e){}})();`;
+/* Runs before first paint: dark is the default and a stored "light"
+   choice is the only thing that prevents it. The ThemeProvider takes
+   over from here and keeps every tab in sync. */
+const themeInitScript = `(function(){try{var s=localStorage.getItem('folio-theme');if(s!=='light')document.documentElement.classList.add('dark')}catch(e){document.documentElement.classList.add('dark')}})();`;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

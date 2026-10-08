@@ -17,7 +17,7 @@ Folio makes interfaces feel editorial: credible, calm, and human. The personalit
 
 ## The look in seven rules
 
-1. **The page is paper — or dark.** Warm `#FAF6EF` canvas by default, warm near-black `#171310` in dark; a sun/moon toggle in the nav switches, persists, and syncs across tabs.
+1. **Dark by default — paper on demand.** Warm near-black `#171310` canvas out of the box; a sun/moon toggle in the nav switches to warm `#FAF6EF` paper, persists, and syncs across tabs.
 2. **Ink carries everything.** `#201A15` text, borders, and dark fills.
 3. **Amber is rationed.** `#B45309` for primary actions, focus, selection, progress, key links, and rules only.
 4. **Pine inverts sparingly.** `#24473B` footer and at most one feature card per page, paper text on it in light and cream text in dark.
