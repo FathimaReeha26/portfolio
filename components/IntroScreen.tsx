@@ -2,7 +2,7 @@
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { markIntroReady } from "@/lib/introBus";
 
 gsap.registerPlugin(useGSAP);
@@ -223,6 +223,8 @@ export function IntroScreen() {
   const snippetRefs = useRef<Array<HTMLPreElement | null>>([]);
   const masterRef = useRef<gsap.core.Timeline | null>(null);
   const driftsRef = useRef<gsap.core.Tween[]>([]);
+  const ambientReleaseRef = useRef<(() => void) | undefined>(undefined);
+  const overflowRef = useRef<string>("");
   const finished = useRef(false);
   const isMobile =
     typeof window !== "undefined" ? window.innerWidth < 640 : false;
@@ -251,6 +253,13 @@ export function IntroScreen() {
     finished.current = true;
     driftsRef.current.forEach((tween) => tween.kill());
     driftsRef.current = [];
+    if (ambientReleaseRef.current) {
+      ambientReleaseRef.current();
+      ambientReleaseRef.current = undefined;
+    }
+    /* Belt and suspenders: the scroll-lock effect restores this on
+       cleanup, but teardown must never leave the page unscrollable. */
+    document.body.style.overflow = overflowRef.current;
     try {
       if (CONFIG.oncePerSession) {
         window.sessionStorage.setItem(CONFIG.sessionKey, "1");
@@ -276,19 +285,22 @@ export function IntroScreen() {
     }
   }
 
-  useGSAP(() => {
+  useEffect(() => {
     setMounted(true);
-  });
+  }, []);
 
-  /* Lock page scroll while the intro owns the screen. */
-  useGSAP(() => {
+  /* Lock page scroll while the intro owns the screen. Plain useEffect
+     (not useGSAP): @gsap/react ignores callback return values, so a
+     useGSAP cleanup here would never run and the page would stay
+     locked. */
+  useEffect(() => {
     if (!mounted || gone) return;
-    const previous = document.body.style.overflow;
+    overflowRef.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     return () => {
-      document.body.style.overflow = previous;
+      document.body.style.overflow = overflowRef.current;
     };
-  }, { dependencies: [mounted, gone] });
+  }, [mounted, gone]);
 
   useGSAP(
     () => {
@@ -513,22 +525,20 @@ export function IntroScreen() {
           if (removePointer) removePointer();
           mm.revert();
         };
+        ambientReleaseRef.current = releaseAmbient;
       });
-
-      return () => {
-        if (releaseAmbient) releaseAmbient();
-      };
     },
     { scope: rootRef, dependencies: [mounted] }
   );
 
-  useGSAP(() => {
+  useEffect(() => {
     function onKey(event: KeyboardEvent) {
       if (event.key === "Escape") skip();
     }
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!mounted || gone) return null;
 
