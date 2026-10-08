@@ -13,7 +13,7 @@ gsap.registerPlugin(useGSAP);
    - oncePerSession: true = play once per session (spec); false replays
      on every full page load.
    - snippets: real, valid code only. `typed` snippets must use plain
-     string lines (typing writes raw text). Tone marks: "p" plain cream,
+     string lines (typing writes raw text). Tone marks: "p" plain ink,
      "k" amber keyword, "s" pine string. Mobile shows the first 9.
    ===================================================================== */
 type Tone = "p" | "k" | "s";
@@ -596,7 +596,7 @@ export function IntroScreen() {
       ref={rootRef}
       aria-label="Site introduction"
       onClick={skip}
-      className="fixed inset-0 z-[100] cursor-pointer overflow-hidden bg-boot"
+      className="fixed inset-0 z-[100] cursor-pointer overflow-hidden bg-paper"
     >
       {/* Ambient code field: decorative, never interactive. */}
       <div
@@ -621,7 +621,7 @@ export function IntroScreen() {
               className={`absolute -translate-x-1/2 -translate-y-1/2 leading-relaxed font-mono will-change-transform select-none ${band.blur}`}
             >
               <code
-                className="text-cream"
+                className="text-ink"
                 {...(snippet.typed
                   ? { "data-typed": snippet.id }
                   : {})}
@@ -641,7 +641,7 @@ export function IntroScreen() {
               {snippet.typed && (
                 <span
                   data-caret={snippet.id}
-                  className="mt-1 block h-3.5 w-[7px] bg-cream/60"
+                  className="mt-1 block h-3.5 w-[7px] bg-ink/60"
                 />
               )}
             </pre>
@@ -661,7 +661,7 @@ export function IntroScreen() {
           />
           <span
             aria-hidden="true"
-            className="relative block overflow-hidden font-display text-[clamp(3.5rem,14vw,8.5rem)] leading-none font-semibold text-cream"
+            className="relative block overflow-hidden font-display text-[clamp(3.5rem,14vw,8.5rem)] leading-none font-semibold text-ink"
           >
             {CONFIG.name.split("").map((letter, index) => (
               <span key={index} className="folio-intro-letter inline-block">
@@ -676,12 +676,12 @@ export function IntroScreen() {
         </div>
         <p
           ref={subRef}
-          className="mt-5 font-mono text-sm text-cream/70 md:text-md"
+          className="mt-5 font-mono text-sm text-ink/70 md:text-md"
         >
           <span ref={subTextRef}>{CONFIG.subline}</span>
           <span
             ref={subCaretRef}
-            className="ml-1 inline-block h-[1em] w-[2px] translate-y-[3px] bg-cream/70"
+            className="ml-1 inline-block h-[1em] w-[2px] translate-y-[3px] bg-ink/70"
           />
         </p>
       </div>
@@ -689,7 +689,7 @@ export function IntroScreen() {
       <button
         type="button"
         onClick={skip}
-        className="absolute right-5 bottom-5 min-h-[44px] rounded-md border border-cream/25 px-4 py-2 text-sm text-cream/80 transition-colors duration-200 hover:border-cream/50 hover:text-cream"
+        className="absolute right-5 bottom-5 min-h-[44px] rounded-md border border-line px-4 py-2 text-sm text-ink/80 transition-colors duration-200 hover:border-amber hover:text-amber-deep"
       >
         Skip intro
       </button>

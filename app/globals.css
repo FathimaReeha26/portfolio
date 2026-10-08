@@ -5,8 +5,8 @@
 
 /* Folio design tokens mapped into the Tailwind v4 theme.
    Source of truth: DESIGN.md. No raw hex in components.
-   `cream` and `boot` are theme constants: light text on the pine
-   surfaces and the boot screen, which stay dark in both themes. */
+   `cream` is a theme constant: light text on the pine surfaces,
+   which stay dark in both themes. */
 @theme {
   --color-paper: #faf6ef;
   --color-ink: #201a15;
@@ -20,7 +20,6 @@
   --color-danger: #c62828;
   --color-focus: #b45309;
   --color-cream: #faf6ef;
-  --color-boot: #201a15;
 
   --font-display: "Fraunces", Georgia, serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
@@ -56,14 +55,13 @@
   --danger: var(--color-danger);
   --focus: var(--color-focus);
   --cream: var(--color-cream);
-  --boot: var(--color-boot);
   color-scheme: light;
 }
 
 /* Dark theme: the page flips to warm near-black with lightened
    amber, success, and danger so every pair still passes `npm run
-   contrast`. Pine, cream, and boot stay constant: pine surfaces and
-   the boot screen remain dark in both themes. */
+   contrast`. Pine and cream stay constant: pine surfaces remain dark
+   in both themes. */
 html.dark {
   --color-paper: #171310;
   --color-ink: #f5eee3;

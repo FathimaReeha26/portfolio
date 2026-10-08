@@ -83,8 +83,6 @@ const D_SUCCESS = "#86C989";
 const D_DANGER = "#E78D8D";
 const CREAM = "#FAF6EF";
 const CREAM_DIM = "rgba(250, 246, 239, 0.85)";
-const BOOT = "#201A15";
-const CREAM_70 = "rgba(250, 246, 239, 0.7)";
 
 // min: enforced threshold. "report" means measured-and-documented only
 // (decorative use, never the sole carrier of meaning).
@@ -113,8 +111,6 @@ const pairs = [
   { name: "Dark: dark text on danger (destructive buttons)", fg: D_PAPER, bg: D_DANGER, min: 4.5 },
   { name: "Dark: danger on dark paper (error icons)", fg: D_DANGER, bg: D_PAPER, min: 3 },
   { name: "Dark: success on dark paper (success icons)", fg: D_SUCCESS, bg: D_PAPER, min: 3 },
-  { name: "Intro: cream name on boot", fg: CREAM, bg: BOOT, min: 4.5 },
-  { name: "Intro: dim cream sub-line on boot", fg: CREAM_70, bg: BOOT, min: 4.5 },
   { name: "Hairline borders on paper (decorative only)", fg: LINE, bg: PAPER, min: 0 },
 ];
 

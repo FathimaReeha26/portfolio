@@ -21,11 +21,10 @@ Use this file as the token and component reference. See `SKILL.md` for how to ap
 | `success` | `#2E7D32` | `#86C989` | Real positive states only |
 | `danger` | `#C62828` | `#E78D8D` | Errors and destructive actions only |
 | `cream` | `#FAF6EF` | `#FAF6EF` | Constant: light text on pine surfaces |
-| `boot` | `#201A15` | `#201A15` | Constant: boot screen background |
 
 ### Usage principles
 
-1. **Two themes, one system.** Light paper by default; dark flips the page to warm near-black via `html.dark`. A sun/moon toggle in the nav switches themes, persists the choice, and stays in sync across tabs; without a stored choice it follows the OS. Pine, cream, and boot stay constant — pine surfaces and the boot screen remain dark in both themes.
+1. **Two themes, one system.** Light paper by default; dark flips the page to warm near-black via `html.dark`. A sun/moon toggle in the nav switches themes, persists the choice, and stays in sync across tabs; without a stored choice it follows the OS. Pine and cream stay constant — pine surfaces remain dark in both themes. The intro follows the active theme, so it always hands off to a matching page.
 2. **Ink carries everything.** Body, labels, borders, dark fills.
 3. **Amber is rationed.** Primary CTAs, focus rings, selection, results/progress, heading rules, the pulse mark, key-link underlines. Never body text at small sizes without checking contrast; never every icon and border.
 4. **Pine inverts.** Footer and one feature card per page at most. Paper text on pine in light, cream text on pine in dark.
@@ -95,7 +94,7 @@ Spacing from the 4px scale; section rhythm from whitespace (`gap-16/20`, generou
 
 One orchestrated moment per page load, everything else answers scroll:
 
-1. **Boot intro** (every full page load, about 4–5 seconds): an ambient field of real, valid code floats at low opacity behind the name, which pops in letter by letter in cream Fraunces as an amber dot hops across each letter, under a 1px amber rule; a mono sub-line types out; then code dims, the name settles, and the boot background fades into the page. Skippable via a visible Skip control, backdrop click, or Escape (fast-forwards, never cuts). Mounts client-side only, so SSR and no-JS users never see it. Reduced motion gets a static 300ms fade and auto-exit. Scroll locks during play; focus moves to main on exit. Tune copy and timing in the config at the top of `components/IntroScreen.tsx`.
+1. **Boot intro** (every full page load, about 4–5 seconds): an ambient field of real, valid code floats at low opacity behind the name, which pops in letter by letter in cream Fraunces as an amber dot hops across each letter, under a 1px amber rule; a mono sub-line types out; then code dims, the name settles, and the intro fades into the matching page. Skippable via a visible Skip control, backdrop click, or Escape (fast-forwards, never cuts). Mounts client-side only, so SSR and no-JS users never see it. Reduced motion gets a static 300ms fade and auto-exit. Scroll locks during play; focus moves to main on exit. Tune copy and timing in the config at the top of `components/IntroScreen.tsx`.
 2. **Hero** chained after the intro: headline lines rise inside overflow masks, supporting elements fade up staggered.
 3. **Scroll reveals** (`ScrollTrigger.batch`, `once`): short fade with a 14px rise; heading rules draw via `scaleX`.
 4. Hovers are CSS micro-transitions (200ms): arrow nudges, borders darken, fills shift.
