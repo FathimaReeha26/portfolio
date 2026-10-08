@@ -187,11 +187,11 @@ const CONFIG = {
 const TONE_CLASS: Record<Tone, string> = { p: "", k: "text-amber", s: "text-pine" };
 
 /* Depth bands for the ambient layer: back is smaller, dimmer, blurred
-   and drifts less; front is sharper and moves more. */
+   and floats gently; front is sharper and travels widest. */
 const DEPTH = [
-  { size: [10, 11], opacity: 0.08, blur: "blur-[1.5px]", drift: 22, dur: 32 },
-  { size: [12, 13], opacity: 0.14, blur: "blur-[0.5px]", drift: 38, dur: 26 },
-  { size: [13, 15], opacity: 0.22, blur: "", drift: 58, dur: 21 },
+  { size: [10, 11], opacity: 0.08, blur: "blur-[1.5px]", drift: 60, dur: 18 },
+  { size: [12, 13], opacity: 0.14, blur: "blur-[0.5px]", drift: 90, dur: 15 },
+  { size: [13, 15], opacity: 0.22, blur: "", drift: 120, dur: 12 },
 ] as const;
 
 function mulberry32(seed: number) {
@@ -472,6 +472,7 @@ export function IntroScreen() {
             gsap.to(el, {
               x: gsap.utils.random(-band.drift, band.drift),
               y: gsap.utils.random(-band.drift, band.drift),
+              rotation: gsap.utils.random(-3, 3),
               duration: gsap.utils.random(band.dur * 0.85, band.dur * 1.15),
               ease: "sine.inOut",
               yoyo: true,
