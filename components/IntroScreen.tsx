@@ -204,10 +204,9 @@ function mulberry32(seed: number) {
   };
 }
 
-/* A cinematic boot intro: an ambient field of real code drifts behind
-   the name, which pops in letter by letter with an amber rule and one
-   shine sweep; a typed sub-line follows, then everything hands off to
-   the page. Client-mounted only (SSR and no-JS never see it), scroll
+/* A cinematic boot intro: an ambient field of real code floats behind
+   the name, which pops in letter by letter under an amber rule; a
+   typed sub-line follows, then everything hands off to the page. Client-mounted only (SSR and no-JS never see it), scroll
    locked while it plays, focus moved to main on exit. */
 export function IntroScreen() {
   const [mounted, setMounted] = useState(false);
@@ -216,7 +215,6 @@ export function IntroScreen() {
   const codeRef = useRef<HTMLDivElement>(null);
   const nameRef = useRef<HTMLDivElement>(null);
   const ruleRef = useRef<HTMLSpanElement>(null);
-  const shineRef = useRef<HTMLSpanElement>(null);
   const subRef = useRef<HTMLParagraphElement>(null);
   const subTextRef = useRef<HTMLSpanElement>(null);
   const subCaretRef = useRef<HTMLSpanElement>(null);
@@ -371,13 +369,6 @@ export function IntroScreen() {
           { scaleX: 0 },
           { scaleX: 1, duration: 0.6, ease: "power3.out" },
           "name+=1.0"
-        );
-        /* One shine sweep across the name, once, no loop. */
-        tl.fromTo(
-          shineRef.current,
-          { xPercent: -160 },
-          { xPercent: 260, duration: 0.9, ease: "power2.inOut" },
-          "name+=1.15"
         );
 
         /* Ambient typing: 4 snippets type themselves, carets fade out. */
@@ -614,10 +605,6 @@ export function IntroScreen() {
                 {letter}
               </span>
             ))}
-            <span
-              ref={shineRef}
-              className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-cream/25 blur-md mix-blend-screen"
-            />
           </span>
           <span
             ref={ruleRef}
