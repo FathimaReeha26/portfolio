@@ -9,11 +9,10 @@ import { Button } from "./Button";
 
 gsap.registerPlugin(useGSAP);
 
-/* Editorial hero: facts line, oversized two-line headline with an
-   italic amber accent, supporting line, two actions. Headline lines
-   rise inside overflow masks once the intro finishes (immediately
-   when the intro is skipped); everything is statically readable
-   without JavaScript or motion. */
+/* Editorial hero: facts line, oversized name headline, supporting
+   line, two actions. The headline rises inside an overflow mask once
+   the intro finishes (immediately when the intro is skipped);
+   everything is statically readable without JavaScript or motion. */
 export function Hero() {
   const rootRef = useRef<HTMLElement>(null);
 
@@ -60,12 +59,7 @@ export function Hero() {
         className="font-display text-4xl leading-[1.05] font-medium text-ink sm:text-3xl lg:text-4xl"
       >
         <span className="block overflow-hidden pb-1">
-          <span className="folio-hero-line block">Fathima Reeha</span>
-        </span>
-        <span className="block overflow-hidden pb-2">
-          <span className="folio-hero-line block">
-            makes AI <em className="text-amber">legible</em>.
-          </span>
+          <span className="folio-hero-line block">{site.name}</span>
         </span>
       </h1>
       <p className="folio-hero-fade max-w-xl text-lg text-ink">
