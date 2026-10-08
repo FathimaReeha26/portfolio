@@ -21,13 +21,13 @@ These are the failures that matter most. Full detail lives in the reference file
 2. Amber `#B45309` marks primary actions, focus, selection, progress, key links, and rules only — never body copy, never every icon and border.
 3. Pine `#24473B` inverts sparingly (footer, at most one feature card per page), always with paper text in light and cream text in dark.
 4. Surfaces are flat: 1px `line` borders, radii 8/12/18px, whitespace for structure. No shadows, gradients, glassmorphism, or 3D effects anywhere.
-5. Fraunces for display with one italic amber accent per headline; Inter for everything else with tabular numerals for facts. No third typeface, no monospace, no all-caps labels.
+5. Fraunces for display with one italic amber accent per headline; Inter for everything else with tabular numerals for facts. No third loaded typeface (system monospace only for decorative intro code), no all-caps labels.
 6. Projects are ruled index rows, never card grids. Numbers only where a real sequence exists.
 7. Every interactive element has `hover`, `focus-visible`, `active`, and `disabled` states, plus `loading` and `error` where relevant.
 8. Color is never the only state indicator — pair it with text, an icon, a check mark, an underline, or an outline change.
 9. Labels are always visible. Placeholders never replace labels. Errors link to fields via `aria-invalid` and `aria-describedby`.
 10. Focus is a 3px amber outline with offset, never removed, never a faint glow.
-11. Motion: one boot intro on every full page load (about 3s, skippable, client-mounted only), hero chained after it, `once` scroll reveals. `useGSAP` with scope, SSR-safe, reverted on cleanup, reduced-motion guards with static final states, no production markers. Content reads without JS.
+11. Motion: one boot intro on every full page load (about 4–5s: ambient code, name reveal, typed sub-line, themed handoff; visible Skip + Escape fast-forward, scroll lock, focus to main on exit; static under reduced motion), hero chained after it, `once` scroll reveals. `useGSAP` with scope, SSR-safe, reverted on cleanup, reduced-motion guards with static final states, no production markers. Content reads without JS.
 12. Decorative marks get `aria-hidden="true"`, never intercept pointer events, and never cover text, controls, or focus outlines.
 13. Respect `prefers-reduced-motion` in CSS and GSAP.
 14. Copy is plain, specific, confident. No invented facts, metrics, or publications.

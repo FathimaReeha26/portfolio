@@ -61,13 +61,14 @@ body {
 
 | Role | Font | Usage |
 | --- | --- | --- |
-| Display | Fraunces | Hero, section and card titles, empty states |
+| Display | Fraunces | Hero, section and card titles, empty states, intro name |
 | Body/UI | Inter | Everything else, including facts (tabular numerals) |
+| Intro code | System monospace stack | Ambient code in the boot intro only — never UI labels |
 
 - Italic is reserved for **one accent word per headline**, in amber.
 - Scale: `12 / 14 / 17 / 20 / 24 / 32 / 44 / 60px`. Body is 17px. Display: hero 44–60, sections 32, cards 20–24.
 - Tight display tracking (`-0.02em`), body measure ≤ 70ch, sentence case, no all-caps labels.
-- No third typeface. No monospace anywhere.
+- No third loaded typeface. Monospace appears only as unloaded system fonts inside the boot intro's decorative code field — never in UI, labels, or body copy.
 
 ---
 
@@ -94,7 +95,7 @@ Spacing from the 4px scale; section rhythm from whitespace (`gap-16/20`, generou
 
 One orchestrated moment per page load, everything else answers scroll:
 
-1. **Boot intro** (every full page load, about 3 seconds, click/Escape skips): system lines report the real build with amber `ok` markers, resolving into the monogram before the curtain lifts. Mounts client-side only, so SSR and no-JS users never see it. Skipped entirely under reduced motion.
+1. **Boot intro** (every full page load, about 4–5 seconds): an ambient field of real, valid code drifts at low opacity behind the name, which pops in letter by letter in cream Fraunces with a 1px amber rule and one shine sweep; a mono sub-line types out; then code dims, the name settles, and the boot background fades into the page. Skippable via a visible Skip control, backdrop click, or Escape (fast-forwards, never cuts). Mounts client-side only, so SSR and no-JS users never see it. Reduced motion gets a static 300ms fade and auto-exit. Scroll locks during play; focus moves to main on exit. Tune copy and timing in the config at the top of `components/IntroScreen.tsx`.
 2. **Hero** chained after the intro: headline lines rise inside overflow masks, supporting elements fade up staggered.
 3. **Scroll reveals** (`ScrollTrigger.batch`, `once`): short fade with a 14px rise; heading rules draw via `scaleX`.
 4. Hovers are CSS micro-transitions (200ms): arrow nudges, borders darken, fills shift.
@@ -122,8 +123,8 @@ Plain, specific, confident. Actions say what happens ("View projects", "Download
 
 - Cream `#F4EDE0`, teal, handwriting fonts, dashed outlines, pencil shadows, pill controls (retired with Sketch)
 - Navy/slate + blue CTA minimalism; black + acid accents; broadsheet hairlines; SaaS card grids; gradients, glass, soft shadows
-- ALL-CAPS eyebrows, middle-dot meta strings, em-dash label fragments, monospace labels, arrows appended to every link
-- Auto-playing motion beyond the single intro; scroll-jacking, parallax, layout shift
+- ALL-CAPS eyebrows, middle-dot meta strings, em-dash label fragments, monospace UI labels, arrows appended to every link
+- Auto-playing motion beyond the single intro; scroll-jacking, page-level parallax, layout shift (the intro's own ambient drift is the one exception)
 - Teal-style overuse of amber: one accent means one
 
 ---
@@ -132,6 +133,6 @@ Plain, specific, confident. Actions say what happens ("View projects", "Download
 
 **Visual:** paper canvas, ink text, amber rationed to actions/focus/selection/progress/rules, pine used sparingly, flat bordered surfaces, generous whitespace, Fraunces display with single italic accents, Inter body ≤70ch.
 **Components:** amber primary buttons with all states; index rows (not card grids); cardless timeline; chips with check-marked selection; labeled forms with linked errors; focus-trapping modal; labeled alerts; readable responsive tables.
-**Motion:** boot intro about 3s on every load, skippable, absent without JS and under reduced motion; hero chained; reveals once; no markers; no layout shift.
+**Motion:** boot intro ~4–5s on every load with visible skip, absent without JS and static under reduced motion; hero chained; reveals once; no markers; no layout shift; focus to main on exit.
 **Accessibility:** AA contrast verified by script; visible amber focus; no color-only state; semantic HTML; 44px targets; reduced motion honored; decorative marks hidden.
 **Content:** specific CTAs, recovery-led errors, helpful empty states, no invented facts.

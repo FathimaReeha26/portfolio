@@ -23,13 +23,13 @@ Folio makes interfaces feel editorial: credible, calm, and human. The personalit
 4. **Pine inverts sparingly.** `#24473B` footer and at most one feature card per page, paper text on it in light and cream text in dark.
 5. **Surfaces are flat.** 1px `line` borders, 8/12/18px radii, generous whitespace. No shadows, gradients, or glass.
 6. **Type does the talking.** Fraunces display with one italic amber accent per headline; Inter body at 17px, ≤70ch.
-7. **Motion answers scroll.** One boot intro per load (~3s, skippable), hero chained after it, `once` reveals; static and readable without motion.
+7. **Motion answers scroll.** One boot intro per load (~4–5s, visible skip), hero chained after it, `once` reveals; static and readable without motion.
 
 ## Typography
 
 - **Fraunces** for display only (hero, section/card titles, empty states), tight tracking, italic reserved for a single accent word.
 - **Inter** for everything else, tabular numerals for facts and dates.
-- Scale: **12 / 14 / 17 / 20 / 24 / 32 / 44 / 60px**. Sentence case, no all-caps labels, no third typeface, no monospace.
+- Scale: **12 / 14 / 17 / 20 / 24 / 32 / 44 / 60px**. Sentence case, no all-caps labels, no third loaded typeface; system monospace only for decorative intro code, never UI.
 
 ## Spacing and layout
 
@@ -60,7 +60,7 @@ Left-aligned, whitespace-structured sections (`gap-16/20`), no decorative divide
 
 ## Motion details
 
-- Intro: boot lines report the real build, monogram resolves, curtain lifts; plays on every full page load; click/Escape skips; client-mounted only.
+- Intro: ambient field of real code, cream name reveal with amber rule + one shine, typed mono sub-line, themed handoff; every full page load; Skip control, backdrop click, and Escape fast-forward; client-mounted only.
 - Hero: masked-line rise + staggered fades, chained on intro completion.
 - Reveals: `ScrollTrigger.batch`, `opacity/y:14`, `power1.out`, `once:true`, `start:"top 90%"`.
 - Rules draw via `scaleX` on scroll. Hovers are 200ms CSS. No markers in production. `useGSAP` with scope, SSR-safe, reverted on cleanup.
@@ -97,7 +97,7 @@ Plain, specific, confident. Actions say what happens; errors say what happened a
 - [ ] Helpful empty states; readable responsive tables
 
 **Motion**
-- [ ] Boot intro about 3s, skippable, plays on every load, absent without JS/motion
+- [ ] Boot intro ~4–5s on every load with visible skip, absent without JS, static under reduced motion
 - [ ] Hero chained; reveals fire once; no markers; no layout shift
 
 **Accessibility**

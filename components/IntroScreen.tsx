@@ -2,140 +2,636 @@
 
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { markIntroReady } from "@/lib/introBus";
-import { projects } from "@/content/projects";
-import { site } from "@/content/site";
 
 gsap.registerPlugin(useGSAP);
 
-interface BootLine {
-  text: string;
-  status?: string;
+/* =====================================================================
+   CONFIG — tune copy and timing here; the logic below stays untouched.
+   - name: the one memorable moment (spec: "Reehh").
+   - oncePerSession: true = play once per session (spec); false replays
+     on every full page load.
+   - snippets: real, valid code only. `typed` snippets must use plain
+     string lines (typing writes raw text). Tone marks: "p" plain cream,
+     "k" amber keyword, "s" pine string. Mobile shows the first 9.
+   ===================================================================== */
+type Tone = "p" | "k" | "s";
+type CodeLine = string | Array<[string, Tone]>;
+interface Snippet {
+  id: string;
+  lang: string;
+  lines: CodeLine[];
+  typed?: boolean;
 }
 
-const bootLines: BootLine[] = [
-  { text: "folio/boot — folio v0.1.0" },
-  { text: "setting type · Fraunces + Inter", status: "ok" },
-  { text: `laying out ${projects.length} case studies`, status: "ok" },
-  { text: "warming the amber", status: "ok" },
-  { text: `ready — welcome in, this is ${site.shortName}'s folio` },
-];
+const CONFIG = {
+  name: "Reehh",
+  subline: "Computer science. Builds things that run.",
+  sessionKey: "folio-intro-seen",
+  oncePerSession: false, // false = replay on every full page load
+  labels: { nameAt: 0.8, sublineAt: 2.2, exitAt: 4.1 },
+  letter: { duration: 0.7, stagger: 0.08 },
+  snippets: [
+    {
+      id: "py-fact",
+      lang: "python",
+      typed: true,
+      lines: ["def fact(n):", "    return 1 if n <= 1 else n * fact(n - 1)"],
+    },
+    {
+      id: "js-debounce",
+      lang: "javascript",
+      lines: [
+        [["const ", "k"], ["debounce = (fn, ms) => {", "p"]],
+        "  let t;",
+        [["  return ", "k"], ["(...a) => {", "p"]],
+        "    clearTimeout(t);",
+        "    t = setTimeout(() => fn(...a), ms);",
+        "  };",
+        "};",
+      ],
+    },
+    {
+      id: "sql-join",
+      lang: "sql",
+      lines: [
+        [[`SELECT `, "k"], [`u.name, COUNT(o.id) AS orders`, "p"]],
+        [[`FROM `, "k"], [`users u`, "p"]],
+        [[`JOIN `, "k"], [`orders o ON o.user_id = u.id`, "p"]],
+        [[`GROUP BY `, "k"], [`u.name;`, "p"]],
+      ],
+    },
+    {
+      id: "c-sum",
+      lang: "c",
+      lines: [
+        [[`int `, "k"], [`sum(int *a, int n) {`, "p"]],
+        [[`  int `, "k"], [`s = 0;`, "p"]],
+        "  for (int i = 0; i < n; i++) s += a[i];",
+        "  return s;",
+        "}",
+      ],
+    },
+    {
+      id: "react-hook",
+      lang: "jsx",
+      lines: [
+        "const [count, setCount] = useState(0);",
+        "useEffect(() => {",
+        [
+          ["  document.title = ", "p"],
+          ["`Clicks: ${count}`", "s"],
+          [";", "p"],
+        ],
+        "}, [count]);",
+      ],
+    },
+    {
+      id: "git-rebase",
+      lang: "bash",
+      typed: true,
+      lines: ["git fetch origin", "git rebase origin/main"],
+    },
+    {
+      id: "java-stream",
+      lang: "java",
+      lines: [
+        "var evens = nums.stream()",
+        "    .filter(n -> n % 2 == 0)",
+        "    .toList();",
+      ],
+    },
+    {
+      id: "sql-where",
+      lang: "sql",
+      typed: true,
+      lines: [
+        "SELECT title, year FROM films",
+        "WHERE year >= 2000",
+        "ORDER BY year DESC;",
+      ],
+    },
+    {
+      id: "js-totals",
+      lang: "javascript",
+      lines: [
+        "const totals = items",
+        "  .map((i) => i.price * i.qty)",
+        "  .reduce((a, b) => a + b, 0);",
+      ],
+    },
+    {
+      id: "py-comp",
+      lang: "python",
+      lines: [
+        "squares = [x * x for x in range(10)",
+        "           if x % 2 == 0]",
+      ],
+    },
+    {
+      id: "py-file",
+      lang: "python",
+      lines: [
+        [
+          ["with open(", "p"],
+          [`"data.csv"`, "s"],
+          [") as f:", "p"],
+        ],
+        "    rows = [line.strip() for line in f]",
+      ],
+    },
+    {
+      id: "js-fetch",
+      lang: "javascript",
+      lines: [
+        [
+          ["const res = await fetch(", "p"],
+          [`"/api/projects"`, "s"],
+          [");", "p"],
+        ],
+        "const data = await res.json();",
+      ],
+    },
+    {
+      id: "ts-result",
+      lang: "typescript",
+      lines: [
+        "type Result<T> =",
+        "  | { ok: true; value: T }",
+        "  | { ok: false; error: string };",
+      ],
+    },
+    {
+      id: "bash-grep",
+      lang: "bash",
+      typed: true,
+      lines: ['grep -r "TODO" src/ | wc -l', 'find . -name "*.tmp" -delete'],
+    },
+    {
+      id: "git-commit",
+      lang: "bash",
+      lines: ["git add -A", 'git commit -m "ship it"', "git push"],
+    },
+    {
+      id: "js-regex",
+      lang: "javascript",
+      lines: [
+        String.raw`const email = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;`,
+        "if (email.test(input)) submit(input);",
+      ],
+    },
+  ] as Snippet[],
+};
 
-/* The single orchestrated moment: a boot sequence that reports the
-   real build, resolving into the monogram before the curtain lifts.
-   Plays on every full page load (about three seconds); click or
-   Escape skips it. It mounts client-side only, so SSR and no-JS
-   users never see it, and reduced motion skips it outright. */
+const TONE_CLASS: Record<Tone, string> = { p: "", k: "text-amber", s: "text-pine" };
+
+/* Depth bands for the ambient layer: back is smaller, dimmer, blurred
+   and drifts less; front is sharper and moves more. */
+const DEPTH = [
+  { size: [10, 11], opacity: 0.08, blur: "blur-[1.5px]", drift: 22, dur: 32 },
+  { size: [12, 13], opacity: 0.14, blur: "blur-[0.5px]", drift: 38, dur: 26 },
+  { size: [13, 15], opacity: 0.22, blur: "", drift: 58, dur: 21 },
+] as const;
+
+function mulberry32(seed: number) {
+  return function () {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* A cinematic boot intro: an ambient field of real code drifts behind
+   the name, which pops in letter by letter with an amber rule and one
+   shine sweep; a typed sub-line follows, then everything hands off to
+   the page. Client-mounted only (SSR and no-JS never see it), scroll
+   locked while it plays, focus moved to main on exit. */
 export function IntroScreen() {
   const [mounted, setMounted] = useState(false);
-  const [done, setDone] = useState(false);
-  const rootRef = useRef<HTMLDivElement>(null);
+  const [gone, setGone] = useState(false);
+  const rootRef = useRef<HTMLElement>(null);
+  const codeRef = useRef<HTMLDivElement>(null);
+  const nameRef = useRef<HTMLDivElement>(null);
+  const ruleRef = useRef<HTMLSpanElement>(null);
+  const shineRef = useRef<HTMLSpanElement>(null);
+  const subRef = useRef<HTMLParagraphElement>(null);
+  const subTextRef = useRef<HTMLSpanElement>(null);
+  const subCaretRef = useRef<HTMLSpanElement>(null);
+  const snippetRefs = useRef<Array<HTMLPreElement | null>>([]);
+  const masterRef = useRef<gsap.core.Timeline | null>(null);
+  const driftsRef = useRef<gsap.core.Tween[]>([]);
   const finished = useRef(false);
+  const isMobile =
+    typeof window !== "undefined" ? window.innerWidth < 640 : false;
 
-  function finish() {
+  /* Seeded scatter: stable across renders, calm zone kept clear
+     around the center so the name always stays readable. */
+  const placed = useMemo(() => {
+    const rand = mulberry32(20261008);
+    const list = isMobile
+      ? CONFIG.snippets.slice(0, 9)
+      : CONFIG.snippets;
+    return list.map((snippet) => {
+      let x = 50;
+      let y = 50;
+      for (let attempt = 0; attempt < 24; attempt++) {
+        x = 8 + rand() * 82;
+        y = 6 + rand() * 86;
+        if (x < 24 || x > 76 || y < 28 || y > 72) break;
+      }
+      return { ...snippet, x, y, depth: Math.floor(rand() * 3) };
+    });
+  }, [isMobile]);
+
+  function teardown() {
     if (finished.current) return;
     finished.current = true;
-    setDone(true);
+    driftsRef.current.forEach((tween) => tween.kill());
+    driftsRef.current = [];
+    try {
+      if (CONFIG.oncePerSession) {
+        window.sessionStorage.setItem(CONFIG.sessionKey, "1");
+      }
+    } catch {
+      /* private mode — the intro simply replays next visit */
+    }
     markIntroReady();
+    const main = document.getElementById("main-content");
+    if (main) {
+      main.setAttribute("tabindex", "-1");
+      main.focus({ preventScroll: true });
+    }
+    setGone(true);
+  }
+
+  function skip() {
+    const master = masterRef.current;
+    if (master && master.isActive()) {
+      master.timeScale(4);
+    } else {
+      teardown();
+    }
   }
 
   useGSAP(() => {
     setMounted(true);
-  }, { scope: rootRef });
+  });
+
+  /* Lock page scroll while the intro owns the screen. */
+  useGSAP(() => {
+    if (!mounted || gone) return;
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = previous;
+    };
+  }, { dependencies: [mounted, gone] });
 
   useGSAP(
     () => {
       if (!mounted || finished.current) return;
+      let seen = false;
+      if (CONFIG.oncePerSession) {
+        try {
+          seen = window.sessionStorage.getItem(CONFIG.sessionKey) === "1";
+        } catch {
+          seen = false;
+        }
+      }
+      if (seen) {
+        markIntroReady();
+        setGone(true);
+        return;
+      }
+
+      const root = rootRef.current;
+      if (!root) {
+        teardown();
+        return;
+      }
+      let releaseAmbient: (() => void) | undefined;
 
       const mm = gsap.matchMedia();
+
       mm.add("(prefers-reduced-motion: reduce)", () => {
-        finish();
+        /* Static take: everything already at its final state, one
+           short fade, auto-exit after about 1.5s. No drift, no
+           typing, no pop. */
+        root
+          .querySelectorAll("[data-caret]")
+          .forEach((caret) => ((caret as HTMLElement).style.display = "none"));
+        const rtl = gsap.timeline({ onComplete: teardown });
+        masterRef.current = rtl;
+        rtl.fromTo(root, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.3 });
+        rtl.to(root, { autoAlpha: 0, duration: 0.3 }, "+=1.2");
       });
+
       mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const root = rootRef.current;
-        if (!root) {
-          finish();
-          return;
-        }
-        const tl = gsap.timeline({ onComplete: finish });
-        tl.from(".folio-boot-line", {
-          opacity: 0,
-          x: -12,
-          duration: 0.36,
-          ease: "power1.out",
-          stagger: 0.19,
-        })
-          .from(
-            ".folio-boot-mark",
-            {
-              opacity: 0,
-              scale: 0.85,
-              duration: 0.6,
-              ease: "expo.out",
+        const q = gsap.utils.selector(root);
+        const letters = q(".folio-intro-letter");
+
+        const tl = gsap.timeline({ onComplete: teardown });
+        masterRef.current = tl;
+        tl.addLabel("code", 0);
+        tl.addLabel("name", CONFIG.labels.nameAt);
+        tl.addLabel("subline", CONFIG.labels.sublineAt);
+        tl.addLabel("exit", CONFIG.labels.exitAt);
+
+        /* Name reveal: letters pop, slide and fade in together. */
+        tl.from(
+          letters,
+          {
+            y: 24,
+            opacity: 0,
+            scale: 0.92,
+            duration: CONFIG.letter.duration,
+            ease: "back.out(1.7)",
+            stagger: CONFIG.letter.stagger,
+          },
+          "name"
+        );
+        /* Amber rule draws as the last letter lands. */
+        tl.fromTo(
+          ruleRef.current,
+          { scaleX: 0 },
+          { scaleX: 1, duration: 0.6, ease: "power3.out" },
+          "name+=1.0"
+        );
+        /* One shine sweep across the name, once, no loop. */
+        tl.fromTo(
+          shineRef.current,
+          { xPercent: -160 },
+          { xPercent: 260, duration: 0.9, ease: "power2.inOut" },
+          "name+=1.15"
+        );
+
+        /* Ambient typing: 4 snippets type themselves, carets fade out. */
+        const typed = placed.filter((snippet) => snippet.typed);
+        tl.set(q("[data-typed]"), { autoAlpha: 0 }, 0);
+        typed.forEach((snippet, index) => {
+          const el = root.querySelector<HTMLElement>(
+            `[data-typed="${snippet.id}"]`
+          );
+          const caret = root.querySelector<HTMLElement>(
+            `[data-caret="${snippet.id}"]`
+          );
+          if (!el) return;
+          const full = (snippet.lines as string[]).join("\n");
+          const counter = { n: 0 };
+          const at = `code+=${0.4 + index * 0.5}`;
+          tl.call(
+            () => {
+              el.textContent = "";
             },
-            "-=0.25"
-          )
-          .fromTo(
-            ".folio-boot-rule",
-            { scaleX: 0 },
-            { scaleX: 1, duration: 0.6, ease: "expo.inOut" },
-            "-=0.45"
-          )
-          .to(root, {
-            yPercent: -100,
-            duration: 0.9,
-            ease: "power4.inOut",
-            delay: 0.35,
-          });
+            undefined,
+            at
+          );
+          tl.to(el, { autoAlpha: 1, duration: 0.25 }, at);
+          tl.to(
+            counter,
+            {
+              n: full.length,
+              duration: Math.max(0.5, full.length * 0.02),
+              ease: "none",
+              onUpdate: () => {
+                el.textContent = full.slice(0, Math.round(counter.n));
+              },
+            },
+            `${at}+=0.1`
+          );
+          if (caret) tl.to(caret, { autoAlpha: 0, duration: 0.25 }, ">");
+        });
+
+        /* Sub-line types out under the name, caret disappears. */
+        const subText = subTextRef.current;
+        if (subText) {
+          const full = CONFIG.subline;
+          const counter = { n: 0 };
+          tl.set(subRef.current, { autoAlpha: 0 }, 0);
+          tl.call(
+            () => {
+              subText.textContent = "";
+            },
+            undefined,
+            "subline"
+          );
+          tl.to(subRef.current, { autoAlpha: 1, duration: 0.3 }, "subline");
+          tl.to(
+            counter,
+            {
+              n: full.length,
+              duration: Math.max(0.6, full.length * 0.028),
+              ease: "none",
+              onUpdate: () => {
+                subText.textContent = full.slice(0, Math.round(counter.n));
+              },
+            },
+            "subline+=0.15"
+          );
+          if (subCaretRef.current) {
+            tl.to(subCaretRef.current, { autoAlpha: 0, duration: 0.2 }, ">");
+          }
+        }
+
+        /* Exit: code dims, name settles and fades, boot wipes into
+           the real page background underneath (active theme intact). */
+        tl.to(codeRef.current, { autoAlpha: 0, duration: 0.5 }, "exit");
+        tl.to(
+          nameRef.current,
+          { scale: 0.96, autoAlpha: 0, duration: 0.6, ease: "power2.in" },
+          "exit+=0.1"
+        );
+        tl.to(subRef.current, { autoAlpha: 0, duration: 0.4 }, "exit+=0.1");
+        tl.to(
+          root,
+          { autoAlpha: 0, duration: 0.7, ease: "power1.out" },
+          "exit+=0.2"
+        );
+
+        /* Slow ambient drift with depth-based parallax. */
+        const drifts: gsap.core.Tween[] = [];
+        snippetRefs.current.forEach((el, index) => {
+          if (!el) return;
+          const band = DEPTH[placed[index].depth];
+          drifts.push(
+            gsap.to(el, {
+              x: gsap.utils.random(-band.drift, band.drift),
+              y: gsap.utils.random(-band.drift, band.drift),
+              duration: gsap.utils.random(band.dur * 0.85, band.dur * 1.15),
+              ease: "sine.inOut",
+              yoyo: true,
+              repeat: -1,
+              delay: gsap.utils.random(0, 2),
+            })
+          );
+        });
+        driftsRef.current = drifts;
+
+        /* Subtle mouse parallax, desktop pointers only. */
+        let removePointer: (() => void) | undefined;
+        if (window.matchMedia("(pointer: fine)").matches) {
+          const layer = codeRef.current;
+          if (layer) {
+            const setX = gsap.quickTo(layer, "x", {
+              duration: 0.9,
+              ease: "power2.out",
+            });
+            const setY = gsap.quickTo(layer, "y", {
+              duration: 0.9,
+              ease: "power2.out",
+            });
+            const onMove = (event: PointerEvent) => {
+              setX((event.clientX / window.innerWidth - 0.5) * 24);
+              setY((event.clientY / window.innerHeight - 0.5) * 24);
+            };
+            window.addEventListener("pointermove", onMove);
+            removePointer = () => {
+              window.removeEventListener("pointermove", onMove);
+              gsap.killTweensOf(layer);
+            };
+          }
+        }
+
+        /* Pause everything while the tab is hidden. */
+        const onVisibility = () => {
+          const paused = document.hidden;
+          if (paused) {
+            tl.pause();
+            driftsRef.current.forEach((tween) => tween.pause());
+          } else {
+            tl.resume();
+            driftsRef.current.forEach((tween) => tween.resume());
+          }
+        };
+        document.addEventListener("visibilitychange", onVisibility);
+
+        releaseAmbient = () => {
+          document.removeEventListener("visibilitychange", onVisibility);
+          if (removePointer) removePointer();
+          mm.revert();
+        };
       });
-      return () => mm.revert();
+
+      return () => {
+        if (releaseAmbient) releaseAmbient();
+      };
     },
     { scope: rootRef, dependencies: [mounted] }
   );
 
-  useGSAP(
-    () => {
-      function onKey(event: KeyboardEvent) {
-        if (event.key === "Escape") finish();
-      }
-      window.addEventListener("keydown", onKey);
-      return () => window.removeEventListener("keydown", onKey);
-    },
-    { scope: rootRef }
-  );
+  useGSAP(() => {
+    function onKey(event: KeyboardEvent) {
+      if (event.key === "Escape") skip();
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  });
 
-  if (!mounted || done) return null;
+  if (!mounted || gone) return null;
 
   return (
-    <div
+    <section
       ref={rootRef}
-      aria-hidden="true"
-      onClick={finish}
-      className="fixed inset-0 z-[100] flex cursor-pointer items-center justify-center bg-boot text-cream"
+      aria-label="Site introduction"
+      onClick={skip}
+      className="fixed inset-0 z-[100] cursor-pointer overflow-hidden bg-boot"
     >
-      <div className="flex w-full max-w-sm flex-col gap-5 px-8">
-        <p className="folio-boot-mark font-display text-5xl font-semibold">
-          F<span className="italic text-amber">R</span>
-        </p>
-        <div className="flex flex-col gap-1.5">
-          {bootLines.map((line) => (
-            <p
-              key={line.text}
-              className="folio-boot-line tnum flex items-baseline justify-between gap-4 text-[13px] leading-relaxed text-cream/75"
+      {/* Ambient code field: decorative, never interactive. */}
+      <div
+        ref={codeRef}
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+      >
+        {placed.map((snippet, index) => {
+          const band = DEPTH[snippet.depth];
+          return (
+            <pre
+              key={snippet.id}
+              ref={(el) => {
+                snippetRefs.current[index] = el;
+              }}
+              style={{
+                left: `${snippet.x}%`,
+                top: `${snippet.y}%`,
+                fontSize: `${isMobile ? band.size[0] : band.size[1]}px`,
+                opacity: band.opacity,
+              }}
+              className={`absolute -translate-x-1/2 -translate-y-1/2 leading-relaxed font-mono will-change-transform select-none ${band.blur}`}
             >
-              <span>{line.text}</span>
-              {line.status && (
-                <span className="font-semibold text-amber">{line.status}</span>
+              <code
+                className="text-cream"
+                {...(snippet.typed
+                  ? { "data-typed": snippet.id }
+                  : {})}
+              >
+                {snippet.lines.map((line, lineIndex) => (
+                  <span key={lineIndex} className="block">
+                    {typeof line === "string"
+                      ? line
+                      : line.map(([text, tone], partIndex) => (
+                          <span key={partIndex} className={TONE_CLASS[tone]}>
+                            {text}
+                          </span>
+                        ))}
+                  </span>
+                ))}
+              </code>
+              {snippet.typed && (
+                <span
+                  data-caret={snippet.id}
+                  className="mt-1 block h-3.5 w-[7px] bg-cream/60"
+                />
               )}
-            </p>
-          ))}
-        </div>
-        <span className="block h-[3px] w-full overflow-hidden rounded-full bg-cream/15">
-          <span className="folio-boot-rule block h-full w-full origin-left rounded-full bg-amber" />
-        </span>
-        <p className="text-xs text-cream/40">click anywhere to skip</p>
+            </pre>
+          );
+        })}
       </div>
-    </div>
+
+      {/* The name: one announcement, letters purely visual. */}
+      <div className="absolute inset-0 flex flex-col items-center justify-center px-6">
+        <div ref={nameRef} className="will-change-transform">
+          <span className="sr-only">{CONFIG.name}</span>
+          <span
+            aria-hidden="true"
+            className="relative block overflow-hidden font-display text-[clamp(3.5rem,14vw,8.5rem)] leading-none font-semibold text-cream"
+          >
+            {CONFIG.name.split("").map((letter, index) => (
+              <span key={index} className="folio-intro-letter inline-block">
+                {letter}
+              </span>
+            ))}
+            <span
+              ref={shineRef}
+              className="pointer-events-none absolute inset-y-0 left-0 w-16 bg-cream/25 blur-md mix-blend-screen"
+            />
+          </span>
+          <span
+            ref={ruleRef}
+            className="mt-4 block h-[1px] w-full origin-left bg-amber"
+          />
+        </div>
+        <p
+          ref={subRef}
+          className="mt-5 font-mono text-sm text-cream/70 md:text-md"
+        >
+          <span ref={subTextRef}>{CONFIG.subline}</span>
+          <span
+            ref={subCaretRef}
+            className="ml-1 inline-block h-[1em] w-[2px] translate-y-[3px] bg-cream/70"
+          />
+        </p>
+      </div>
+
+      <button
+        type="button"
+        onClick={skip}
+        className="absolute right-5 bottom-5 min-h-[44px] rounded-md border border-cream/25 px-4 py-2 text-sm text-cream/80 transition-colors duration-200 hover:border-cream/50 hover:text-cream"
+      >
+        Skip intro
+      </button>
+    </section>
   );
 }

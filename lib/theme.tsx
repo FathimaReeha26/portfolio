@@ -43,7 +43,9 @@ const ThemeContext = createContext<{ theme: Theme; toggleTheme: () => void }>({
 });
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
-  const [theme, setTheme] = useState<Theme>(() => currentTheme());
+  /* Always start at the SSR value ("light") so hydration matches;
+     the mount effect below reads the pre-paint choice immediately. */
+  const [theme, setTheme] = useState<Theme>("light");
 
   useEffect(() => {
     setTheme(currentTheme());

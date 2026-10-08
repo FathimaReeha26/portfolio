@@ -24,6 +24,10 @@
 
   --font-display: "Fraunces", Georgia, serif;
   --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  /* System monospace only (no download, no third loaded family):
+     ambient code in the boot intro. */
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas,
+    "Liberation Mono", monospace;
 
   --text-xs: 12px;
   --text-sm: 14px;
