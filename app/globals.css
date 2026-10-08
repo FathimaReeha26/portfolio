@@ -101,6 +101,14 @@ body {
   outline-offset: 2px;
 }
 
+/* #main-content is a programmatic-only focus target (skip link, intro
+   handoff): never in Tab order, so it takes no visible ring. Unlayered
+   with an ID so it wins over the rule above; the activating control
+   already showed focus. */
+#main-content:focus {
+  outline: none;
+}
+
 button,
 a,
 [role="button"] {

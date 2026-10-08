@@ -76,10 +76,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           </a>
           <IntroScreen />
           <SiteNav />
-          {/* Programmatic-only focus target (skip link, intro handoff):
-            never in Tab order, so no visible ring — the activating
-            control already showed focus. */}
-        <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6 focus:outline-none">
+          <main id="main-content" className="mx-auto w-full max-w-6xl flex-1 px-6">
             {children}
           </main>
           <SiteFooter />
