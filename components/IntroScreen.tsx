@@ -27,11 +27,10 @@ interface Snippet {
 
 const CONFIG = {
   name: "Reehh",
-  subline: "Computer science. Builds things that run.",
   sessionKey: "folio-intro-seen",
   oncePerSession: false, // false = replay on every full page load
-  labels: { nameAt: 0.8, sublineAt: 2.2, exitAt: 4.1 },
-  letter: { duration: 0.7, stagger: 0.08 },
+  labels: { nameAt: 0.8, exitAt: 3.7 },
+  letter: { duration: 0.7, stagger: 0.22 },
   snippets: [
     {
       id: "py-fact",
@@ -203,11 +202,11 @@ function mulberry32(seed: number) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-
 /* A cinematic boot intro: an ambient field of real code floats behind
-   the name, which pops in letter by letter under an amber rule; a
-   typed sub-line follows, then everything hands off to the page. Client-mounted only (SSR and no-JS never see it), scroll
-   locked while it plays, focus moved to main on exit. */
+   the name, which pops in letter by letter as an amber dot hops across
+   each letter; then everything hands off to the page. Client-mounted
+   only (SSR and no-JS never see it), scroll locked while it plays,
+   focus moved to main on exit. */
 export function IntroScreen() {
   const [mounted, setMounted] = useState(false);
   const [gone, setGone] = useState(false);
@@ -216,9 +215,6 @@ export function IntroScreen() {
   const nameRef = useRef<HTMLDivElement>(null);
   const ruleRef = useRef<HTMLSpanElement>(null);
   const dotRef = useRef<HTMLSpanElement>(null);
-  const subRef = useRef<HTMLParagraphElement>(null);
-  const subTextRef = useRef<HTMLSpanElement>(null);
-  const subCaretRef = useRef<HTMLSpanElement>(null);
   const snippetRefs = useRef<Array<HTMLPreElement | null>>([]);
   const masterRef = useRef<gsap.core.Timeline | null>(null);
   const driftsRef = useRef<gsap.core.Tween[]>([]);
@@ -348,7 +344,6 @@ export function IntroScreen() {
         masterRef.current = tl;
         tl.addLabel("code", 0);
         tl.addLabel("name", CONFIG.labels.nameAt);
-        tl.addLabel("subline", CONFIG.labels.sublineAt);
         tl.addLabel("exit", CONFIG.labels.exitAt);
 
         /* Name reveal: letters pop, slide and fade in together. */
@@ -364,8 +359,9 @@ export function IntroScreen() {
           },
           "name"
         );
-        /* Hopping dot: bounces along the top of each letter as it
-           lands, then pops out before the rule draws. */
+        /* Hopping dot conducts the reveal: it lands on each letter
+           exactly as that letter pops in, then pops out before the
+           rule draws. Shared rhythm with the letter stagger. */
         const dot = dotRef.current;
         const wrap = nameRef.current;
         if (dot && wrap) {
@@ -395,17 +391,17 @@ export function IntroScreen() {
               "name"
             );
             stops.forEach((stop, index) => {
-              const at = `name+=${(index * CONFIG.letter.stagger + 0.1).toFixed(3)}`;
+              const at = `name+=${(0.1 + index * CONFIG.letter.stagger).toFixed(3)}`;
               tl.to(
                 dot,
-                { x: stop.x, duration: 0.18, ease: "power1.inOut" },
+                { x: stop.x, duration: 0.26, ease: "power1.inOut" },
                 at
               );
               tl.to(
                 dot,
                 {
-                  y: stop.y - 34,
-                  duration: 0.1,
+                  y: stop.y - 40,
+                  duration: 0.14,
                   ease: "power2.out",
                   yoyo: true,
                   repeat: 1,
@@ -415,17 +411,17 @@ export function IntroScreen() {
             });
             tl.to(
               dot,
-              { scale: 0, duration: 0.25, ease: "back.in(2)" },
-              `name+=${(stops.length * CONFIG.letter.stagger + 0.35).toFixed(3)}`
+              { scale: 0, duration: 0.3, ease: "back.in(2)" },
+              `name+=${(0.25 + stops.length * CONFIG.letter.stagger).toFixed(3)}`
             );
           }
         }
-        /* Amber rule draws as the last letter lands. */
+        /* Amber rule draws once the dot is gone. */
         tl.fromTo(
           ruleRef.current,
           { scaleX: 0 },
           { scaleX: 1, duration: 0.6, ease: "power3.out" },
-          "name+=1.0"
+          "name+=1.5"
         );
 
         /* Ambient typing: 4 snippets type themselves, carets fade out. */
@@ -465,38 +461,7 @@ export function IntroScreen() {
           if (caret) tl.to(caret, { autoAlpha: 0, duration: 0.25 }, ">");
         });
 
-        /* Sub-line types out under the name, caret disappears. */
-        const subText = subTextRef.current;
-        if (subText) {
-          const full = CONFIG.subline;
-          const counter = { n: 0 };
-          tl.set(subRef.current, { autoAlpha: 0 }, 0);
-          tl.call(
-            () => {
-              subText.textContent = "";
-            },
-            undefined,
-            "subline"
-          );
-          tl.to(subRef.current, { autoAlpha: 1, duration: 0.3 }, "subline");
-          tl.to(
-            counter,
-            {
-              n: full.length,
-              duration: Math.max(0.6, full.length * 0.028),
-              ease: "none",
-              onUpdate: () => {
-                subText.textContent = full.slice(0, Math.round(counter.n));
-              },
-            },
-            "subline+=0.15"
-          );
-          if (subCaretRef.current) {
-            tl.to(subCaretRef.current, { autoAlpha: 0, duration: 0.2 }, ">");
-          }
-        }
-
-        /* Exit: code dims, name settles and fades, boot wipes into
+        /* Exit: code dims, name settles and fades, intro wipes into
            the real page background underneath (active theme intact). */
         tl.to(codeRef.current, { autoAlpha: 0, duration: 0.5 }, "exit");
         tl.to(
@@ -504,7 +469,6 @@ export function IntroScreen() {
           { scale: 0.96, autoAlpha: 0, duration: 0.6, ease: "power2.in" },
           "exit+=0.1"
         );
-        tl.to(subRef.current, { autoAlpha: 0, duration: 0.4 }, "exit+=0.1");
         tl.to(
           root,
           { autoAlpha: 0, duration: 0.7, ease: "power1.out" },
@@ -674,16 +638,6 @@ export function IntroScreen() {
             className="mt-4 block h-[1px] w-full origin-left bg-amber"
           />
         </div>
-        <p
-          ref={subRef}
-          className="mt-5 font-mono text-sm text-ink/70 md:text-md"
-        >
-          <span ref={subTextRef}>{CONFIG.subline}</span>
-          <span
-            ref={subCaretRef}
-            className="ml-1 inline-block h-[1em] w-[2px] translate-y-[3px] bg-ink/70"
-          />
-        </p>
       </div>
 
       <button
