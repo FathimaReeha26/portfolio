@@ -29,8 +29,8 @@ const CONFIG = {
   name: "Reehh",
   sessionKey: "folio-intro-seen",
   oncePerSession: false, // false = replay on every full page load
-  labels: { nameAt: 0.8, exitAt: 3.7 },
-  letter: { duration: 0.7, stagger: 0.22 },
+  labels: { nameAt: 0.8, exitAt: 4.1 },
+  letter: { duration: 0.7, stagger: 0.4 },
   snippets: [
     {
       id: "py-fact",
@@ -359,24 +359,26 @@ export function IntroScreen() {
           },
           "name"
         );
-        /* Hopping dot conducts the reveal: it lands on each letter
-           exactly as that letter pops in, then pops out before the
-           rule draws. Shared rhythm with the letter stagger. */
+        /* Hopping dot conducts the reveal: a full jump cycle per
+           letter — travel, gravity arc (slow rise, fast fall), landing
+           squash, a beat of rest — then on to the next. Each cycle fits
+           inside one stagger step so hops never overlap and stutter. */
         const dot = dotRef.current;
         const wrap = nameRef.current;
+        const HOP = CONFIG.letter.stagger;
         if (dot && wrap) {
-          const wrapBox = wrap.getBoundingClientRect();
-          const stops = (
-            Array.from(
-              wrap.querySelectorAll(".folio-intro-letter")
-            ) as HTMLElement[]
-          ).map((letter) => {
-            const box = letter.getBoundingClientRect();
-            return {
-              x: box.left - wrapBox.left + box.width / 2,
-              y: box.top - wrapBox.top,
-            };
-          });
+        /* Letter stops via offset* (transform-immune: the pop tween
+           has already shifted getBoundingClientRect boxes). */
+        const letterEls = Array.from(
+          wrap.querySelectorAll(".folio-intro-letter")
+        ) as HTMLElement[];
+        const origin = (letterEls[0]?.offsetParent as HTMLElement | null) ?? null;
+        const baseX = origin ? origin.offsetLeft : 0;
+        const baseY = origin ? origin.offsetTop : 0;
+        const stops = letterEls.map((letter) => ({
+          x: baseX + letter.offsetLeft + letter.offsetWidth / 2,
+          y: baseY + letter.offsetTop,
+        }));
           if (stops.length > 0) {
             gsap.set(dot, {
               xPercent: -50,
@@ -391,28 +393,37 @@ export function IntroScreen() {
               "name"
             );
             stops.forEach((stop, index) => {
-              const at = `name+=${(0.1 + index * CONFIG.letter.stagger).toFixed(3)}`;
+              const at = `name+=${(0.05 + index * HOP).toFixed(3)}`;
               tl.to(
                 dot,
-                { x: stop.x, duration: 0.26, ease: "power1.inOut" },
+                { x: stop.x, duration: 0.32, ease: "power1.inOut" },
                 at
               );
               tl.to(
                 dot,
-                {
-                  y: stop.y - 40,
-                  duration: 0.14,
-                  ease: "power2.out",
-                  yoyo: true,
-                  repeat: 1,
-                },
+                { y: stop.y - 46, duration: 0.17, ease: "power2.out" },
                 at
+              );
+              tl.to(
+                dot,
+                { y: stop.y - 6, duration: 0.15, ease: "power2.in" },
+                `${at}+=0.17`
+              );
+              tl.to(
+                dot,
+                {
+                  scaleY: 0.7,
+                  scaleX: 1.25,
+                  duration: 0.08,
+                  ease: "power2.out",
+                },
+                `${at}+=0.32`
               );
             });
             tl.to(
               dot,
               { scale: 0, duration: 0.3, ease: "back.in(2)" },
-              `name+=${(0.25 + stops.length * CONFIG.letter.stagger).toFixed(3)}`
+              `name+=${(0.3 + stops.length * HOP).toFixed(3)}`
             );
           }
         }
@@ -421,7 +432,7 @@ export function IntroScreen() {
           ruleRef.current,
           { scaleX: 0 },
           { scaleX: 1, duration: 0.6, ease: "power3.out" },
-          "name+=1.5"
+          "name+=2.45"
         );
 
         /* Ambient typing: 4 snippets type themselves, carets fade out. */
