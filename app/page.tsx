@@ -83,7 +83,6 @@ function Projects() {
       <SectionHeading
         id="projects"
         title="Projects"
-        description="Each entry opens a case study: problem, approach, results, and what comes next."
       />
       <ProjectGrid />
     </section>
