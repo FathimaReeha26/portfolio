@@ -340,6 +340,11 @@ export function IntroScreen() {
         const q = gsap.utils.selector(root);
         const letters = q(".folio-intro-letter");
 
+        /* Cheap insurance: never let two master timelines exist. */
+        if (masterRef.current) {
+          masterRef.current.kill();
+          masterRef.current = null;
+        }
         const tl = gsap.timeline({ onComplete: teardown });
         masterRef.current = tl;
         tl.addLabel("code", 0);
@@ -359,10 +364,12 @@ export function IntroScreen() {
           },
           "name"
         );
-        /* Hopping dot conducts the reveal: a full jump cycle per
-           letter — travel, gravity arc (slow rise, fast fall), landing
-           squash, a beat of rest — then on to the next. Each cycle fits
-           inside one stagger step so hops never overlap and stutter. */
+        /* Hopping dot conducts the reveal: it is born on the first
+           letter together with that letter's pop (one arrival, never
+           two), then one full jump cycle per remaining letter — travel,
+           gravity arc (slow rise, fast fall), landing squash, a beat of
+           rest. Each cycle fits inside one stagger step so hops never
+           overlap and stutter. */
         const dot = dotRef.current;
         const wrap = nameRef.current;
         const HOP = CONFIG.letter.stagger;
@@ -383,17 +390,17 @@ export function IntroScreen() {
             gsap.set(dot, {
               xPercent: -50,
               yPercent: -50,
-              x: stops[0].x - 48,
+              x: stops[0].x,
               y: stops[0].y - 6,
               scale: 0,
             });
             tl.to(
               dot,
-              { scale: 1, duration: 0.2, ease: "back.out(2)" },
-              "name"
+              { scale: 1, duration: 0.25, ease: "back.out(2)" },
+              "name+=0.05"
             );
-            stops.forEach((stop, index) => {
-              const at = `name+=${(0.05 + index * HOP).toFixed(3)}`;
+            stops.slice(1).forEach((stop, index) => {
+              const at = `name+=${(0.45 + index * HOP).toFixed(3)}`;
               tl.to(
                 dot,
                 { x: stop.x, duration: 0.32, ease: "power1.inOut" },
@@ -423,7 +430,7 @@ export function IntroScreen() {
             tl.to(
               dot,
               { scale: 0, duration: 0.3, ease: "back.in(2)" },
-              `name+=${(0.3 + stops.length * HOP).toFixed(3)}`
+              `name+=${(0.75 + (stops.length - 1) * HOP).toFixed(3)}`
             );
           }
         }
@@ -432,7 +439,7 @@ export function IntroScreen() {
           ruleRef.current,
           { scaleX: 0 },
           { scaleX: 1, duration: 0.6, ease: "power3.out" },
-          "name+=2.45"
+          "name+=2.6"
         );
 
         /* Ambient typing: 4 snippets type themselves, carets fade out. */
