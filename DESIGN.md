@@ -80,7 +80,7 @@ Spacing from the 4px scale; section rhythm from whitespace (`gap-16/20`, generou
 ## 4. Components
 
 - **Button:** primary is amber fill with paper text; secondary is bordered paper; tertiary is an amber-underlined text button; destructive is danger fill. 48px minimum, `hover` darkens or adds border, `active` presses 1px, `disabled` goes sand, `loading` pairs the spinner with text.
-- **Project index rows:** ruled rows (top border, last row also bottom), area tag in amber-deep, display title, summary, stack chips, result line, "Read case study" link with an arrow that nudges on hover. Never cards-in-a-grid.
+- **Project boxes:** bordered boxes in a responsive grid, area tag in amber-deep, display title, summary, stack chips, result line, "Read case study" affordance with an arrow that nudges on hover. Flat borders, no shadows; the title link stretches over the whole box with the focus ring on the box.
 - **Timeline:** single line, amber nodes, tabular dates. Numbers only where a real sequence exists.
 - **Chips:** small bordered labels; selected is an ink fill **plus** a check mark.
 - **Forms:** visible labels, amber focus border, errors in ink with a danger icon, linked via `aria-invalid` + `aria-describedby`.
@@ -121,7 +121,7 @@ Plain, specific, confident. Actions say what happens ("View projects", "Download
 ## 8. Anti-patterns
 
 - Cream `#F4EDE0`, teal, handwriting fonts, dashed outlines, pencil shadows, pill controls (retired with Sketch)
-- Navy/slate + blue CTA minimalism; black + acid accents; broadsheet hairlines; SaaS card grids; gradients, glass, soft shadows
+- Navy/slate + blue CTA minimalism; black + acid accents; broadsheet hairlines; gradients, glass, soft shadows
 - ALL-CAPS eyebrows, middle-dot meta strings, em-dash label fragments, monospace UI labels, arrows appended to every link
 - Auto-playing motion beyond the single intro; scroll-jacking, page-level parallax, layout shift (the intro's own ambient drift is the one exception)
 - Teal-style overuse of amber: one accent means one
@@ -131,7 +131,7 @@ Plain, specific, confident. Actions say what happens ("View projects", "Download
 ## 9. QA checklist
 
 **Visual:** paper canvas, ink text, amber rationed to actions/focus/selection/progress/rules, pine used sparingly, flat bordered surfaces, generous whitespace, Fraunces display with single italic accents, Inter body ≤70ch.
-**Components:** amber primary buttons with all states; index rows (not card grids); cardless timeline; chips with check-marked selection; labeled forms with linked errors; focus-trapping modal; labeled alerts; readable responsive tables.
+**Components:** amber primary buttons with all states; project boxes in a grid; cardless timeline; chips with check-marked selection; labeled forms with linked errors; focus-trapping modal; labeled alerts; readable responsive tables.
 **Motion:** boot intro ~4–5s on every load with visible skip, absent without JS and static under reduced motion; hero chained; reveals once; no markers; no layout shift; focus to main on exit.
 **Accessibility:** AA contrast verified by script; visible amber focus; no color-only state; semantic HTML; 44px targets; reduced motion honored; decorative marks hidden.
 **Content:** specific CTAs, recovery-led errors, helpful empty states, no invented facts.

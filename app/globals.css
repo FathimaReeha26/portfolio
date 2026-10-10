@@ -107,6 +107,16 @@ body {
   outline: none;
 }
 
+/* Stretched card links: the ring belongs on the whole box (::after),
+   not the title text. Unlayered so it wins over the global rule. */
+.stretched-link:focus-visible {
+  outline: none;
+}
+.stretched-link:focus-visible::after {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
 button,
 a,
 [role="button"] {

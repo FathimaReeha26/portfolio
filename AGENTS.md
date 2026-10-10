@@ -22,7 +22,7 @@ These are the failures that matter most. Full detail lives in the reference file
 3. Pine `#24473B` inverts sparingly (footer, at most one feature card per page), always with paper text in light and cream text in dark.
 4. Surfaces are flat: 1px `line` borders, radii 8/12/18px, whitespace for structure. No shadows, gradients, glassmorphism, or 3D effects anywhere.
 5. Fraunces for display with one italic amber accent per headline; Inter for everything else with tabular numerals for facts. No third loaded typeface (system monospace only for decorative intro code), no all-caps labels.
-6. Projects are ruled index rows, never card grids. Numbers only where a real sequence exists.
+6. Projects display as boxes in a responsive grid (1 / 2 / 3 columns): flat 1px `line` borders, 12px radius, no shadows. Numbers only where a real sequence exists.
 7. Every interactive element has `hover`, `focus-visible`, `active`, and `disabled` states, plus `loading` and `error` where relevant.
 8. Color is never the only state indicator — pair it with text, an icon, a check mark, an underline, or an outline change.
 9. Labels are always visible. Placeholders never replace labels. Errors link to fields via `aria-invalid` and `aria-describedby`.

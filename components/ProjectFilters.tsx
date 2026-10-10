@@ -8,8 +8,8 @@ import { Reveal } from "./Reveal";
 
 type Filter = ProjectArea | "All";
 
-/* Project index with area filter chips. Selection is announced via
-   aria-live so screen reader users hear the result count change. */
+/* Project box grid with area filter chips. Selection is announced
+   via aria-live so screen reader users hear the result count change. */
 export function ProjectFilters() {
   const [filter, setFilter] = useState<Filter>("All");
   const visible =
@@ -37,9 +37,9 @@ export function ProjectFilters() {
           No projects match this filter yet. Try a different area.
         </p>
       ) : (
-        <div className="flex flex-col">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {visible.map((project) => (
-            <Reveal key={project.slug}>
+            <Reveal key={project.slug} className="h-full">
               <ProjectCard project={project} />
             </Reveal>
           ))}

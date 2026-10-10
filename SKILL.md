@@ -33,7 +33,7 @@ Folio makes interfaces feel editorial: credible, calm, and human. The personalit
 
 ## Spacing and layout
 
-Left-aligned, whitespace-structured sections (`gap-16/20`), no decorative dividers. Projects are ruled index rows, never card grids. Numbers only where a real sequence exists (timelines, steps).
+Left-aligned, whitespace-structured sections (`gap-16/20`), no decorative dividers. Projects are boxes in a responsive grid with flat borders. Numbers only where a real sequence exists (timelines, steps).
 
 ## Implementation workflow
 
@@ -48,7 +48,7 @@ Left-aligned, whitespace-structured sections (`gap-16/20`), no decorative divide
 | Component | Key treatment |
 | --- | --- |
 | Primary button | Amber fill, paper text, 48px, presses 1px, action-oriented label |
-| Project row | Ruled row, amber-deep area tag, display title, chips, result line, nudging arrow link |
+| Project box | Bordered box, amber-deep area tag, display title, chips, result line, stretched title link |
 | Card | Flat bordered panel; sand tint or pine inversion where meaning demands it |
 | Input | Bordered, amber focus border, visible label, linked errors |
 | Chips and filters | Small bordered labels; selected = ink fill **plus** check mark |
@@ -78,7 +78,7 @@ Plain, specific, confident. Actions say what happens; errors say what happened a
 ## Anti-patterns
 
 - Sketch remnants: cream, teal, handwriting, dashes, pencil shadows, pills
-- Generic defaults: navy minimalism, dark+acid, broadsheet hairlines, card grids, gradients, glass, soft shadows
+- Generic defaults: navy minimalism, dark+acid, broadsheet hairlines, gradients, glass, soft shadows
 - Template chrome: all-caps eyebrows, middle-dot metas, em-dash labels, mono data labels, arrows on every link
 - Amber everywhere; motion beyond the single intro moment; scroll-jacking; parallax; layout shift
 
@@ -92,7 +92,7 @@ Plain, specific, confident. Actions say what happens; errors say what happened a
 
 **Components**
 - [ ] Amber primary buttons with all states and action-oriented labels
-- [ ] Ruled project rows, cardless timeline, check-marked chip selection
+- [ ] Project boxes in a grid, cardless timeline, check-marked chip selection
 - [ ] Labeled forms with linked errors; focus-trapping modal; labeled alerts
 - [ ] Helpful empty states; readable responsive tables
 
