@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { Card } from "@/components/Card";
 import { Chip } from "@/components/Chip";
 import { Hero } from "@/components/Hero";
-import { ProjectFilters } from "@/components/ProjectFilters";
+import { ProjectGrid } from "@/components/ProjectGrid";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Timeline } from "@/components/Timeline";
@@ -85,7 +85,7 @@ function Projects() {
         title="Projects"
         description="Each entry opens a case study: problem, approach, results, and what comes next."
       />
-      <ProjectFilters />
+      <ProjectGrid />
     </section>
   );
 }
