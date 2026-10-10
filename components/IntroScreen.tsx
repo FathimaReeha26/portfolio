@@ -29,8 +29,11 @@ const CONFIG = {
   name: "Reehh",
   sessionKey: "folio-intro-seen",
   oncePerSession: false, // false = replay on every full page load
-  labels: { nameAt: 0.8, exitAt: 4.1 },
-  letter: { duration: 0.7, stagger: 0.4 },
+  labels: { nameAt: 0.8, exitAt: 4.15 },
+  letter: { duration: 0.7, stagger: 0.09 },
+  /* Victory lap after the name lands: first hop offset, gap between
+     hops. Keep gap >= 0.34 so each jump cycle finishes cleanly. */
+  dot: { start: 0.9, gap: 0.34 },
   snippets: [
     {
       id: "py-fact",
@@ -203,10 +206,10 @@ function mulberry32(seed: number) {
   };
 }
 /* A cinematic boot intro: an ambient field of real code floats behind
-   the name, which pops in letter by letter as an amber dot hops across
-   each letter; then everything hands off to the page. Client-mounted
-   only (SSR and no-JS never see it), scroll locked while it plays,
-   focus moved to main on exit. */
+   the name, which pops in letter by letter; then an amber dot is born
+   on the first letter and victory-laps across the rest before the
+   amber rule draws. Client-mounted only (SSR and no-JS never see it),
+   scroll locked while it plays, focus moved to main on exit. */
 export function IntroScreen() {
   const [mounted, setMounted] = useState(false);
   const [gone, setGone] = useState(false);
@@ -364,15 +367,14 @@ export function IntroScreen() {
           },
           "name"
         );
-        /* Hopping dot conducts the reveal: it is born on the first
-           letter together with that letter's pop (one arrival, never
-           two), then one full jump cycle per remaining letter — travel,
-           gravity arc (slow rise, fast fall), landing squash, a beat of
-           rest. Each cycle fits inside one stagger step so hops never
+        /* Victory lap: the name lands first, then the dot is born on
+           the first letter and hops across the rest — travel, gravity
+           arc (slow rise, fast fall), landing squash, reshape, a beat
+           of rest. Each cycle fits inside one gap step so hops never
            overlap and stutter. */
         const dot = dotRef.current;
         const wrap = nameRef.current;
-        const HOP = CONFIG.letter.stagger;
+        const GAP = CONFIG.dot.gap;
         if (dot && wrap) {
         /* Letter stops via offset* (transform-immune: the pop tween
            has already shifted getBoundingClientRect boxes). */
@@ -397,48 +399,48 @@ export function IntroScreen() {
             tl.to(
               dot,
               { scale: 1, duration: 0.25, ease: "back.out(2)" },
-              "name+=0.05"
+              `name+=${CONFIG.dot.start.toFixed(3)}`
             );
             stops.slice(1).forEach((stop, index) => {
-              const t = 0.45 + index * HOP;
+              const t = CONFIG.dot.start + 0.05 + index * GAP;
               const at = `name+=${t.toFixed(3)}`;
               tl.to(
                 dot,
-                { x: stop.x, duration: 0.32, ease: "power1.inOut" },
+                { x: stop.x, duration: 0.3, ease: "power1.inOut" },
                 at
               );
               tl.to(
                 dot,
-                { y: stop.y - 46, duration: 0.17, ease: "power2.out" },
+                { y: stop.y - 46, duration: 0.15, ease: "power2.out" },
                 at
               );
               tl.to(
                 dot,
-                { y: stop.y - 6, duration: 0.15, ease: "power2.in" },
-                `name+=${(t + 0.17).toFixed(3)}`
+                { y: stop.y - 6, duration: 0.13, ease: "power2.in" },
+                `name+=${(t + 0.15).toFixed(3)}`
               );
               tl.to(
                 dot,
                 {
                   scaleY: 0.7,
                   scaleX: 1.25,
-                  duration: 0.08,
+                  duration: 0.06,
                   ease: "power2.out",
                 },
-                `name+=${(t + 0.32).toFixed(3)}`
+                `name+=${(t + 0.28).toFixed(3)}`
               );
               /* Reshape back to a circle before the next takeoff —
                  the dot is round everywhere, not just on R. */
               tl.to(
                 dot,
-                { scaleX: 1, scaleY: 1, duration: 0.08, ease: "power2.out" },
-                `name+=${(t + 0.4).toFixed(3)}`
+                { scaleX: 1, scaleY: 1, duration: 0.06, ease: "power2.out" },
+                `name+=${(t + 0.34).toFixed(3)}`
               );
             });
             tl.to(
               dot,
               { scale: 0, duration: 0.3, ease: "back.in(2)" },
-              `name+=${(0.75 + (stops.length - 1) * HOP).toFixed(3)}`
+              `name+=${(CONFIG.dot.start + 0.05 + 4 * GAP + 0.25).toFixed(3)}`
             );
           }
         }
