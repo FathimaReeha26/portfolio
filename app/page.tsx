@@ -11,7 +11,6 @@ import { coursework, education } from "@/content/education";
 import { experience } from "@/content/experience";
 import { publications } from "@/content/publications";
 import { bio, currently, researchInterests, site } from "@/content/site";
-import { awards, skillGroups } from "@/content/skills";
 
 export const metadata: Metadata = {
   title: `${site.name} — Portfolio`,
@@ -26,7 +25,6 @@ export default function Home() {
       <Projects />
       {publications.length > 0 && <Research />}
       <Experience />
-      <Skills />
       <Contact />
     </div>
   );
@@ -164,46 +162,6 @@ function Experience() {
           </div>
         )}
       </div>
-    </section>
-  );
-}
-
-function Skills() {
-  return (
-    <section aria-labelledby="skills" className="scroll-mt-24">
-      <SectionHeading
-        id="skills"
-        title="Capabilities"
-        description="The tools I reach for, and how I like to work."
-      />
-      <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
-        {skillGroups.map((group) => (
-          <div key={group.group}>
-            <h3 className="mb-3 text-md font-semibold text-ink">
-              {group.group}
-            </h3>
-            <ul className="flex flex-wrap gap-2">
-              {group.items.map((skill) => (
-                <li key={skill}>
-                  <Chip>{skill}</Chip>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
-      </div>
-      {awards.length > 0 && (
-        <div className="mt-8">
-          <h3 className="mb-2 text-md font-semibold text-ink">
-            Awards, talks, and open source
-          </h3>
-          <ul className="flex list-disc flex-col gap-1 pl-6 text-md text-ink marker:text-amber">
-            {awards.map((award, index) => (
-              <li key={index}>{award}</li>
-            ))}
-          </ul>
-        </div>
-      )}
     </section>
   );
 }
