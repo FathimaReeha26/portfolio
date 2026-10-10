@@ -82,7 +82,7 @@ function Projects() {
     <section aria-labelledby="projects" className="scroll-mt-24">
       <SectionHeading
         id="projects"
-        title="Selected work"
+        title="Projects"
         description="Each entry opens a case study: problem, approach, results, and what comes next."
       />
       <ProjectFilters />
