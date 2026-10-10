@@ -55,10 +55,11 @@ const personSchema = {
   sameAs: site.socials.map((social) => social.href),
 };
 
-/* Runs before first paint: dark is the default and a stored "light"
-   choice is the only thing that prevents it. The ThemeProvider takes
-   over from here and keeps every tab in sync. */
-const themeInitScript = `(function(){try{var s=localStorage.getItem('folio-theme');if(s!=='light')document.documentElement.classList.add('dark')}catch(e){document.documentElement.classList.add('dark')}})();`;
+/* Runs before first paint: marks JS availability (reveals the SSR
+   intro poster) and applies the theme — dark is the default and a
+   stored "light" choice is the only thing that prevents it. The
+   ThemeProvider takes over from here and keeps every tab in sync. */
+const themeInitScript = `(function(){try{document.documentElement.classList.add('js');var s=localStorage.getItem('folio-theme');if(s!=='light')document.documentElement.classList.add('dark')}catch(e){document.documentElement.classList.add('js','dark')}})();`;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (

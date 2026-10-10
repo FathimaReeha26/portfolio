@@ -27,7 +27,7 @@ These are the failures that matter most. Full detail lives in the reference file
 8. Color is never the only state indicator — pair it with text, an icon, a check mark, an underline, or an outline change.
 9. Labels are always visible. Placeholders never replace labels. Errors link to fields via `aria-invalid` and `aria-describedby`.
 10. Focus is a 3px amber outline with offset, never removed, never a faint glow.
-11. Motion: one boot intro on every full page load (about 4–5s: ambient code, name reveal with hopping dot, themed handoff; visible Skip + Escape fast-forward, scroll lock, focus to main on exit; static under reduced motion), hero chained after it, `once` scroll reveals. `useGSAP` with scope, SSR-safe, reverted on cleanup, reduced-motion guards with static final states, no production markers. Content reads without JS.
+11. Motion: one boot intro on every full page load (about 4–5s: ambient code, name reveal with post-reveal dot lap, themed handoff; visible Skip + Escape fast-forward, scroll lock, focus to main on exit; static under reduced motion; SSR poster, hidden without JS), hero chained after it, `once` scroll reveals. `useGSAP` with scope, SSR-safe, reverted on cleanup, reduced-motion guards with static final states, no production markers. Content reads without JS.
 12. Decorative marks get `aria-hidden="true"`, never intercept pointer events, and never cover text, controls, or focus outlines.
 13. Respect `prefers-reduced-motion` in CSS and GSAP.
 14. Copy is plain, specific, confident. No invented facts, metrics, or publications.

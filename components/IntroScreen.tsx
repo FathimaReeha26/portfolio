@@ -208,7 +208,8 @@ function mulberry32(seed: number) {
 /* A cinematic boot intro: an ambient field of real code floats behind
    the name, which pops in letter by letter; then an amber dot is born
    on the first letter and victory-laps across the rest before the
-   amber rule draws. Client-mounted only (SSR and no-JS never see it),
+   amber rule draws. SSR renders a static poster (revealed pre-paint
+   only when JS runs, so first paint never flashes the homepage);
    scroll locked while it plays, focus moved to main on exit. */
 export function IntroScreen() {
   const [mounted, setMounted] = useState(false);
@@ -581,14 +582,15 @@ export function IntroScreen() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  if (!mounted || gone) return null;
+  if (gone) return null;
 
   return (
     <section
       ref={rootRef}
+      id="folio-intro"
       aria-label="Site introduction"
       onClick={skip}
-      className="fixed inset-0 z-[100] cursor-pointer overflow-hidden bg-paper"
+      className="invisible fixed inset-0 z-[100] cursor-pointer overflow-hidden bg-paper"
     >
       {/* Ambient code field: decorative, never interactive. */}
       <div

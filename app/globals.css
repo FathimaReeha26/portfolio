@@ -117,6 +117,14 @@ body {
   outline-offset: 2px;
 }
 
+/* Intro overlay: rendered in SSR as a static poster so first paint
+   never flashes the homepage, but kept invisible until JS runs (the
+   pre-paint script adds `html.js`). No-JS visitors never see it.
+   Unlayered ID so it wins over the `invisible` utility. */
+html.js #folio-intro {
+  visibility: visible;
+}
+
 button,
 a,
 [role="button"] {
