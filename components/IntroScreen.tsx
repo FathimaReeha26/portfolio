@@ -400,7 +400,8 @@ export function IntroScreen() {
               "name+=0.05"
             );
             stops.slice(1).forEach((stop, index) => {
-              const at = `name+=${(0.45 + index * HOP).toFixed(3)}`;
+              const t = 0.45 + index * HOP;
+              const at = `name+=${t.toFixed(3)}`;
               tl.to(
                 dot,
                 { x: stop.x, duration: 0.32, ease: "power1.inOut" },
@@ -414,7 +415,7 @@ export function IntroScreen() {
               tl.to(
                 dot,
                 { y: stop.y - 6, duration: 0.15, ease: "power2.in" },
-                `${at}+=0.17`
+                `name+=${(t + 0.17).toFixed(3)}`
               );
               tl.to(
                 dot,
@@ -424,7 +425,14 @@ export function IntroScreen() {
                   duration: 0.08,
                   ease: "power2.out",
                 },
-                `${at}+=0.32`
+                `name+=${(t + 0.32).toFixed(3)}`
+              );
+              /* Reshape back to a circle before the next takeoff —
+                 the dot is round everywhere, not just on R. */
+              tl.to(
+                dot,
+                { scaleX: 1, scaleY: 1, duration: 0.08, ease: "power2.out" },
+                `name+=${(t + 0.4).toFixed(3)}`
               );
             });
             tl.to(
