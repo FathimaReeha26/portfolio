@@ -125,6 +125,25 @@ html.js #folio-intro {
   visibility: visible;
 }
 
+/* The poster must render the intro's opening frame, not its finished
+   one: with motion allowed, first paint hides exactly what GSAP's
+   from/set tweens hide at hydration (name letters, dot, rule, typed
+   snippets), so the name never appears and then vanishes before its
+   reveal. Unlayered to beat utilities; reduced motion keeps the full
+   static poster for the static take. */
+@media (prefers-reduced-motion: no-preference) {
+  html.js #folio-intro .folio-intro-letter,
+  html.js #folio-intro code[data-typed] {
+    opacity: 0;
+  }
+  html.js #folio-intro [data-dot] {
+    transform: scale(0);
+  }
+  html.js #folio-intro [data-rule] {
+    transform: scaleX(0);
+  }
+}
+
 button,
 a,
 [role="button"] {

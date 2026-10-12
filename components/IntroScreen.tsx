@@ -355,13 +355,17 @@ export function IntroScreen() {
         tl.addLabel("name", CONFIG.labels.nameAt);
         tl.addLabel("exit", CONFIG.labels.exitAt);
 
-        /* Name reveal: letters pop, slide and fade in together. */
-        tl.from(
+        /* Name reveal: letters pop, slide and fade in together.
+           fromTo with explicit end values — a `from` would capture
+           the poster's hidden state (CSS above) as the end value and
+           the letters would never appear. */
+        tl.fromTo(
           letters,
+          { y: 24, opacity: 0, scale: 0.92 },
           {
-            y: 24,
-            opacity: 0,
-            scale: 0.92,
+            y: 0,
+            opacity: 1,
+            scale: 1,
             duration: CONFIG.letter.duration,
             ease: "back.out(1.7)",
             stagger: CONFIG.letter.stagger,
@@ -490,21 +494,29 @@ export function IntroScreen() {
           if (caret) tl.to(caret, { autoAlpha: 0, duration: 0.25 }, ">");
         });
 
-        /* Exit: code dims, name settles and fades, intro wipes into
-           the real page background underneath (active theme intact).
-           The hero is released mid-fade so it animates up through the
-           handoff instead of blinking in after it. */
-        tl.call(markIntroReadyAsync, undefined, "exit+=0.4");
-        tl.to(codeRef.current, { autoAlpha: 0, duration: 0.5 }, "exit");
+        /* Exit, two clean beats so nothing double-exposes: content
+           (code, name, skip) leaves first, then the background wipes
+           to the parked page and the hero is released mid-wipe. */
+        tl.call(markIntroReadyAsync, undefined, "exit+=0.55");
+        tl.to(
+          codeRef.current,
+          { autoAlpha: 0, duration: 0.4, ease: "power1.out" },
+          "exit"
+        );
+        tl.to(
+          q("[data-skip]"),
+          { autoAlpha: 0, duration: 0.3, ease: "power1.out" },
+          "exit"
+        );
         tl.to(
           nameRef.current,
-          { scale: 0.96, autoAlpha: 0, duration: 0.6, ease: "power2.in" },
-          "exit+=0.1"
+          { scale: 0.96, autoAlpha: 0, duration: 0.4, ease: "power2.in" },
+          "exit+=0.05"
         );
         tl.to(
           root,
-          { autoAlpha: 0, duration: 0.7, ease: "power1.out" },
-          "exit+=0.2"
+          { autoAlpha: 0, duration: 0.6, ease: "power1.out" },
+          "exit+=0.45"
         );
 
         /* Slow ambient drift with depth-based parallax. */
@@ -668,6 +680,7 @@ export function IntroScreen() {
           </span>
           <span
             ref={ruleRef}
+            data-rule="true"
             className="mt-4 block h-[1px] w-full origin-left bg-amber"
           />
         </div>
@@ -676,6 +689,7 @@ export function IntroScreen() {
       <button
         type="button"
         onClick={skip}
+        data-skip="true"
         className="absolute right-5 bottom-5 min-h-[44px] rounded-md border border-line px-4 py-2 text-sm text-ink/80 transition-colors duration-200 hover:border-amber hover:text-amber-deep"
       >
         Skip intro
