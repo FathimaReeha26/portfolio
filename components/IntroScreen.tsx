@@ -3,7 +3,7 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { markIntroReady } from "@/lib/introBus";
+import { markIntroReadyAsync } from "@/lib/introBus";
 
 gsap.registerPlugin(useGSAP);
 
@@ -266,7 +266,7 @@ export function IntroScreen() {
     } catch {
       /* private mode — the intro simply replays next visit */
     }
-    markIntroReady();
+    markIntroReadyAsync();
     const main = document.getElementById("main-content");
     if (main) {
       main.setAttribute("tabindex", "-1");
@@ -313,7 +313,7 @@ export function IntroScreen() {
         }
       }
       if (seen) {
-        markIntroReady();
+        markIntroReadyAsync();
         setGone(true);
         return;
       }
@@ -491,7 +491,10 @@ export function IntroScreen() {
         });
 
         /* Exit: code dims, name settles and fades, intro wipes into
-           the real page background underneath (active theme intact). */
+           the real page background underneath (active theme intact).
+           The hero is released mid-fade so it animates up through the
+           handoff instead of blinking in after it. */
+        tl.call(markIntroReadyAsync, undefined, "exit+=0.4");
         tl.to(codeRef.current, { autoAlpha: 0, duration: 0.5 }, "exit");
         tl.to(
           nameRef.current,

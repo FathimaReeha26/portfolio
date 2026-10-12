@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "serve": "node scripts/serve.js",
     "contrast": "node scripts/check-contrast.mjs"
   },
   "dependencies": {

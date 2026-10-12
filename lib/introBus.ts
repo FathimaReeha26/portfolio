@@ -13,6 +13,16 @@ export function markIntroReady() {
   window.dispatchEvent(new Event(EVENT));
 }
 
+/* Async variant: call this — not markIntroReady — from inside GSAP
+   timeline callbacks. GSAP executes those callbacks with the
+   timeline's matchMedia context active, so a synchronous dispatch
+   would stamp every listener-created tween with that context, and a
+   later matchMedia revert would wipe them out. Deferring escapes the
+   context entirely. */
+export function markIntroReadyAsync() {
+  window.setTimeout(markIntroReady, 0);
+}
+
 export function onIntroReady(callback: () => void): () => void {
   if (ready) {
     const id = window.setTimeout(callback, 0);

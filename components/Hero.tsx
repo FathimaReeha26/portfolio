@@ -21,24 +21,36 @@ export function Hero() {
       if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
         return;
       }
+      /* Park the hero hidden from mount — not at handoff — so the
+         overlay fade never reveals a static frame that then blinks
+         into the animation. No-JS users never run this. */
+      gsap.set(".folio-hero-line", { yPercent: 112 });
+      gsap.set(".folio-hero-fade", { opacity: 0, y: 12 });
       const remove = onIntroReady(() => {
-        gsap.fromTo(
-          ".folio-hero-line",
-          { yPercent: 112 },
-          { yPercent: 0, duration: 0.9, ease: "expo.out", stagger: 0.09 }
-        );
-        gsap.fromTo(
-          ".folio-hero-fade",
-          { opacity: 0, y: 12 },
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.6,
-            ease: "power1.out",
-            stagger: 0.08,
-            delay: 0.35,
-          }
-        );
+        /* Element refs, not selector strings: a bare string here
+           resolves outside the gsap.context scope and matches zero
+           targets, silently killing the reveal. */
+        const root = rootRef.current;
+        const lines = root
+          ? Array.from(root.querySelectorAll(".folio-hero-line"))
+          : [];
+        const fades = root
+          ? Array.from(root.querySelectorAll(".folio-hero-fade"))
+          : [];
+        gsap.to(lines, {
+          yPercent: 0,
+          duration: 0.9,
+          ease: "expo.out",
+          stagger: 0.09,
+        });
+        gsap.to(fades, {
+          opacity: 1,
+          y: 0,
+          duration: 0.6,
+          ease: "power1.out",
+          stagger: 0.08,
+          delay: 0.35,
+        });
       });
       return () => remove();
     },
