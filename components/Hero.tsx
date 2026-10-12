@@ -29,7 +29,10 @@ export function Hero() {
       const remove = onIntroReady(() => {
         /* Element refs, not selector strings: a bare string here
            resolves outside the gsap.context scope and matches zero
-           targets, silently killing the reveal. */
+           targets, silently killing the reveal. Released at the
+           intro's veil-end so the whole glide is visible; power3.out
+           keeps real travel in the second half (expo finishes hidden
+           behind the veil and the page then "snaps"). */
         const root = rootRef.current;
         const lines = root
           ? Array.from(root.querySelectorAll(".folio-hero-line"))
@@ -39,17 +42,16 @@ export function Hero() {
           : [];
         gsap.to(lines, {
           yPercent: 0,
-          duration: 0.9,
-          ease: "expo.out",
-          stagger: 0.09,
+          duration: 0.85,
+          ease: "power3.out",
         });
         gsap.to(fades, {
           opacity: 1,
           y: 0,
-          duration: 0.6,
+          duration: 0.5,
           ease: "power1.out",
           stagger: 0.08,
-          delay: 0.35,
+          delay: 0.1,
         });
       });
       return () => remove();

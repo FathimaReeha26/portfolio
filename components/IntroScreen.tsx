@@ -284,6 +284,13 @@ export function IntroScreen() {
     }
   }
 
+  /* Return scroll while the veil is still opaque: restoring it at
+     teardown forces a full-page relayout in view, which drops a
+     frame mid-handoff — a visible stutter. */
+  function releaseScrollLock() {
+    document.body.style.overflow = overflowRef.current;
+  }
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -497,10 +504,13 @@ export function IntroScreen() {
           if (caret) tl.to(caret, { autoAlpha: 0, duration: 0.25 }, ">");
         });
 
-        /* Exit, two clean beats so nothing double-exposes: content
-           (code, name, skip) leaves first, then the background wipes
-           to the parked page and the hero is released mid-wipe. */
-        tl.call(markIntroReadyAsync, undefined, "exit+=0.55");
+        /* Exit, timed so the arrival reads as one glide: content
+           leaves behind the opaque veil, the scroll lock releases
+           while still veiled (no visible relayout hitch), then a
+           short veil lifts and the hero — released at that exact
+           moment — glides in fully visible instead of finishing
+           hidden and snapping the page into place. */
+        tl.call(markIntroReadyAsync, undefined, "exit+=0.8");
         tl.to(
           codeRef.current,
           { autoAlpha: 0, duration: 0.4, ease: "power1.out" },
@@ -516,9 +526,10 @@ export function IntroScreen() {
           { scale: 0.96, autoAlpha: 0, duration: 0.4, ease: "power2.in" },
           "exit+=0.05"
         );
+        tl.call(releaseScrollLock, undefined, "exit+=0.3");
         tl.to(
           root,
-          { autoAlpha: 0, duration: 0.6, ease: "power1.out" },
+          { autoAlpha: 0, duration: 0.35, ease: "power1.out" },
           "exit+=0.45"
         );
 
