@@ -78,6 +78,13 @@ html.dark {
 
 html {
   scroll-behavior: smooth;
+  /* Reserve the scrollbar lane permanently. The intro (and modals)
+     lock scroll with `overflow: hidden`, which hides the scrollbar —
+     on classic-scrollbar platforms that widens the viewport by ~15px
+     and snaps the whole page sideways when the lock lifts. A stable
+     gutter keeps layout width identical across lock/unlock (and
+     skips the resize-scrolltrigger refresh that comes with it). */
+  scrollbar-gutter: stable;
 }
 
 body {

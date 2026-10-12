@@ -296,6 +296,9 @@ export function IntroScreen() {
     if (!mounted || gone) return;
     overflowRef.current = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    /* A reload from a scrolled position can restore the old offset
+       when the lock lifts — snap the intro back to the top. */
+    window.scrollTo(0, 0);
     return () => {
       document.body.style.overflow = overflowRef.current;
     };
