@@ -13,7 +13,7 @@ export const experience: ExperienceItem[] = [
   {
     role: "Active Member – IoT & Embedded Systems",
     org: "EMBED Club, PA College of Engineering",
-    dates: "2024 – Present",
+    dates: "Present",
     bullets: [
       "Participate in hands-on technical workshops and activities focusing on IoT and embedded systems.",
       "Collaborate on practical hardware-software integration and automation projects.",
@@ -22,7 +22,7 @@ export const experience: ExperienceItem[] = [
   {
     role: "Hackathon Participant",
     org: "Engineering Hackathons & Competitions",
-    dates: "2024 – Present",
+    dates: "2026",
     bullets: [
       "Collaborate in fast-paced team environments to prototype practical software solutions.",
       "Apply machine learning, problem-solving, and algorithmic thinking to real-world problem statements.",
