@@ -13,8 +13,16 @@ export const education: EducationItem[] = [
     degree: "B.E. in Computer Science and Engineering",
     school: "P.A. College of Engineering",
     dates: "2024 – 2028",
-    details: ["CGPA 8.3/10"],
+    details: [
+      "CGPA: 8.3 / 10",
+      "Focus: Artificial Intelligence, Machine Learning & Software Engineering",
+    ],
   },
 ];
 
-export const coursework: string[] = [];
+export const coursework: string[] = [
+  "Data Structures & Algorithms",
+  "Object-Oriented Programming (Java)",
+  "Database Management Systems (SQL)",
+  "Machine Learning Fundamentals",
+];
