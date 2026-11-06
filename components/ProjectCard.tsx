@@ -15,7 +15,7 @@ export function ProjectCard({ project }: { project: Project }) {
       <h3 className="font-display text-xl font-medium text-ink transition-colors duration-200 group-hover:text-amber-deep sm:text-2xl">
         <Link
           href={`/projects/${project.slug}`}
-          className="stretched-link after:absolute after:inset-0 after:rounded-lg"
+          className="stretched-link after:absolute after:inset-0 after:rounded-lg after:z-10"
         >
           {project.title}
         </Link>

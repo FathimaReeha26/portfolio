@@ -44,6 +44,17 @@ export function SiteNav() {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  onClick={(e) => {
+                    if (pathname === "/" && item.href.includes("#")) {
+                      const hash = item.href.split("#")[1];
+                      const el = document.getElementById(hash);
+                      if (el) {
+                        e.preventDefault();
+                        el.scrollIntoView({ behavior: "smooth" });
+                        history.pushState(null, "", `#${hash}`);
+                      }
+                    }
+                  }}
                   aria-current={isPage ? "page" : undefined}
                   className={`flex min-h-[44px] items-center text-md transition-colors duration-200 ${
                     isPage
@@ -89,6 +100,18 @@ export function SiteNav() {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  onClick={(e) => {
+                    setOpen(false);
+                    if (pathname === "/" && item.href.includes("#")) {
+                      const hash = item.href.split("#")[1];
+                      const el = document.getElementById(hash);
+                      if (el) {
+                        e.preventDefault();
+                        el.scrollIntoView({ behavior: "smooth" });
+                        history.pushState(null, "", `#${hash}`);
+                      }
+                    }
+                  }}
                   className="flex min-h-[44px] items-center rounded-md px-2 text-md text-ink hover:bg-sand"
                 >
                   {item.label}

@@ -32,9 +32,9 @@ export default function Home() {
 
 function About() {
   return (
-    <section aria-labelledby="about" className="scroll-mt-24">
+    <section id="about" aria-labelledby="about-heading" className="scroll-mt-24">
       <SectionHeading
-        id="about"
+        id="about-heading"
         title="About"
         description="A short account of who I am and what I am working on."
       />
@@ -77,9 +77,9 @@ function About() {
 
 function Projects() {
   return (
-    <section aria-labelledby="projects" className="scroll-mt-24">
+    <section id="projects" aria-labelledby="projects-heading" className="scroll-mt-24">
       <SectionHeading
-        id="projects"
+        id="projects-heading"
         title="Projects"
       />
       <ProjectGrid />
@@ -137,8 +137,8 @@ function Experience() {
   ];
 
   return (
-    <section aria-labelledby="experience" className="scroll-mt-24">
-      <SectionHeading id="experience" title="Education and experience" />
+    <section id="experience" aria-labelledby="experience-heading" className="scroll-mt-24">
+      <SectionHeading id="experience-heading" title="Education and experience" />
       <div className="flex flex-col gap-8">
         <Reveal>
           <Timeline items={timelineItems} />
@@ -164,9 +164,9 @@ function Experience() {
 
 function Contact() {
   return (
-    <section aria-labelledby="contact" className="scroll-mt-24">
+    <section id="contact" aria-labelledby="contact-heading" className="scroll-mt-24">
       <SectionHeading
-        id="contact"
+        id="contact-heading"
         title="Say hello"
         description="The fastest way to reach me is email."
       />

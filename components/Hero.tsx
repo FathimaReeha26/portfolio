@@ -80,9 +80,20 @@ export function Hero() {
         {site.supportingLine}
       </p>
       <div className="folio-hero-fade flex flex-wrap items-center gap-3">
-        <Button href="#projects" variant="primary">
+        <a
+          href="#projects"
+          onClick={(e) => {
+            const el = document.getElementById("projects");
+            if (el) {
+              e.preventDefault();
+              el.scrollIntoView({ behavior: "smooth" });
+              history.pushState(null, "", "#projects");
+            }
+          }}
+          className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md bg-amber px-6 py-3 text-md font-semibold text-paper transition-colors duration-200 hover:bg-amber-deep active:translate-y-px focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-amber cursor-pointer"
+        >
           View projects
-        </Button>
+        </a>
         <a
           href={site.cvHref}
           download="Fathima_Reeha_CV.pdf"
