@@ -7,19 +7,19 @@ export interface SkillGroup {
 }
 
 export const skillGroups: SkillGroup[] = [
-  { group: "Languages", items: ["Python", "Java", "SQL"] },
+  { group: "Technical Skills", items: ["Python", "Java", "SQL", "DSA"] },
   {
-    group: "ML / Data",
-    items: ["Machine Learning", "Data Analysis", "Data Cleaning"],
+    group: "Tools & Systems",
+    items: ["VS Code", "Canva", "GitHub", "OpenCode", "Arduino IDE"],
   },
   {
-    group: "Tools",
-    items: ["VS Code", "Jupyter Notebook", "GitHub", "Excel", "Canva"],
-  },
-  {
-    group: "Working style",
-    items: ["Team Work", "Problem Solving", "Communication", "Time Management"],
+    group: "Soft Skills",
+    items: ["Teamwork", "Problem Solving", "Communication"],
   },
 ];
 
-export const awards: string[] = [];
+export const awards: string[] = [
+  "Hackathon Participant",
+  "Active EMBED Club Member",
+  "IoT & Embedded Systems Activities",
+];

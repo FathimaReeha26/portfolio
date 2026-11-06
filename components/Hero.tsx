@@ -83,9 +83,13 @@ export function Hero() {
         <Button href="#projects" variant="primary">
           View projects
         </Button>
-        <Button href={site.cvHref} variant="secondary">
+        <a
+          href={site.cvHref}
+          download="Fathima_Reeha_CV.pdf"
+          className="inline-flex min-h-[48px] items-center justify-center gap-2 rounded-md border border-line bg-paper px-6 py-3 text-md font-semibold text-ink transition-colors duration-200 hover:border-ink"
+        >
           Download CV
-        </Button>
+        </a>
       </div>
     </section>
   );

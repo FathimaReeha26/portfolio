@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Alert } from "@/components/Alert";
+import { Download, ExternalLink } from "lucide-react";
 import { Card } from "@/components/Card";
 import { Chip } from "@/components/Chip";
 import { Reveal } from "@/components/Reveal";
@@ -8,7 +8,7 @@ import { coursework, education } from "@/content/education";
 import { experience } from "@/content/experience";
 import { publications } from "@/content/publications";
 import { site } from "@/content/site";
-import { skillGroups } from "@/content/skills";
+import { awards, skillGroups } from "@/content/skills";
 
 export const metadata: Metadata = {
   title: "CV",
@@ -31,12 +31,25 @@ export default function CvPage() {
         <p className="tnum text-sm text-ink">{site.email}</p>
       </header>
 
-      <Alert variant="note" title="About the PDF version">
-        The downloadable PDF is added separately. Place it at
-        <span className="tnum text-sm"> public/cv.pdf </span>
-        and point the CV links at it — everything on this page already
-        mirrors what belongs in the file.
-      </Alert>
+      <div className="flex flex-wrap items-center gap-4">
+        <a
+          href="/cv.pdf"
+          download="Fathima_Reeha_CV.pdf"
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-md bg-amber px-5 py-2.5 text-md font-semibold text-paper transition-colors duration-200 hover:bg-amber-deep focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-amber"
+        >
+          <Download aria-hidden="true" size={18} />
+          Download PDF version
+        </a>
+        <a
+          href="/cv.pdf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-[44px] items-center gap-2 rounded-md border border-line bg-paper px-5 py-2.5 text-md font-semibold text-ink transition-colors duration-200 hover:border-ink focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-amber"
+        >
+          <ExternalLink aria-hidden="true" size={18} />
+          View full PDF
+        </a>
+      </div>
 
       <section aria-labelledby="cv-education">
         <SectionHeading id="cv-education" title="Education" />
@@ -111,6 +124,17 @@ export default function CvPage() {
           )}
         </div>
       </section>
+
+      {awards.length > 0 && (
+        <section aria-labelledby="cv-achievements">
+          <SectionHeading id="cv-achievements" title="Achievements" />
+          <ul className="flex list-disc flex-col gap-2 pl-6 text-md text-ink marker:text-amber">
+            {awards.map((award) => (
+              <li key={award}>{award}</li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {publications.length > 0 && (
         <section aria-labelledby="cv-publications">

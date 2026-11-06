@@ -57,12 +57,13 @@ export function SiteNav() {
             );
           })}
           <li>
-            <Link
+            <a
               href={site.cvHref}
+              download="Fathima_Reeha_CV.pdf"
               className="flex min-h-[44px] items-center rounded-md bg-ink px-5 text-md font-semibold text-paper transition-colors duration-200 hover:bg-amber-deep"
             >
               Download CV
-            </Link>
+            </a>
           </li>
         </ul>
 
@@ -95,12 +96,13 @@ export function SiteNav() {
               </li>
             ))}
             <li className="pt-2">
-              <Link
+              <a
                 href={site.cvHref}
+                download="Fathima_Reeha_CV.pdf"
                 className="flex min-h-[44px] items-center justify-center rounded-md bg-ink px-5 text-md font-semibold text-paper"
               >
                 Download CV
-              </Link>
+              </a>
             </li>
           </ul>
         </div>

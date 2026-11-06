@@ -16,9 +16,8 @@ export const site = {
   school: "P.A. College of Engineering",
   graduation: "2028",
   email: "reeha5622@gmail.com",
-  // "Download CV" points at the /cv page until a real PDF is added
-  // to public/cv.pdf (see README). Then point this at "/cv.pdf".
-  cvHref: "/cv",
+  // Downloadable PDF resume located at public/cv.pdf
+  cvHref: "/cv.pdf",
   lastUpdated: "2026-11-06",
   // Social links are omitted until real profile URLs are provided —
   // no placeholder links are shown.

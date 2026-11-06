@@ -116,28 +116,28 @@ export const projects: Project[] = [
   },
   {
     slug: "face-detection",
-    title: "Face Detection System",
+    title: "Face Detection",
     summary:
-      "Real-time face detection system that detects and identifies human faces from images and video streams.",
+      "Face detection application in Python using OpenCV that identifies human faces in images and real-time webcam video.",
     problem:
-      "Detecting faces reliably across varying lighting, orientations, and scales requires robust computer vision and image processing.",
+      "Detecting faces reliably across varying lighting conditions and multiple faces per frame requires effective image preprocessing and computer vision.",
     approach: [
-      "Capture and preprocess image or video feed frames.",
-      "Apply face detection algorithms to locate and extract facial features.",
-      "Track and highlight detected faces with bounding boxes in real time.",
+      "Capture and preprocess image and real-time webcam video frames.",
+      "Apply grayscale conversion and resizing to improve detection accuracy.",
+      "Identify human faces and track multiple faces per frame in real time.",
     ],
-    role: "Developer",
-    stack: ["Python", "Machine Learning", "Computer Vision"],
+    role: "Solo Build",
+    stack: ["Python", "OpenCV", "Computer Vision"],
     areas: ["ML"],
-    outcome: "Functional face detection model operating on image and video inputs.",
+    outcome: "Working real-time face detection application handling multiple faces under varying lighting conditions.",
     architecture: [
-      ["Video / Image input", "Preprocessing"],
-      ["Feature extraction", "Face detection"],
-      ["Bounding box tracking", "Real-time output"],
+      ["Webcam / Image input", "Grayscale & resizing"],
+      ["Feature extraction", "OpenCV detection"],
+      ["Bounding box tracking", "Real-time display"],
     ],
     results: [
-      { label: "Input", display: "Image and real-time video feed" },
-      { label: "Focus", display: "Face localization and feature extraction" },
+      { label: "Input", display: "Images and real-time webcam video" },
+      { label: "Role", display: "Solo Build" },
     ],
   },
 ];
