@@ -172,7 +172,7 @@ function Contact() {
       <SectionHeading
         id="contact"
         title="Say hello"
-        description="The fastest way to reach me is email. My inbox is open for internships, research chats, and collaborations."
+        description="The fastest way to reach me is email."
       />
       <Reveal>
         <Card variant="pine" className="flex flex-col items-start gap-5">
