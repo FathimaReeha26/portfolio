@@ -33,7 +33,7 @@ export const currently: CurrentlyItem[] = [
   { label: "Studying", value: "B.E. CSE, 3rd year · CGPA 8.3/10" },
   {
     label: "Building",
-    value: "SynCura – Explainable ICU Risk Monitoring System",
+    value: "SynCura – Explainable ICU Risk Monitoring System & Face Detection",
   },
   {
     label: "Looking for",
@@ -43,7 +43,7 @@ export const currently: CurrentlyItem[] = [
 
 export const bio: string[] = [
   "I am Fathima Reeha, a third-year Computer Science Engineering student at P.A. College of Engineering (2024–2028, CGPA 8.3/10) with strong programming skills in Python and Java.",
-  "I am currently building SynCura, an explainable ICU risk monitoring system that predicts early patient risk from clinical data and raises timely alerts.",
+  "I am currently developing SynCura, an explainable AI-based ICU risk monitoring system that predicts early patient risk from clinical data, alongside a real-time Face Detection project.",
   "I care about Artificial Intelligence, Data Structures, and practical software that solves real problems — and I am looking for opportunities to apply my skills to real-world challenges.",
 ];
 
