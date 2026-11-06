@@ -121,31 +121,27 @@ function Research() {
 }
 
 function Experience() {
+  const timelineItems = [
+    ...education.map((item) => ({
+      title: item.degree,
+      subtitle: item.school,
+      dates: item.dates,
+      bullets: item.details,
+    })),
+    ...experience.map((item) => ({
+      title: item.role,
+      subtitle: item.org,
+      dates: item.dates,
+      bullets: item.bullets,
+    })),
+  ];
+
   return (
     <section aria-labelledby="experience" className="scroll-mt-24">
-      <SectionHeading id="experience" title="Experience and education" />
+      <SectionHeading id="experience" title="Education and experience" />
       <div className="flex flex-col gap-8">
-        {experience.length > 0 && (
-          <Reveal>
-            <Timeline
-              items={experience.map((item) => ({
-                title: item.role,
-                subtitle: item.org,
-                dates: item.dates,
-                bullets: item.bullets,
-              }))}
-            />
-          </Reveal>
-        )}
         <Reveal>
-          <Timeline
-            items={education.map((item) => ({
-              title: item.degree,
-              subtitle: item.school,
-              dates: item.dates,
-              bullets: item.details,
-            }))}
-          />
+          <Timeline items={timelineItems} />
         </Reveal>
         {coursework.length > 0 && (
           <div>
