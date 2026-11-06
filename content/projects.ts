@@ -114,6 +114,32 @@ export const projects: Project[] = [
       { label: "Goal", display: "Less manual work, more efficient operations" },
     ],
   },
+  {
+    slug: "face-detection",
+    title: "Face Detection System",
+    summary:
+      "Real-time face detection system that detects and identifies human faces from images and video streams.",
+    problem:
+      "Detecting faces reliably across varying lighting, orientations, and scales requires robust computer vision and image processing.",
+    approach: [
+      "Capture and preprocess image or video feed frames.",
+      "Apply face detection algorithms to locate and extract facial features.",
+      "Track and highlight detected faces with bounding boxes in real time.",
+    ],
+    role: "Developer",
+    stack: ["Python", "Machine Learning", "Computer Vision"],
+    areas: ["ML"],
+    outcome: "Functional face detection model operating on image and video inputs.",
+    architecture: [
+      ["Video / Image input", "Preprocessing"],
+      ["Feature extraction", "Face detection"],
+      ["Bounding box tracking", "Real-time output"],
+    ],
+    results: [
+      { label: "Input", display: "Image and real-time video feed" },
+      { label: "Focus", display: "Face localization and feature extraction" },
+    ],
+  },
 ];
 
 export function getProject(slug: string): Project | undefined {
