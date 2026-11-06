@@ -19,8 +19,7 @@ export const site = {
   // "Download CV" points at the /cv page until a real PDF is added
   // to public/cv.pdf (see README). Then point this at "/cv.pdf".
   cvHref: "/cv",
-  lastUpdated: "2026-10-06",
-  signOff: "Thanks for stopping by my sketchbook",
+  lastUpdated: "2026-11-06",
   // Social links are omitted until real profile URLs are provided —
   // no placeholder links are shown.
   socials: [] as SocialLink[],
